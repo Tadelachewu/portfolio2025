@@ -35,6 +35,18 @@
       "description": "Screenshot of Data Analyst App",
       "imageUrl": "https://picsum.photos/seed/data-analyst/600/400",
       "imageHint": "data analysis"
+    },
+    {
+      "id": "youtube-automation",
+      "description": "Screenshot of YouTube Automation app",
+      "imageUrl": "https://picsum.photos/seed/youtube-auto/600/400",
+      "imageHint": "video automation"
+    },
+    {
+      "id": "nibpmo-automation",
+      "description": "Screenshot of NIBPMO Login Automation",
+      "imageUrl": "https://picsum.photos/seed/nib-auto/600/400",
+      "imageHint": "login automation"
     }
   ]
 }

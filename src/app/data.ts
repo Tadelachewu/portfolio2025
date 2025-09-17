@@ -1,10 +1,10 @@
-import { CodeXml, Smartphone, Server, ServerCog, Database, Flame, Container, GitBranch, Briefcase, GraduationCap, Building, Star, Award, Bot } from 'lucide-react';
+import { CodeXml, Smartphone, Server, ServerCog, Database, Flame, Container, GitBranch, Briefcase, GraduationCap, Building, Star, Award, Bot, MousePointerClick } from 'lucide-react';
 
 export const skills = [
   { category: "Frontend", items: ["React", "React Native", "Qwik.js", "Next.js"] },
   { category: "Backend", items: ["Node.js", "Express"] },
   { category: "Database", items: ["MongoDB", "SQL Server", "PostgreSQL"] },
-  { category: "Other", items: ["Firebase", "Docker", "Git", "Python", "AI", "Telegram Bot"] }
+  { category: "Other", items: ["Firebase", "Docker", "Git", "Python", "AI", "Telegram Bot", "Playwright"] }
 ];
 
 export const projects = [
@@ -31,6 +31,22 @@ export const projects = [
     github: "#",
     live: "#",
     image: "data-analyst-app"
+  },
+  {
+    title: "YouTube Automation",
+    description: "Generates a video from a user's prompt and automatically uploads it to YouTube.",
+    tech: ["Python", "AI", "Playwright"],
+    github: "#",
+    live: "#",
+    image: "youtube-automation"
+  },
+  {
+    title: "NIBPMO Login Automation",
+    description: "Automates the login process for NIBPMO using Playwright.",
+    tech: ["Python", "Playwright"],
+    github: "#",
+    live: "#",
+    image: "nibpmo-automation"
   },
   {
     title: "Employee Management System",
@@ -91,6 +107,7 @@ export const skillIcons: { [key: string]: React.ElementType } = {
   "AI": Bot,
   "Telegram Bot": Bot,
   "Next.js": CodeXml,
+  "Playwright": MousePointerClick,
 };
 
 export const educationIcons = {
