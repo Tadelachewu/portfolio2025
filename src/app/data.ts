@@ -37,7 +37,7 @@ export const experience = [
     role: "IT Trainee",
     company: "NIB Bank (Technical Program Department)",
     duration: "2025",
-    responsibilities: ["Assisted in system administration tasks", "Supported IT infrastructure maintenance and upgrades"]
+    responsibilities: ["USSD app API integration", "Database scripting", "Deployment", "Web app and API development", "Business ideas"]
   }
 ];
 
