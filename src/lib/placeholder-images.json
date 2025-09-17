@@ -1,3 +1,22 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "profile-picture",
+      "description": "Profile picture of Tadele Mesfin Belay",
+      "imageUrl": "https://picsum.photos/seed/tadele/400/400",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "employee-management",
+      "description": "Screenshot of Employee Management System",
+      "imageUrl": "https://picsum.photos/seed/ems/600/400",
+      "imageHint": "dashboard interface"
+    },
+    {
+      "id": "chat-app",
+      "description": "Screenshot of Chat Application",
+      "imageUrl": "https://picsum.photos/seed/chat/600/400",
+      "imageHint": "chat application"
+    }
+  ]
 }

@@ -1,0 +1,128 @@
+'use client';
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { Github, Linkedin, Mail, Phone, Send } from "lucide-react";
+import Link from "next/link";
+
+const formSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  email: z.string().email({ message: "Please enter a valid email." }),
+  message: z.string().min(10, { message: "Message must be at least 10 characters." }),
+});
+
+export default function ContactSection() {
+  const { toast } = useToast();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log("Form submitted:", values);
+    toast({
+      title: "Message Sent!",
+      description: "Thank you for reaching out. I'll get back to you soon.",
+    });
+    form.reset();
+  }
+
+  return (
+    <section id="contact" className="py-20 lg:py-32">
+      <div className="container">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Get In Touch</h2>
+          <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
+            Have a question or want to work together? Feel free to reach out.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="space-y-6">
+            <h3 className="text-2xl font-semibold">Contact Information</h3>
+            <div className="space-y-4 text-lg">
+                <div className="flex items-center gap-4">
+                    <Mail className="h-6 w-6 text-primary"/>
+                    <span>tadelemesfinb@gmail.com</span>
+                </div>
+                <div className="flex items-center gap-4">
+                    <Phone className="h-6 w-6 text-primary"/>
+                    <span>+251 912 345678</span>
+                </div>
+            </div>
+            <h3 className="text-2xl font-semibold pt-6">Follow Me</h3>
+             <div className="flex items-center gap-4">
+                <Button asChild variant="outline" size="icon">
+                    <Link href="#" target="_blank"><Linkedin /></Link>
+                </Button>
+                <Button asChild variant="outline" size="icon">
+                    <Link href="#" target="_blank"><Github /></Link>
+                </Button>
+            </div>
+          </div>
+
+          <div>
+             <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Your Name" {...field} className="text-base"/>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input placeholder="your.email@example.com" {...field} className="text-base"/>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Message</FormLabel>
+                      <FormControl>
+                        <Textarea placeholder="Your message..." {...field} className="min-h-[150px] text-base" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit" size="lg">
+                    <Send className="mr-2 h-5 w-5"/>
+                    Send Message
+                </Button>
+              </form>
+            </Form>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
