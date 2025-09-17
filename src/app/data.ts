@@ -3,7 +3,7 @@ import { CodeXml, Smartphone, Server, ServerCog, Database, Flame, Container, Git
 export const skills = [
   { category: "Frontend", items: ["React", "React Native", "Qwik.js", "Next.js"] },
   { category: "Backend", items: ["Node.js", "Express"] },
-  { category: "Database", items: ["MongoDB", "SQL Server"] },
+  { category: "Database", items: ["MongoDB", "SQL Server", "PostgreSQL"] },
   { category: "Other", items: ["Firebase", "Docker", "Git", "Python", "AI", "Telegram Bot"] }
 ];
 
@@ -11,7 +11,7 @@ export const projects = [
   {
     title: "CV and Application Generator",
     description: "An application that uses AI to generate CVs and applications, accessible via a Telegram bot.",
-    tech: ["AI", "Python", "Telegram Bot"],
+    tech: ["AI", "Python", "Telegram Bot", "PostgreSQL"],
     github: "#",
     live: "#",
     image: "cv-generator"
@@ -75,6 +75,7 @@ export const skillIcons: { [key: string]: React.ElementType } = {
   "Express": ServerCog,
   "MongoDB": Database,
   "SQL Server": Database,
+  "PostgreSQL": Database,
   "Firebase": Flame,
   "Docker": Container,
   "Git": GitBranch,
