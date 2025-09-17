@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { PlusCircle } from "lucide-react";
 import React from "react";
+import type { education } from "@/app/portfolio-data";
 
 const formSchema = z.object({
   degree: z.string().min(5, "Degree is required."),
@@ -21,9 +22,10 @@ const formSchema = z.object({
 
 type AddEducationFormProps = {
   setDialogOpen: (open: boolean) => void;
+  setEducation: React.Dispatch<React.SetStateAction<typeof education>>;
 };
 
-export function AddEducationForm({ setDialogOpen }: AddEducationFormProps) {
+export function AddEducationForm({ setDialogOpen, setEducation }: AddEducationFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
@@ -40,17 +42,16 @@ export function AddEducationForm({ setDialogOpen }: AddEducationFormProps) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
-    console.log("New Education Data:", values);
+    
+    setEducation(prevEducation => [values, ...prevEducation]);
 
-    setTimeout(() => {
-        toast({
-            title: "Education Added (Simulated)",
-            description: "The new education entry has been logged to the console.",
-        });
-        setIsSubmitting(false);
-        setDialogOpen(false);
-        form.reset();
-    }, 1000);
+    toast({
+        title: "Education Added!",
+        description: "The new education entry has been added.",
+    });
+    setIsSubmitting(false);
+    setDialogOpen(false);
+    form.reset();
   }
 
   return (

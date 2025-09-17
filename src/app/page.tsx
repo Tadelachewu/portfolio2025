@@ -12,11 +12,17 @@ import EducationSection from '@/components/education-section';
 import PostSection from '@/components/post-section';
 import ContactSection from '@/components/contact-section';
 import Footer from '@/components/footer';
+import { skills as initialSkills, projects as initialProjects, experience as initialExperience, education as initialEducation, posts as initialPosts } from '@/app/portfolio-data';
 
 export type Section = 'home' | 'about' | 'skills' | 'projects' | 'experience' | 'education' | 'posts' | 'contact';
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<Section>('home');
+  const [skills, setSkills] = useState(initialSkills);
+  const [projects, setProjects] = useState(initialProjects);
+  const [experience, setExperience] = useState(initialExperience);
+  const [education, setEducation] = useState(initialEducation);
+  const [posts, setPosts] = useState(initialPosts);
 
   const renderSection = () => {
     switch (activeSection) {
@@ -25,15 +31,15 @@ export default function Home() {
       case 'about':
         return <AboutSection />;
       case 'skills':
-        return <SkillsSection />;
+        return <SkillsSection skills={skills} setSkills={setSkills} />;
       case 'projects':
-        return <ProjectsSection />;
+        return <ProjectsSection projects={projects} setProjects={setProjects} />;
       case 'experience':
-        return <ExperienceSection />;
+        return <ExperienceSection experience={experience} setExperience={setExperience} />;
       case 'education':
-        return <EducationSection />;
+        return <EducationSection education={education} setEducation={setEducation} />;
       case 'posts':
-        return <PostSection />;
+        return <PostSection posts={posts} setPosts={setPosts} />;
       case 'contact':
         return <ContactSection />;
       default:

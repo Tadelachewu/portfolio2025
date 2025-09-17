@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { PlusCircle } from "lucide-react";
 import React from "react";
+import type { posts } from "@/app/portfolio-data";
 
 const formSchema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters."),
@@ -21,9 +22,10 @@ const formSchema = z.object({
 
 type AddPostFormProps = {
   setDialogOpen: (open: boolean) => void;
+  setPosts: React.Dispatch<React.SetStateAction<typeof posts>>;
 };
 
-export function AddPostForm({ setDialogOpen }: AddPostFormProps) {
+export function AddPostForm({ setDialogOpen, setPosts }: AddPostFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
@@ -40,25 +42,22 @@ export function AddPostForm({ setDialogOpen }: AddPostFormProps) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     
-    // In a real app, you would process the data further (e.g., create a slug from the title)
-    const processedValues = {
+    const newPost = {
         ...values,
         date: new Date().toISOString().split('T')[0], // Set current date
         slug: values.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, ''),
         tags: values.tags.split(',').map(tag => tag.trim()).filter(t => t),
     }
 
-    console.log("New Post Data:", processedValues);
+    setPosts(prevPosts => [newPost, ...prevPosts]);
 
-    setTimeout(() => {
-        toast({
-            title: "Post Created (Simulated)",
-            description: "The new post has been logged to the console.",
-        });
-        setIsSubmitting(false);
-        setDialogOpen(false);
-        form.reset();
-    }, 1000);
+    toast({
+        title: "Post Created!",
+        description: "Your new post has been added.",
+    });
+    setIsSubmitting(false);
+    setDialogOpen(false);
+    form.reset();
   }
 
   return (

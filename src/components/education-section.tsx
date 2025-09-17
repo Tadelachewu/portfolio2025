@@ -1,15 +1,21 @@
 
 'use client';
 
-import { education, educationIcons } from '@/app/portfolio-data';
+import { educationIcons } from '@/app/portfolio-data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { GraduationCap, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AddEducationForm } from '@/components/forms/add-education-form';
 import { useState } from 'react';
+import type { education } from '@/app/portfolio-data';
 
-export default function EducationSection() {
+type EducationSectionProps = {
+  education: typeof education;
+  setEducation: React.Dispatch<React.SetStateAction<typeof education>>;
+};
+
+export default function EducationSection({ education, setEducation }: EducationSectionProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const edu = education[0];
   const DegreeIcon = educationIcons.degree;
@@ -42,47 +48,49 @@ export default function EducationSection() {
                     Fill out the form below to add a new education entry.
                   </DialogDescription>
                 </DialogHeader>
-                <AddEducationForm setDialogOpen={setIsDialogOpen} />
+                <AddEducationForm setDialogOpen={setIsDialogOpen} setEducation={setEducation} />
               </DialogContent>
             </Dialog>
         </div>
         <div className="max-w-3xl mx-auto">
-          <Card className="overflow-hidden shadow-lg transition-all hover:shadow-xl hover:-translate-y-1">
-            <CardHeader className="bg-muted p-6">
-              <div className="flex items-center gap-4">
-                <div className="bg-primary text-primary-foreground p-3 rounded-lg">
-                  <DegreeIcon className="h-8 w-8" />
+          {education.map((edu, index) => (
+            <Card key={index} className="overflow-hidden shadow-lg transition-all hover:shadow-xl hover:-translate-y-1 mb-8 last:mb-0">
+              <CardHeader className="bg-muted p-6">
+                <div className="flex items-center gap-4">
+                  <div className="bg-primary text-primary-foreground p-3 rounded-lg">
+                    <DegreeIcon className="h-8 w-8" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-2xl font-bold">{edu.degree}</CardTitle>
+                    <p className="text-lg text-muted-foreground font-medium">{edu.year}</p>
+                  </div>
                 </div>
-                <div>
-                  <CardTitle className="text-2xl font-bold">{edu.degree}</CardTitle>
-                  <p className="text-lg text-muted-foreground font-medium">{edu.year}</p>
+              </CardHeader>
+              <CardContent className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-6 text-lg">
+                <div className="flex items-center gap-3">
+                  <InstitutionIcon className="h-6 w-6 text-accent" />
+                  <div>
+                    <span className="font-semibold">Institution: </span>
+                    <span>{edu.institution}</span>
+                  </div>
                 </div>
-              </div>
-            </CardHeader>
-            <CardContent className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-6 text-lg">
-              <div className="flex items-center gap-3">
-                <InstitutionIcon className="h-6 w-6 text-accent" />
-                <div>
-                  <span className="font-semibold">Institution: </span>
-                  <span>{edu.institution}</span>
+                <div className="flex items-center gap-3">
+                  <CgpaIcon className="h-6 w-6 text-accent" />
+                  <div>
+                    <span className="font-semibold">CGPA: </span>
+                    <span>{edu.cgpa}</span>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <CgpaIcon className="h-6 w-6 text-accent" />
-                <div>
-                  <span className="font-semibold">CGPA: </span>
-                  <span>{edu.cgpa}</span>
+                <div className="flex items-center gap-3 col-span-1 sm:col-span-2">
+                  <ExitExamIcon className="h-6 w-6 text-accent" />
+                  <div>
+                    <span className="font-semibold">Exit Exam Score: </span>
+                    <span>{edu.exitExam}</span>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-3 col-span-1 sm:col-span-2">
-                <ExitExamIcon className="h-6 w-6 text-accent" />
-                <div>
-                  <span className="font-semibold">Exit Exam Score: </span>
-                  <span>{edu.exitExam}</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </section>

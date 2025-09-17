@@ -3,7 +3,6 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { posts } from '@/app/portfolio-data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -12,8 +11,14 @@ import { ArrowRight, Calendar, Rss, PlusCircle } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AddPostForm } from '@/components/forms/add-post-form';
 import { useState } from 'react';
+import type { posts } from '@/app/portfolio-data';
 
-export default function PostSection() {
+type PostSectionProps = {
+  posts: typeof posts;
+  setPosts: React.Dispatch<React.SetStateAction<typeof posts>>;
+};
+
+export default function PostSection({ posts, setPosts }: PostSectionProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
@@ -41,7 +46,7 @@ export default function PostSection() {
                     Fill out the form below to create a new blog post.
                   </DialogDescription>
                 </DialogHeader>
-                <AddPostForm setDialogOpen={setIsDialogOpen} />
+                <AddPostForm setDialogOpen={setIsDialogOpen} setPosts={setPosts} />
               </DialogContent>
             </Dialog>
         </div>

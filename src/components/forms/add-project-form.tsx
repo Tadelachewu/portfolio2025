@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { PlusCircle } from "lucide-react";
 import React from "react";
+import type { projects } from "@/app/portfolio-data";
 
 const formSchema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters."),
@@ -23,9 +24,10 @@ const formSchema = z.object({
 
 type AddProjectFormProps = {
   setDialogOpen: (open: boolean) => void;
+  setProjects: React.Dispatch<React.SetStateAction<typeof projects>>;
 };
 
-export function AddProjectForm({ setDialogOpen }: AddProjectFormProps) {
+export function AddProjectForm({ setDialogOpen, setProjects }: AddProjectFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
@@ -43,20 +45,23 @@ export function AddProjectForm({ setDialogOpen }: AddProjectFormProps) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
-    console.log("New Project Data:", values);
     
-    // Here you would typically call an API to save the data.
-    // For now, we'll just simulate a successful submission.
+    const newProject = {
+      ...values,
+      tech: values.tech.split(',').map(t => t.trim()).filter(t => t),
+      github: values.github || '#',
+      live: values.live || '#',
+    };
+
+    setProjects(prevProjects => [...prevProjects, newProject]);
     
-    setTimeout(() => {
-        toast({
-            title: "Project Added (Simulated)",
-            description: "The new project has been logged to the console.",
-        });
-        setIsSubmitting(false);
-        setDialogOpen(false);
-        form.reset();
-    }, 1000);
+    toast({
+        title: "Project Added!",
+        description: "Your new project has been added to the list.",
+    });
+    setIsSubmitting(false);
+    setDialogOpen(false);
+    form.reset();
   }
 
   return (

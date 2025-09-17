@@ -1,14 +1,19 @@
 
 'use client';
 
-import { experience } from '@/app/portfolio-data';
-import { Briefcase, CheckCircle, PlusCircle } from 'lucide-react';
+import { CheckCircle, PlusCircle, Briefcase } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AddExperienceForm } from '@/components/forms/add-experience-form';
 import { useState } from 'react';
+import type { experience } from '@/app/portfolio-data';
 
-export default function ExperienceSection() {
+type ExperienceSectionProps = {
+  experience: typeof experience;
+  setExperience: React.Dispatch<React.SetStateAction<typeof experience>>;
+};
+
+export default function ExperienceSection({ experience, setExperience }: ExperienceSectionProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
@@ -36,7 +41,7 @@ export default function ExperienceSection() {
                     Fill out the form below to add a new work experience.
                   </DialogDescription>
                 </DialogHeader>
-                <AddExperienceForm setDialogOpen={setIsDialogOpen} />
+                <AddExperienceForm setDialogOpen={setIsDialogOpen} setExperience={setExperience} />
               </DialogContent>
             </Dialog>
         </div>

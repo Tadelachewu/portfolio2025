@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { PlusCircle } from "lucide-react";
 import React from "react";
+import type { experience } from "@/app/portfolio-data";
 
 const formSchema = z.object({
   role: z.string().min(2, "Role is required."),
@@ -21,9 +22,10 @@ const formSchema = z.object({
 
 type AddExperienceFormProps = {
   setDialogOpen: (open: boolean) => void;
+  setExperience: React.Dispatch<React.SetStateAction<typeof experience>>;
 };
 
-export function AddExperienceForm({ setDialogOpen }: AddExperienceFormProps) {
+export function AddExperienceForm({ setDialogOpen, setExperience }: AddExperienceFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
@@ -40,23 +42,20 @@ export function AddExperienceForm({ setDialogOpen }: AddExperienceFormProps) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     
-    // In a real app, you would split the responsibilities string into an array
-    const processedValues = {
+    const newExperience = {
       ...values,
       responsibilities: values.responsibilities.split('\n').filter(r => r.trim() !== ''),
     };
     
-    console.log("New Experience Data:", processedValues);
+    setExperience(prevExperience => [newExperience, ...prevExperience]);
 
-    setTimeout(() => {
-        toast({
-            title: "Experience Added (Simulated)",
-            description: "The new experience has been logged to the console.",
-        });
-        setIsSubmitting(false);
-        setDialogOpen(false);
-        form.reset();
-    }, 1000);
+    toast({
+        title: "Experience Added!",
+        description: "The new experience has been added to your timeline.",
+    });
+    setIsSubmitting(false);
+    setDialogOpen(false);
+    form.reset();
   }
 
   return (

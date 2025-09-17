@@ -3,7 +3,6 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { projects } from '@/app/portfolio-data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -12,8 +11,14 @@ import { Github, ExternalLink, Lightbulb, PlusCircle } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AddProjectForm } from '@/components/forms/add-project-form';
 import { useState } from 'react';
+import type { projects } from '@/app/portfolio-data';
 
-export default function ProjectsSection() {
+type ProjectsSectionProps = {
+  projects: typeof projects;
+  setProjects: React.Dispatch<React.SetStateAction<typeof projects>>;
+};
+
+export default function ProjectsSection({ projects, setProjects }: ProjectsSectionProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
@@ -41,7 +46,7 @@ export default function ProjectsSection() {
                     Fill out the form below to add a new project to your portfolio.
                   </DialogDescription>
                 </DialogHeader>
-                <AddProjectForm setDialogOpen={setIsDialogOpen} />
+                <AddProjectForm setDialogOpen={setIsDialogOpen} setProjects={setProjects} />
               </DialogContent>
             </Dialog>
         </div>

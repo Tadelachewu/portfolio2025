@@ -1,15 +1,21 @@
 
 'use client';
 
-import { skills, skillIcons } from '@/app/portfolio-data';
+import { skillIcons } from '@/app/portfolio-data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Wrench, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AddSkillForm } from '@/components/forms/add-skill-form';
 import { useState } from 'react';
+import type { skills } from '@/app/portfolio-data';
 
-export default function SkillsSection() {
+type SkillsSectionProps = {
+  skills: typeof skills;
+  setSkills: React.Dispatch<React.SetStateAction<typeof skills>>;
+};
+
+export default function SkillsSection({ skills, setSkills }: SkillsSectionProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
@@ -37,7 +43,7 @@ export default function SkillsSection() {
                     Select a category and enter the skill name.
                   </DialogDescription>
                 </DialogHeader>
-                <AddSkillForm setDialogOpen={setIsDialogOpen} />
+                <AddSkillForm setDialogOpen={setIsDialogOpen} setSkills={setSkills} />
               </DialogContent>
             </Dialog>
         </div>

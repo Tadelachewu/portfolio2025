@@ -11,9 +11,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { PlusCircle } from "lucide-react";
 import React from "react";
-import { skills } from "@/app/portfolio-data";
+import { skills as initialSkills } from "@/app/portfolio-data";
 
-const skillCategories = skills.map(s => s.category);
+const skillCategories = initialSkills.map(s => s.category);
 
 const formSchema = z.object({
   category: z.enum(skillCategories as [string, ...string[]], {
@@ -24,9 +24,10 @@ const formSchema = z.object({
 
 type AddSkillFormProps = {
   setDialogOpen: (open: boolean) => void;
+  setSkills: React.Dispatch<React.SetStateAction<typeof initialSkills>>;
 };
 
-export function AddSkillForm({ setDialogOpen }: AddSkillFormProps) {
+export function AddSkillForm({ setDialogOpen, setSkills }: AddSkillFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
@@ -39,17 +40,26 @@ export function AddSkillForm({ setDialogOpen }: AddSkillFormProps) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
-    console.log("New Skill Data:", values);
+    
+    setSkills(prevSkills => {
+      return prevSkills.map(cat => {
+        if (cat.category === values.category) {
+          return {
+            ...cat,
+            items: [...cat.items, values.skillName]
+          };
+        }
+        return cat;
+      });
+    });
 
-    setTimeout(() => {
-        toast({
-            title: "Skill Added (Simulated)",
-            description: `Added "${values.skillName}" to ${values.category}.`,
-        });
-        setIsSubmitting(false);
-        setDialogOpen(false);
-        form.reset();
-    }, 1000);
+    toast({
+        title: "Skill Added!",
+        description: `Added "${values.skillName}" to ${values.category}.`,
+    });
+    setIsSubmitting(false);
+    setDialogOpen(false);
+    form.reset();
   }
 
   return (
