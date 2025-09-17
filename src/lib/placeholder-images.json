@@ -54,6 +54,24 @@
       "description": "Screenshot of NIB Security Analyst Bot",
       "imageUrl": "https://picsum.photos/seed/nib-security/600/400",
       "imageHint": "security dashboard"
+    },
+    {
+      "id": "post-1",
+      "description": "Abstract technology background",
+      "imageUrl": "https://picsum.photos/seed/post1/600/400",
+      "imageHint": "tech abstract"
+    },
+    {
+      "id": "post-2",
+      "description": "AI brain concept",
+      "imageUrl": "https://picsum.photos/seed/post2/600/400",
+      "imageHint": "AI brain"
+    },
+    {
+      "id": "post-3",
+      "description": "Cybersecurity concept art",
+      "imageUrl": "https://picsum.photos/seed/post3/600/400",
+      "imageHint": "cyber security"
     }
   ]
 }
