@@ -1,7 +1,7 @@
 
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { posts } from '@/app/posts-data';
+import { posts } from '@/app/portfolio-data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Badge } from '@/components/ui/badge';
 import { Calendar } from 'lucide-react';

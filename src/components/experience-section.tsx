@@ -1,4 +1,4 @@
-import { experience } from '@/app/data';
+import { experience } from '@/app/portfolio-data';
 import { Briefcase, CheckCircle } from 'lucide-react';
 
 export default function ExperienceSection() {

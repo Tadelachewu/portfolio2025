@@ -12,7 +12,7 @@ import { Github, Linkedin, Mail, Phone, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { sendEmail, SendEmailInput } from "@/ai/flows/send-email-flow";
-import { contactInfo } from "@/app/data";
+import { contactInfo } from "@/app/portfolio-data";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),

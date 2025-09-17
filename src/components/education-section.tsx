@@ -1,4 +1,4 @@
-import { education, educationIcons } from '@/app/data';
+import { education, educationIcons } from '@/app/portfolio-data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { GraduationCap } from 'lucide-react';
 

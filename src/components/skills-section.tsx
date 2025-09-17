@@ -1,4 +1,4 @@
-import { skills, skillIcons } from '@/app/data';
+import { skills, skillIcons } from '@/app/portfolio-data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Wrench } from 'lucide-react';
 
