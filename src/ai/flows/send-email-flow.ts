@@ -9,6 +9,7 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
+import nodemailer from 'nodemailer';
 
 const SendEmailInputSchema = z.object({
   name: z.string().describe('The name of the person sending the message.'),
@@ -33,18 +34,45 @@ const sendEmailFlow = ai.defineFlow(
     outputSchema: SendEmailOutputSchema,
   },
   async (input) => {
-    // In a real application, you would integrate with an email sending service
-    // like SendGrid, Mailgun, or AWS SES here.
-    // For this example, we'll just log the email content to the console
-    // to simulate that an email has been "sent".
-    
-    console.log('New Contact Form Submission:');
-    console.log(`From: ${input.name} <${input.email}>`);
-    console.log(`To: tade2024bdu@gmail.com`);
-    console.log('Message:');
-    console.log(input.message);
+    const { name, email, message } = input;
+    const toEmail = 'tade2024bdu@gmail.com';
 
-    // Simulate a successful email send.
-    return { success: true };
+    // Nodemailer transporter setup
+    // IMPORTANT: You need to set the EMAIL_SERVER_USER and EMAIL_SERVER_PASSWORD
+    // environment variables. For Gmail, you might need to generate an "App Password".
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_SERVER_USER,
+        pass: process.env.EMAIL_SERVER_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: `"${name}" <${email}>`,
+      to: toEmail,
+      subject: `New message from ${name} via your portfolio`,
+      text: message,
+      html: `
+        <p>You have a new contact form submission from your portfolio:</p>
+        <ul>
+          <li><strong>Name:</strong> ${name}</li>
+          <li><strong>Email:</strong> ${email}</li>
+        </ul>
+        <p><strong>Message:</strong></p>
+        <p>${message}</p>
+      `,
+    };
+
+    try {
+      await transporter.sendMail(mailOptions);
+      console.log(`Email sent to ${toEmail}`);
+      return { success: true };
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      // In a real app, you'd want more robust error handling.
+      // For now, we'll just indicate failure.
+      return { success: false };
+    }
   }
 );
