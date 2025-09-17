@@ -1,7 +1,7 @@
 import { CodeXml, Smartphone, Server, ServerCog, Database, Flame, Container, GitBranch, Briefcase, GraduationCap, Building, Star, Award, Bot } from 'lucide-react';
 
 export const skills = [
-  { category: "Frontend", items: ["React", "React Native", "Qwik.js"] },
+  { category: "Frontend", items: ["React", "React Native", "Qwik.js", "Next.js"] },
   { category: "Backend", items: ["Node.js", "Express"] },
   { category: "Database", items: ["MongoDB", "SQL Server"] },
   { category: "Other", items: ["Firebase", "Docker", "Git", "Python", "AI", "Telegram Bot"] }
@@ -15,6 +15,14 @@ export const projects = [
     github: "#",
     live: "#",
     image: "cv-generator"
+  },
+  {
+    title: "Online Editor App",
+    description: "An AI-powered online code editor built with Next.js for a seamless development experience.",
+    tech: ["AI", "Next.js"],
+    github: "#",
+    live: "#",
+    image: "online-editor"
   },
   {
     title: "Employee Management System",
@@ -73,6 +81,7 @@ export const skillIcons: { [key: string]: React.ElementType } = {
   "Python": CodeXml,
   "AI": Bot,
   "Telegram Bot": Bot,
+  "Next.js": CodeXml,
 };
 
 export const educationIcons = {

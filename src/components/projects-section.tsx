@@ -34,7 +34,7 @@ export default function ProjectsSection() {
                   <CardTitle className="text-2xl font-bold">{project.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="flex-grow">
-                  <CardDescription className="mb-4">{project.description}</CardDescription>
+                  <CardDescription className="mb-4 text-base">{project.description}</CardDescription>
                   <div className="flex flex-wrap gap-2">
                     {project.tech.map((tech, techIndex) => (
                       <Badge key={techIndex} variant="secondary">{tech}</Badge>
