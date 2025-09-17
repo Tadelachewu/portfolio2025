@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { projects } from '@/app/data';
@@ -42,18 +43,25 @@ export default function ProjectsSection() {
                   </div>
                 </CardContent>
                 <CardFooter className="flex gap-4">
-                  <Button asChild variant="outline">
+                  <Button asChild variant="outline" disabled={project.github === '#'}>
                     <Link href={project.github} target="_blank">
                       <Github className="mr-2 h-4 w-4" />
                       GitHub
                     </Link>
                   </Button>
-                  <Button asChild>
-                    <Link href={project.live} target="_blank">
+                  {project.live !== '#' ? (
+                    <Button asChild>
+                      <Link href={project.live} target="_blank">
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        Live Demo
+                      </Link>
+                    </Button>
+                  ) : (
+                    <Button disabled>
                       <ExternalLink className="mr-2 h-4 w-4" />
-                      Live Demo
-                    </Link>
-                  </Button>
+                      Coming Soon
+                    </Button>
+                  )}
                 </CardFooter>
               </Card>
             );

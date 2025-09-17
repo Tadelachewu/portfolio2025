@@ -53,9 +53,9 @@ export const projects = [
     title: "Employee Management System",
     description: "Full-stack app with React frontend and Express + SQL Server backend, enabling comprehensive employee data management.",
     tech: ["React", "Express", "SQL Server"],
-    github: "#",
+    github: "https://github.com/Tadelachewu/hrapp.git",
     live: "#",
-image: "employee-management"
+    image: "employee-management"
   },
   {
     title: "Chat Application",
