@@ -11,7 +11,7 @@
       "id": "employee-management",
       "description": "Screenshot of Employee Management System",
       "imageUrl": "https://picsum.photos/seed/ems/600/400",
-      "imageHint": "dashboard interface"
+      "imageHint": "HR dashboard"
     },
     {
       "id": "cv-generator",
@@ -26,10 +26,10 @@
       "imageHint": "code editor"
     },
     {
-      "id": "data-analyst-app",
-      "description": "Screenshot of Data Analyst App",
-      "imageUrl": "https://picsum.photos/seed/data-analyst/600/400",
-      "imageHint": "data analysis"
+      "id": "application-letter-bot",
+      "description": "Screenshot of Application Letter Bot",
+      "imageUrl": "https://picsum.photos/seed/app-letter/600/400",
+      "imageHint": "letter writing"
     },
     {
       "id": "youtube-automation",
@@ -41,19 +41,19 @@
       "id": "nibpmo-automation",
       "description": "Screenshot of NIBPMO Login Automation",
       "imageUrl": "https://picsum.photos/seed/nib-auto/600/400",
-      "imageHint": "login automation"
+      "imageHint": "secure login"
     },
     {
       "id": "nib-data-bot",
       "description": "Screenshot of NIB Data Analysis Bot",
       "imageUrl": "https://picsum.photos/seed/nib-data/600/400",
-      "imageHint": "data analysis bot"
+      "imageHint": "excel spreadsheet"
     },
     {
       "id": "nib-security-bot",
       "description": "Screenshot of NIB Security Analyst Bot",
       "imageUrl": "https://picsum.photos/seed/nib-security/600/400",
-      "imageHint": "security bot"
+      "imageHint": "security dashboard"
     }
   ]
 }

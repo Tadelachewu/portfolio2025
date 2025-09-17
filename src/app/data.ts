@@ -23,7 +23,7 @@ export const projects = [
     tech: ["Python", "Telegram Bot"],
     github: "https://github.com/Tadelachewu/BotApplicationLetter.git",
     live: "https://t.me/ApplicationLetterByTade_bot",
-    image: "data-analyst-app" 
+    image: "application-letter-bot" 
   },
   {
     title: "Online Editor App",
@@ -134,5 +134,5 @@ export const educationIcons = {
 
 export const contactInfo = {
     email: 'tade2024bdu@gmail.com',
-    phone: '+251 949 847 581'
+    phone: '+251949847581'
 }
