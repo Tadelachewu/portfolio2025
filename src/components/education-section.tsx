@@ -1,5 +1,6 @@
 import { education, educationIcons } from '@/app/data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { GraduationCap } from 'lucide-react';
 
 export default function EducationSection() {
   const edu = education[0];
@@ -12,7 +13,10 @@ export default function EducationSection() {
     <section id="education" className="py-20 lg:py-32 bg-secondary">
       <div className="container">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Education</h2>
+            <div className="flex items-center justify-center gap-4 mb-4">
+                <GraduationCap className="h-10 w-10 text-primary" />
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Education</h2>
+            </div>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">My academic background and qualifications.</p>
         </div>
         <div className="max-w-3xl mx-auto">

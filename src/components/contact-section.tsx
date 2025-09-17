@@ -8,7 +8,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Github, Linkedin, Mail, Phone, Send } from "lucide-react";
+import { Github, Linkedin, Mail, Phone, Send, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { sendEmail, SendEmailInput } from "@/ai/flows/send-email-flow";
@@ -66,7 +66,10 @@ export default function ContactSection() {
     <section id="contact" className="py-20 lg:py-32">
       <div className="container">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Get In Touch</h2>
+            <div className="flex items-center justify-center gap-4 mb-4">
+                <MessageCircle className="h-10 w-10 text-primary" />
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Get In Touch</h2>
+            </div>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
             Have a question or want to work together? Feel free to reach out.
           </p>

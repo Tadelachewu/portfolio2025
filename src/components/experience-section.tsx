@@ -6,7 +6,10 @@ export default function ExperienceSection() {
     <section id="experience" className="py-20 lg:py-32">
       <div className="container">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Work Experience</h2>
+            <div className="flex items-center justify-center gap-4 mb-4">
+                <Briefcase className="h-10 w-10 text-primary" />
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Work Experience</h2>
+            </div>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">My professional journey and key contributions.</p>
         </div>
         <div className="relative">

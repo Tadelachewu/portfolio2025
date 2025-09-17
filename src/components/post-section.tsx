@@ -6,14 +6,17 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Calendar } from 'lucide-react';
+import { ArrowRight, Calendar, Rss } from 'lucide-react';
 
 export default function PostSection() {
   return (
     <section id="posts" className="py-20 lg:py-32">
       <div className="container">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">News & Ideas</h2>
+            <div className="flex items-center justify-center gap-4 mb-4">
+                <Rss className="h-10 w-10 text-primary" />
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">News & Ideas</h2>
+            </div>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">Check out my latest articles and thoughts on technology.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

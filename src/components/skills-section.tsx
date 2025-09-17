@@ -1,12 +1,16 @@
 import { skills, skillIcons } from '@/app/data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Wrench } from 'lucide-react';
 
 export default function SkillsSection() {
   return (
     <section id="skills" className="py-20 lg:py-32">
       <div className="container">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">My Technical Skills</h2>
+            <div className="flex items-center justify-center gap-4 mb-4">
+                <Wrench className="h-10 w-10 text-primary" />
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">My Technical Skills</h2>
+            </div>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">A snapshot of the technologies and tools I work with.</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
