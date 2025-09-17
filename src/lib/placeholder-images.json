@@ -29,6 +29,12 @@
       "description": "Screenshot of Online Editor App",
       "imageUrl": "https://picsum.photos/seed/editor/600/400",
       "imageHint": "code editor"
+    },
+    {
+      "id": "data-analyst-app",
+      "description": "Screenshot of Data Analyst App",
+      "imageUrl": "https://picsum.photos/seed/data-analyst/600/400",
+      "imageHint": "data analysis"
     }
   ]
 }

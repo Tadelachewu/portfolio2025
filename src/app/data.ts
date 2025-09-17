@@ -25,6 +25,14 @@ export const projects = [
     image: "online-editor"
   },
   {
+    title: "Data Analyst App",
+    description: "Accepts an Excel file and generates a filtered dataset based on user selection, accessible via a Telegram bot.",
+    tech: ["Python", "Telegram Bot"],
+    github: "#",
+    live: "#",
+    image: "data-analyst-app"
+  },
+  {
     title: "Employee Management System",
     description: "Full-stack app with React frontend and Express + SQL Server backend, enabling comprehensive employee data management.",
     tech: ["React", "Express", "SQL Server"],
