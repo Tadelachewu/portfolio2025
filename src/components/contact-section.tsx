@@ -91,7 +91,7 @@ export default function ContactSection() {
                     <Link href="#" target="_blank"><Linkedin /></Link>
                 </Button>
                 <Button asChild variant="outline" size="icon">
-                    <Link href="#" target="_blank"><Github /></Link>
+                    <Link href="https://github.com/Tadelachewu" target="_blank"><Github /></Link>
                 </Button>
             </div>
           </div>

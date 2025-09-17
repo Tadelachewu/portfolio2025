@@ -16,7 +16,7 @@ export default function Footer() {
                 </Link>
             </Button>
             <Button asChild variant="ghost" size="icon">
-                <Link href="#" target="_blank" aria-label="GitHub">
+                <Link href="https://github.com/Tadelachewu" target="_blank" aria-label="GitHub">
                     <Github className="h-5 w-5" />
                 </Link>
             </Button>
