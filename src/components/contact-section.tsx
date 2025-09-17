@@ -9,7 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Github, Linkedin, Mail, Phone, MessageCircle } from "lucide-react";
+import { Github, Linkedin, Mail, Phone, MessageCircle, Youtube, Send } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { sendEmail, SendEmailInput } from "@/ai/flows/send-email-flow";
@@ -20,6 +20,21 @@ const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email." }),
   message: z.string().min(10, { message: "Message must be at least 10 characters." }),
 });
+
+const TikTokIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M16.38 3.42a4.5 4.5 0 0 1 5.2 5.2v.05c0 1.62-.6 3.1-1.65 4.23-1.04 1.14-2.48 1.9-4.08 2.22v-2.1a6.3 6.3 0 0 0 3.73-3.73 4.49 4.49 0 0 1-1.2-3.32c-.03-2.48-2.02-4.48-4.5-4.5-2.46-.02-4.48 1.97-4.5 4.44v6.68a2 2 0 1 1-4 0V8.89a2 2 0 1 1 4 0v2.46a6.5 6.5 0 0 0 6.5-6.5c.02-.02.04-.04.06-.06Z" />
+    </svg>
+  );
 
 export default function ContactSection() {
   const { toast } = useToast();
@@ -96,6 +111,15 @@ export default function ContactSection() {
                 </Button>
                 <Button asChild variant="outline" size="icon">
                     <Link href="https://github.com/Tadelachewu" target="_blank"><Github /></Link>
+                </Button>
+                <Button asChild variant="outline" size="icon">
+                    <Link href="https://www.youtube.com/@EagleTube-ph6wh" target="_blank"><Youtube /></Link>
+                </Button>
+                <Button asChild variant="outline" size="icon">
+                    <Link href="https://t.me/TadeleMesfin" target="_blank"><Send /></Link>
+                </Button>
+                 <Button asChild variant="outline" size="icon">
+                    <Link href="#" target="_blank"><TikTokIcon className="h-5 w-5"/></Link>
                 </Button>
             </div>
           </div>
