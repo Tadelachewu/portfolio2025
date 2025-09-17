@@ -9,12 +9,20 @@ export const skills = [
 
 export const projects = [
   {
-    title: "CV and Application Generator",
-    description: "An application that uses AI to generate CVs and applications, accessible via a Telegram bot.",
+    title: "AI CV Generator",
+    description: "A Telegram bot that uses AI to generate professional CVs.",
     tech: ["AI", "Python", "Telegram Bot", "PostgreSQL"],
-    github: "#",
-    live: "#",
+    github: "https://github.com/Tadelachewu/ai_real_cv_generator.git",
+    live: "https://t.me/MertuCv_bot",
     image: "cv-generator"
+  },
+  {
+    title: "Application Letter Bot",
+    description: "A Telegram bot that assists in generating application letters.",
+    tech: ["Python", "Telegram Bot"],
+    github: "https://github.com/Tadelachewu/BotApplicationLetter.git",
+    live: "https://t.me/ApplicationLetterByTade_bot",
+    image: "data-analyst-app" 
   },
   {
     title: "Online Editor App",
@@ -23,14 +31,6 @@ export const projects = [
     github: "#",
     live: "#",
     image: "online-editor"
-  },
-  {
-    title: "Data Analyst App",
-    description: "Accepts an Excel file and generates a filtered dataset based on user selection, accessible via a Telegram bot.",
-    tech: ["Python", "Telegram Bot"],
-    github: "#",
-    live: "#",
-    image: "data-analyst-app"
   },
   {
     title: "YouTube Automation",
@@ -54,7 +54,7 @@ export const projects = [
     tech: ["React", "Express", "SQL Server"],
     github: "#",
     live: "#",
-    image: "employee-management"
+image: "employee-management"
   },
   {
     title: "Chat Application",
