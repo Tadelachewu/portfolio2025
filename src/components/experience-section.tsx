@@ -1,9 +1,16 @@
 
+'use client';
+
 import { experience } from '@/app/portfolio-data';
 import { Briefcase, CheckCircle, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { AddExperienceForm } from '@/components/forms/add-experience-form';
+import { useState } from 'react';
 
 export default function ExperienceSection() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   return (
     <section id="experience" className="py-20 lg:py-32 flex-1 flex items-center">
       <div className="container">
@@ -15,10 +22,23 @@ export default function ExperienceSection() {
                 </div>
               <p className="mt-4 max-w-2xl text-lg text-muted-foreground">My professional journey and key contributions.</p>
             </div>
-            <Button>
-                <PlusCircle className="mr-2 h-5 w-5"/>
-                Add Experience
-            </Button>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button>
+                    <PlusCircle className="mr-2 h-5 w-5"/>
+                    Add Experience
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[625px]">
+                <DialogHeader>
+                  <DialogTitle>Add New Experience</DialogTitle>
+                  <DialogDescription>
+                    Fill out the form below to add a new work experience.
+                  </DialogDescription>
+                </DialogHeader>
+                <AddExperienceForm setDialogOpen={setIsDialogOpen} />
+              </DialogContent>
+            </Dialog>
         </div>
         <div className="relative">
           {/* Timeline Line */}

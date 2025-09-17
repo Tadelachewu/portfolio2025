@@ -1,10 +1,17 @@
 
+'use client';
+
 import { skills, skillIcons } from '@/app/portfolio-data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Wrench, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { AddSkillForm } from '@/components/forms/add-skill-form';
+import { useState } from 'react';
 
 export default function SkillsSection() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   return (
     <section id="skills" className="py-20 lg:py-32 flex-1 flex items-center">
       <div className="container">
@@ -16,10 +23,23 @@ export default function SkillsSection() {
                 </div>
               <p className="mt-4 max-w-2xl text-lg text-muted-foreground">A snapshot of the technologies and tools I work with.</p>
             </div>
-            <Button>
-                <PlusCircle className="mr-2 h-5 w-5"/>
-                Add Skill
-            </Button>
+             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button>
+                    <PlusCircle className="mr-2 h-5 w-5"/>
+                    Add Skill
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Add New Skill</DialogTitle>
+                  <DialogDescription>
+                    Select a category and enter the skill name.
+                  </DialogDescription>
+                </DialogHeader>
+                <AddSkillForm setDialogOpen={setIsDialogOpen} />
+              </DialogContent>
+            </Dialog>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {skills.map((skillCategory, index) => (

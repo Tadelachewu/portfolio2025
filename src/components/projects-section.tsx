@@ -1,4 +1,5 @@
 
+'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,8 +9,13 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Github, ExternalLink, Lightbulb, PlusCircle } from 'lucide-react';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { AddProjectForm } from '@/components/forms/add-project-form';
+import { useState } from 'react';
 
 export default function ProjectsSection() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   return (
     <section id="projects" className="py-20 lg:py-32 bg-secondary flex-1 flex items-center">
       <div className="container">
@@ -21,10 +27,23 @@ export default function ProjectsSection() {
                 </div>
               <p className="mt-4 max-w-2xl text-lg text-muted-foreground">Here are some of the projects I'm proud to have worked on.</p>
             </div>
-            <Button>
-                <PlusCircle className="mr-2 h-5 w-5"/>
-                Add Project
-            </Button>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button>
+                    <PlusCircle className="mr-2 h-5 w-5"/>
+                    Add Project
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[625px]">
+                <DialogHeader>
+                  <DialogTitle>Add New Project</DialogTitle>
+                  <DialogDescription>
+                    Fill out the form below to add a new project to your portfolio.
+                  </DialogDescription>
+                </DialogHeader>
+                <AddProjectForm setDialogOpen={setIsDialogOpen} />
+              </DialogContent>
+            </Dialog>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => {

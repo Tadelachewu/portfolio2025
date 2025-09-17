@@ -1,10 +1,16 @@
 
+'use client';
+
 import { education, educationIcons } from '@/app/portfolio-data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { GraduationCap, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { AddEducationForm } from '@/components/forms/add-education-form';
+import { useState } from 'react';
 
 export default function EducationSection() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const edu = education[0];
   const DegreeIcon = educationIcons.degree;
   const InstitutionIcon = educationIcons.institution;
@@ -22,10 +28,23 @@ export default function EducationSection() {
                 </div>
               <p className="mt-4 max-w-2xl text-lg text-muted-foreground">My academic background and qualifications.</p>
             </div>
-            <Button>
-                <PlusCircle className="mr-2 h-5 w-5"/>
-                Add Education
-            </Button>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button>
+                    <PlusCircle className="mr-2 h-5 w-5"/>
+                    Add Education
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[625px]">
+                <DialogHeader>
+                  <DialogTitle>Add New Education</DialogTitle>
+                  <DialogDescription>
+                    Fill out the form below to add a new education entry.
+                  </DialogDescription>
+                </DialogHeader>
+                <AddEducationForm setDialogOpen={setIsDialogOpen} />
+              </DialogContent>
+            </Dialog>
         </div>
         <div className="max-w-3xl mx-auto">
           <Card className="overflow-hidden shadow-lg transition-all hover:shadow-xl hover:-translate-y-1">

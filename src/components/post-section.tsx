@@ -1,4 +1,5 @@
 
+'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,8 +9,13 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Calendar, Rss, PlusCircle } from 'lucide-react';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { AddPostForm } from '@/components/forms/add-post-form';
+import { useState } from 'react';
 
 export default function PostSection() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   return (
     <section id="posts" className="py-20 lg:py-32 flex-1 flex items-center">
       <div className="container">
@@ -21,10 +27,23 @@ export default function PostSection() {
                 </div>
               <p className="mt-4 max-w-2xl text-lg text-muted-foreground">Check out my latest articles and thoughts on technology.</p>
             </div>
-            <Button>
-                <PlusCircle className="mr-2 h-5 w-5"/>
-                Add Post
-            </Button>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button>
+                    <PlusCircle className="mr-2 h-5 w-5"/>
+                    Add Post
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[625px]">
+                <DialogHeader>
+                  <DialogTitle>Create New Post</DialogTitle>
+                  <DialogDescription>
+                    Fill out the form below to create a new blog post.
+                  </DialogDescription>
+                </DialogHeader>
+                <AddPostForm setDialogOpen={setIsDialogOpen} />
+              </DialogContent>
+            </Dialog>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post, index) => {
