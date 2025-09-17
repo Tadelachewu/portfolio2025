@@ -28,8 +28,8 @@ export const projects = [
     title: "Online Editor App",
     description: "An AI-powered online code editor built with Next.js for a seamless development experience.",
     tech: ["AI", "Next.js"],
-    github: "#",
-    live: "#",
+    github: "https://github.com/Tadelachewu/Editorapp.git",
+    live: "https://editorapp-r3se2zlre-tadelachewus-projects.vercel.app/",
     image: "online-editor"
   },
   {
