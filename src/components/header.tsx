@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X, UserCircle2, Wrench, Lightbulb, Briefcase, GraduationCap, Rss, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import type { Section } from '@/app/page';
 
@@ -77,16 +77,20 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-[300px] sm:w-[400px] p-0">
+             <SheetHeader className="p-4 border-b">
+                <SheetTitle className="sr-only">Menu</SheetTitle>
+                <SheetDescription className="sr-only">Main navigation menu</SheetDescription>
+                <div className="flex justify-between items-center">
+                    <button onClick={() => handleLinkClick('home')} className="text-xl font-bold text-primary">
+                        Mesfin.Dev
+                    </button>
+                    <Button variant="ghost" size="icon" onClick={() => setIsSheetOpen(false)}>
+                        <X className="h-6 w-6" />
+                        <span className="sr-only">Close menu</span>
+                    </Button>
+                </div>
+              </SheetHeader>
             <div className="flex flex-col h-full">
-              <div className="flex justify-between items-center p-4 border-b">
-                 <button onClick={() => handleLinkClick('home')} className="text-xl font-bold text-primary">
-                    Mesfin.Dev
-                </button>
-                <Button variant="ghost" size="icon" onClick={() => setIsSheetOpen(false)}>
-                    <X className="h-6 w-6" />
-                    <span className="sr-only">Close menu</span>
-                </Button>
-              </div>
               <nav className="flex flex-col items-start gap-2 p-4">
                 {navLinks.map((link) => (
                   <button
