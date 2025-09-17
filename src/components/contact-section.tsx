@@ -12,6 +12,7 @@ import { Github, Linkedin, Mail, Phone, Send } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { sendEmail, SendEmailInput } from "@/ai/flows/send-email-flow";
+import { contactInfo } from "@/app/data";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -75,14 +76,14 @@ export default function ContactSection() {
           <div className="space-y-6">
             <h3 className="text-2xl font-semibold">Contact Information</h3>
             <div className="space-y-4 text-lg">
-                <div className="flex items-center gap-4">
+                <a href={`mailto:${contactInfo.email}`} className="flex items-center gap-4 hover:text-primary transition-colors">
                     <Mail className="h-6 w-6 text-primary"/>
-                    <span>tade2024bdu@gmail.com</span>
-                </div>
-                <div className="flex items-center gap-4">
+                    <span>{contactInfo.email}</span>
+                </a>
+                <a href={`tel:${contactInfo.phone.replace(/\s/g, '')}`} className="flex items-center gap-4 hover:text-primary transition-colors">
                     <Phone className="h-6 w-6 text-primary"/>
-                    <span>+251 912 345678</span>
-                </div>
+                    <span>{contactInfo.phone}</span>
+                </a>
             </div>
             <h3 className="text-2xl font-semibold pt-6">Follow Me</h3>
              <div className="flex items-center gap-4">

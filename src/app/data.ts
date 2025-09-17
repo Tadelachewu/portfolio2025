@@ -134,5 +134,5 @@ export const educationIcons = {
 
 export const contactInfo = {
     email: 'tade2024bdu@gmail.com',
-    phone: '+251 912 345678'
+    phone: '+251 949 847 581'
 }
