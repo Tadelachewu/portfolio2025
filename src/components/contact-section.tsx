@@ -8,7 +8,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Github, Linkedin, Mail, Phone, Send, MessageCircle } from "lucide-react";
+import { Github, Linkedin, Mail, Phone, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { sendEmail, SendEmailInput } from "@/ai/flows/send-email-flow";
@@ -143,7 +143,7 @@ export default function ContactSection() {
                 />
                 <Button type="submit" size="lg" disabled={isSubmitting}>
                     {isSubmitting ? 'Sending...' : <>
-                        <Send className="mr-2 h-5 w-5"/>
+                        <MessageCircle className="mr-2 h-5 w-5"/>
                         Send Message
                     </>}
                 </Button>

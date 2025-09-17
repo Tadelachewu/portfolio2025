@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Download, Send } from "lucide-react";
+import { Download, MessageCircle } from "lucide-react";
 import Link from "next/link";
 
 export default function HeroSection() {
@@ -25,7 +25,7 @@ export default function HeroSection() {
           </Button>
           <Button size="lg" variant="outline" asChild>
             <Link href="#contact">
-              <Send className="mr-2 h-5 w-5" />
+              <MessageCircle className="mr-2 h-5 w-5" />
               Contact Me
             </Link>
           </Button>
