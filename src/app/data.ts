@@ -50,6 +50,14 @@ export const projects = [
     image: "nibpmo-automation"
   },
   {
+    title: "NIB Data Analysis Bot",
+    description: "A Telegram bot that analyzes Excel files and extracts user-specified data columns.",
+    tech: ["Python", "Telegram Bot"],
+    github: "#",
+    live: "#",
+    image: "nib-data-bot"
+  },
+  {
     title: "Employee Management System",
     description: "Full-stack app with React frontend and Express + SQL Server backend, enabling comprehensive employee data management.",
     tech: ["React", "Express", "SQL Server"],

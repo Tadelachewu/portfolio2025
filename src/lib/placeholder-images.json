@@ -42,6 +42,12 @@
       "description": "Screenshot of NIBPMO Login Automation",
       "imageUrl": "https://picsum.photos/seed/nib-auto/600/400",
       "imageHint": "login automation"
+    },
+    {
+      "id": "nib-data-bot",
+      "description": "Screenshot of NIB Data Analysis Bot",
+      "imageUrl": "https://picsum.photos/seed/nib-data/600/400",
+      "imageHint": "data analysis bot"
     }
   ]
 }
