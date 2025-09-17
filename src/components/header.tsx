@@ -49,13 +49,13 @@ export default function Header() {
           Mesfin.Dev
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-2">
           {navLinks.map((link) => (
             <Link
               href={link.href}
               key={link.href}
               onClick={(e) => handleLinkClick(e, link.href)}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary flex items-center gap-2"
+              className="text-sm font-medium text-muted-foreground transition-all hover:text-primary hover:bg-muted px-3 py-2 rounded-md flex items-center gap-2"
             >
               <link.icon className="h-4 w-4" />
               <span>{link.label}</span>
@@ -93,7 +93,7 @@ export default function Header() {
                     href={link.href}
                     key={link.href}
                     onClick={(e) => handleLinkClick(e, link.href)}
-                    className="text-lg font-medium w-full p-3 rounded-md hover:bg-muted flex items-center gap-3"
+                    className="text-lg font-medium w-full p-3 rounded-md hover:bg-muted flex items-center gap-3 transition-colors"
                   >
                     <link.icon className="h-5 w-5 text-primary" />
                     <span>{link.label}</span>
