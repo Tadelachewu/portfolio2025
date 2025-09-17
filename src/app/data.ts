@@ -53,8 +53,8 @@ export const projects = [
     title: "NIB Data Analysis Bot",
     description: "A Telegram bot that analyzes Excel files and extracts user-specified data columns.",
     tech: ["Python", "Telegram Bot"],
-    github: "#",
-    live: "#",
+    github: "https://github.com/Tadelachewu/FileFilteringandgenerateexcelfile.git",
+    live: "https://t.me/NibDataAnalyst_bot",
     image: "nib-data-bot"
   },
   {
