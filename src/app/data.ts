@@ -1,9 +1,9 @@
-import { CodeXml, Smartphone, Server, ServerCog, Database, Flame, Container, GitBranch, Briefcase, GraduationCap, Building, Star, Award, Bot, MousePointerClick } from 'lucide-react';
+import { CodeXml, Smartphone, Server, ServerCog, Database, Flame, Container, GitBranch, Briefcase, GraduationCap, Building, Star, Award, Bot, MousePointerClick, AppWindow } from 'lucide-react';
 
 export const skills = [
-  { category: "Frontend", items: ["React", "React Native", "Qwik.js", "Next.js"] },
-  { category: "Backend", items: ["Node.js", "Express"] },
-  { category: "Database", items: ["MongoDB", "SQL Server", "PostgreSQL"] },
+  { category: "Frontend", items: ["React", "React Native", "Qwik.js", "Next.js", "Streamlit"] },
+  { category: "Backend", items: ["Node.js", "Express", "Flask", "Django", "FastAPI"] },
+  { category: "Database", items: ["MongoDB", "SQL Server", "PostgreSQL", "MySQL", "Oracle"] },
   { category: "Other", items: ["Firebase", "Docker", "Git", "Python", "AI", "Telegram Bot", "Playwright"] }
 ];
 
@@ -108,6 +108,12 @@ export const skillIcons: { [key: string]: React.ElementType } = {
   "Telegram Bot": Bot,
   "Next.js": CodeXml,
   "Playwright": MousePointerClick,
+  "Streamlit": AppWindow,
+  "Flask": ServerCog,
+  "Django": ServerCog,
+  "FastAPI": ServerCog,
+  "MySQL": Database,
+  "Oracle": Database,
 };
 
 export const educationIcons = {
