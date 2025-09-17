@@ -9,9 +9,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { PlusCircle } from "lucide-react";
+import { CodeXml, PlusCircle } from "lucide-react";
 import React from "react";
-import { skills as initialSkills } from "@/app/portfolio-data";
+import { skills as initialSkills, skillIcons as initialSkillIcons } from "@/app/portfolio-data";
 
 const skillCategories = initialSkills.map(s => s.category);
 
@@ -25,9 +25,10 @@ const formSchema = z.object({
 type AddSkillFormProps = {
   setDialogOpen: (open: boolean) => void;
   setSkills: React.Dispatch<React.SetStateAction<typeof initialSkills>>;
+  setSkillIcons: React.Dispatch<React.SetStateAction<typeof initialSkillIcons>>;
 };
 
-export function AddSkillForm({ setDialogOpen, setSkills }: AddSkillFormProps) {
+export function AddSkillForm({ setDialogOpen, setSkills, setSkillIcons }: AddSkillFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
@@ -52,6 +53,11 @@ export function AddSkillForm({ setDialogOpen, setSkills }: AddSkillFormProps) {
         return cat;
       });
     });
+
+    setSkillIcons(prevIcons => ({
+        ...prevIcons,
+        [values.skillName]: CodeXml 
+    }));
 
     toast({
         title: "Skill Added!",

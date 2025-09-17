@@ -1,9 +1,9 @@
 
 'use client';
 
-import { skillIcons } from '@/app/portfolio-data';
+import { skillIcons as initialSkillIcons } from '@/app/portfolio-data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Wrench, PlusCircle } from 'lucide-react';
+import { Wrench, PlusCircle, CodeXml } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AddSkillForm } from '@/components/forms/add-skill-form';
@@ -13,9 +13,11 @@ import type { skills } from '@/app/portfolio-data';
 type SkillsSectionProps = {
   skills: typeof skills;
   setSkills: React.Dispatch<React.SetStateAction<typeof skills>>;
+  skillIcons: typeof initialSkillIcons;
+  setSkillIcons: React.Dispatch<React.SetStateAction<typeof initialSkillIcons>>;
 };
 
-export default function SkillsSection({ skills, setSkills }: SkillsSectionProps) {
+export default function SkillsSection({ skills, setSkills, skillIcons, setSkillIcons }: SkillsSectionProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
@@ -43,7 +45,7 @@ export default function SkillsSection({ skills, setSkills }: SkillsSectionProps)
                     Select a category and enter the skill name.
                   </DialogDescription>
                 </DialogHeader>
-                <AddSkillForm setDialogOpen={setIsDialogOpen} setSkills={setSkills} />
+                <AddSkillForm setDialogOpen={setIsDialogOpen} setSkills={setSkills} setSkillIcons={setSkillIcons}/>
               </DialogContent>
             </Dialog>
         </div>
@@ -56,7 +58,7 @@ export default function SkillsSection({ skills, setSkills }: SkillsSectionProps)
               <CardContent className="flex-grow">
                 <ul className="space-y-4">
                   {skillCategory.items.map((item, itemIndex) => {
-                    const Icon = skillIcons[item];
+                    const Icon = skillIcons[item] || CodeXml;
                     return (
                       <li key={itemIndex} className="flex items-center gap-3">
                         {Icon && <Icon className="w-5 h-5 text-accent" />}
