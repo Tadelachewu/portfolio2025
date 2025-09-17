@@ -20,6 +20,7 @@ export type SendEmailInput = z.infer<typeof SendEmailInputSchema>;
 
 const SendEmailOutputSchema = z.object({
   success: z.boolean(),
+  error: z.string().optional(),
 });
 export type SendEmailOutput = z.infer<typeof SendEmailOutputSchema>;
 
@@ -34,8 +35,26 @@ const sendEmailFlow = ai.defineFlow(
     outputSchema: SendEmailOutputSchema,
   },
   async (input) => {
+    console.log('--- Starting sendEmailFlow ---');
+
     const { name, email, message } = input;
     const toEmail = 'tade2024bdu@gmail.com';
+
+    const emailServerUser = process.env.EMAIL_SERVER_USER;
+    const emailServerPassword = process.env.EMAIL_SERVER_PASSWORD;
+
+    if (!emailServerUser) {
+      console.error('EMAIL_SERVER_USER environment variable not set.');
+      return { success: false, error: 'Server configuration error: Missing email user.' };
+    }
+     if (!emailServerPassword) {
+      console.error('EMAIL_SERVER_PASSWORD environment variable not set.');
+      return { success: false, error: 'Server configuration error: Missing email password.' };
+    }
+    
+    console.log(`EMAIL_SERVER_USER is set: ${!!emailServerUser}`);
+    console.log(`EMAIL_SERVER_PASSWORD is set: ${!!emailServerPassword}`);
+
 
     // Nodemailer transporter setup
     // IMPORTANT: You need to set the EMAIL_SERVER_USER and EMAIL_SERVER_PASSWORD
@@ -43,8 +62,8 @@ const sendEmailFlow = ai.defineFlow(
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.EMAIL_SERVER_USER,
-        pass: process.env.EMAIL_SERVER_PASSWORD,
+        user: emailServerUser,
+        pass: emailServerPassword,
       },
     });
 
@@ -65,14 +84,23 @@ const sendEmailFlow = ai.defineFlow(
     };
 
     try {
-      await transporter.sendMail(mailOptions);
-      console.log(`Email sent to ${toEmail}`);
+      console.log('Attempting to send email...');
+      const info = await transporter.sendMail(mailOptions);
+      console.log(`Email sent successfully to ${toEmail}. Message ID: ${info.messageId}`);
       return { success: true };
-    } catch (error) {
-      console.error('Failed to send email:', error);
-      // In a real app, you'd want more robust error handling.
-      // For now, we'll just indicate failure.
-      return { success: false };
+    } catch (error: any) {
+      console.error('Failed to send email. Error details:', error);
+      
+      let errorMessage = 'An unknown error occurred while sending the email.';
+      if (error.code === 'EAUTH') {
+        errorMessage = 'Authentication failed. Please check your EMAIL_SERVER_USER and EMAIL_SERVER_PASSWORD credentials. For Gmail, you may need to use an "App Password".';
+      } else if (error.code === 'ECONNECTION') {
+        errorMessage = 'Could not connect to the email server. Please check your network connection and server details.';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+
+      return { success: false, error: errorMessage };
     }
   }
 );

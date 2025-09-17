@@ -35,17 +35,25 @@ export default function ContactSection() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     try {
-      await sendEmail(values as SendEmailInput);
-      toast({
-        title: "Message Sent!",
-        description: "Thank you for reaching out. I'll get back to you soon.",
-      });
-      form.reset();
+      const result = await sendEmail(values as SendEmailInput);
+      if (result.success) {
+        toast({
+          title: "Message Sent!",
+          description: "Thank you for reaching out. I'll get back to you soon.",
+        });
+        form.reset();
+      } else {
+         toast({
+            title: "Uh oh! Something went wrong.",
+            description: result.error || "There was a problem sending your message. Please try again later.",
+            variant: "destructive",
+        });
+      }
     } catch (error) {
         console.error("Failed to send email", error);
         toast({
             title: "Uh oh! Something went wrong.",
-            description: "There was a problem sending your message. Please try again later.",
+            description: "There was a problem with the request. Please try again later.",
             variant: "destructive",
         });
     } finally {
