@@ -1,9 +1,9 @@
 
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
 import { posts } from '@/app/portfolio-data';
 import { Badge } from '@/components/ui/badge';
 import { Calendar } from 'lucide-react';
+import ImageWithFallback from '@/components/image-with-fallback';
 
 export function generateStaticParams() {
   return posts.map((post) => ({
@@ -43,12 +43,13 @@ export default function PostPage({ params }: { params: { slug: string } }) {
 
           {post.imageUrl && (
             <div className="mb-8 rounded-lg overflow-hidden shadow-lg">
-              <Image
+               <ImageWithFallback
                 src={post.imageUrl}
                 alt={post.title}
                 width={1200}
                 height={630}
                 className="w-full object-cover"
+                fallbackSrc="https://picsum.photos/seed/fallback-lg/1200/630"
               />
             </div>
           )}

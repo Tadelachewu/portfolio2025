@@ -1,7 +1,6 @@
 
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -11,6 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { AddPostForm } from '@/components/forms/add-post-form';
 import { useState } from 'react';
 import type { posts } from '@/app/portfolio-data';
+import ImageWithFallback from '@/components/image-with-fallback';
 
 type PostSectionProps = {
   posts: typeof posts;
@@ -54,12 +54,13 @@ export default function PostSection({ posts, setPosts }: PostSectionProps) {
             return (
               <Card key={index} className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
                 {post.imageUrl && (
-                  <Image
+                  <ImageWithFallback
                     src={post.imageUrl}
                     alt={post.title}
                     width={600}
                     height={400}
                     className="w-full h-auto object-cover"
+                    fallbackSrc="https://picsum.photos/seed/fallback/600/400"
                   />
                 )}
                 <CardHeader>
