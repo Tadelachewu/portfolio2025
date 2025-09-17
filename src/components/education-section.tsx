@@ -1,3 +1,4 @@
+
 import { education, educationIcons } from '@/app/portfolio-data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { GraduationCap } from 'lucide-react';
@@ -10,7 +11,7 @@ export default function EducationSection() {
   const ExitExamIcon = educationIcons.exitExam;
 
   return (
-    <section id="education" className="py-20 lg:py-32 bg-secondary">
+    <section id="education" className="py-20 lg:py-32 bg-secondary flex-1 flex items-center">
       <div className="container">
         <div className="text-center mb-12">
             <div className="flex items-center justify-center gap-4 mb-4">

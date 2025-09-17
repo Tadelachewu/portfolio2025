@@ -1,9 +1,10 @@
+
 import { experience } from '@/app/portfolio-data';
 import { Briefcase, CheckCircle } from 'lucide-react';
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="py-20 lg:py-32">
+    <section id="experience" className="py-20 lg:py-32 flex-1 flex items-center">
       <div className="container">
         <div className="text-center mb-16">
             <div className="flex items-center justify-center gap-4 mb-4">

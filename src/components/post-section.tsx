@@ -1,4 +1,5 @@
 
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { posts } from '@/app/portfolio-data';
@@ -10,7 +11,7 @@ import { ArrowRight, Calendar, Rss } from 'lucide-react';
 
 export default function PostSection() {
   return (
-    <section id="posts" className="py-20 lg:py-32">
+    <section id="posts" className="py-20 lg:py-32 flex-1 flex items-center">
       <div className="container">
         <div className="text-center mb-12">
             <div className="flex items-center justify-center gap-4 mb-4">
@@ -50,12 +51,12 @@ export default function PostSection() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button asChild>
+                    <Button asChild>
                       <Link href={`/posts/${post.slug}`}>
                         Read More
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
-                  </Button>
+                    </Button>
                 </CardFooter>
               </Card>
             );

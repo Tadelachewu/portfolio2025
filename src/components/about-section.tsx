@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { UserCircle2 } from 'lucide-react';
@@ -6,7 +7,7 @@ export default function AboutSection() {
   const profilePic = PlaceHolderImages.find(p => p.id === 'profile-picture');
 
   return (
-    <section id="about" className="py-20 lg:py-32 bg-secondary">
+    <section id="about" className="py-20 lg:py-32 bg-secondary flex-1 flex items-center">
       <div className="container">
           <div className="flex justify-center mb-12">
             <div className="flex items-center gap-4">

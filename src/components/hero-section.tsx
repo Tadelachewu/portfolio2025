@@ -1,10 +1,15 @@
+
 import { Button } from "@/components/ui/button";
 import { Download, MessageCircle } from "lucide-react";
-import Link from "next/link";
+import type { Section } from "@/app/page";
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  setActiveSection: (section: Section) => void;
+}
+
+export default function HeroSection({ setActiveSection }: HeroSectionProps) {
   return (
-    <section id="home" className="container flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] text-center py-20">
+    <section id="home" className="container flex flex-col items-center justify-center flex-1 text-center py-20">
       <div className="animate-fade-in-up">
         <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-4 text-primary">
           Tadele Mesfin Belay
@@ -23,11 +28,9 @@ export default function HeroSection() {
               Download Resume
             </a>
           </Button>
-          <Button size="lg" variant="outline" asChild>
-            <Link href="#contact">
+          <Button size="lg" variant="outline" onClick={() => setActiveSection('contact')}>
               <MessageCircle className="mr-2 h-5 w-5" />
               Contact Me
-            </Link>
           </Button>
         </div>
       </div>

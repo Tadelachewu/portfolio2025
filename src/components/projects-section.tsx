@@ -1,4 +1,5 @@
 
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { projects } from '@/app/portfolio-data';
@@ -10,7 +11,7 @@ import { Github, ExternalLink, Lightbulb } from 'lucide-react';
 
 export default function ProjectsSection() {
   return (
-    <section id="projects" className="py-20 lg:py-32 bg-secondary">
+    <section id="projects" className="py-20 lg:py-32 bg-secondary flex-1 flex items-center">
       <div className="container">
         <div className="text-center mb-12">
             <div className="flex items-center justify-center gap-4 mb-4">
