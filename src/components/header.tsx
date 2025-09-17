@@ -36,14 +36,19 @@ export default function Header() {
   return (
     <header className={cn("sticky top-0 z-50 w-full transition-all duration-300", isScrolled ? "bg-background/80 backdrop-blur-sm border-b" : "bg-transparent")}>
       <div className="container flex items-center justify-between h-16">
-        <Link href="#home" passHref legacyBehavior>
-          <a onClick={(e) => handleLinkClick(e, '#home')} className="text-xl font-bold text-primary">Mesfin.Dev</a>
+        <Link href="#home" onClick={(e) => handleLinkClick(e, '#home')} className="text-xl font-bold text-primary">
+          Mesfin.Dev
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => (
-            <Link href={link.href} key={link.href} passHref legacyBehavior>
-              <a onClick={(e) => handleLinkClick(e, link.href)} className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">{link.label}</a>
+            <Link
+              href={link.href}
+              key={link.href}
+              onClick={(e) => handleLinkClick(e, link.href)}
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+            >
+              {link.label}
             </Link>
           ))}
           <Button asChild size="sm">
@@ -61,8 +66,8 @@ export default function Header() {
           <SheetContent side="right" className="w-[300px] sm:w-[400px]">
             <div className="flex flex-col h-full">
               <div className="flex justify-between items-center p-4 border-b">
-                 <Link href="#home" passHref legacyBehavior>
-                    <a onClick={(e) => handleLinkClick(e, '#home')} className="text-xl font-bold text-primary">Mesfin.Dev</a>
+                 <Link href="#home" onClick={(e) => handleLinkClick(e, '#home')} className="text-xl font-bold text-primary">
+                    Mesfin.Dev
                 </Link>
                 <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
                     <X className="h-6 w-6" />
@@ -71,8 +76,13 @@ export default function Header() {
               </div>
               <nav className="flex flex-col items-start gap-4 p-4">
                 {navLinks.map((link) => (
-                  <Link href={link.href} key={link.href} passHref legacyBehavior>
-                    <a onClick={(e) => handleLinkClick(e, link.href)} className="text-lg font-medium w-full p-2 rounded-md hover:bg-muted">{link.label}</a>
+                  <Link
+                    href={link.href}
+                    key={link.href}
+                    onClick={(e) => handleLinkClick(e, link.href)}
+                    className="text-lg font-medium w-full p-2 rounded-md hover:bg-muted"
+                  >
+                    {link.label}
                   </Link>
                 ))}
                 <Button asChild className="w-full mt-4">
