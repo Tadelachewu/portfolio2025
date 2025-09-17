@@ -1,6 +1,8 @@
 
 import { CodeXml, Smartphone, Server, ServerCog, Database, Flame, Container, GitBranch, Briefcase, GraduationCap, Building, Star, Award, Bot, MousePointerClick, AppWindow } from 'lucide-react';
 
+export const aboutMe = "Passionate developer aiming to become a Computer Scientist specializing in Cybersecurity, AI, and Full-Stack Development. With a strong foundation in modern web technologies and a drive for continuous learning, I am dedicated to building efficient, scalable, and secure applications. I thrive in collaborative environments and am always eager to take on new challenges that push the boundaries of technology.";
+
 export const skills = [
   { category: "Frontend", items: ["React", "React Native", "Qwik.js", "Next.js", "Streamlit", "Typescript"] },
   { category: "Backend", items: ["Node.js", "Express", "Flask", "Django", "FastAPI"] },

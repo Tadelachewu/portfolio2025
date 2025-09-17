@@ -1,19 +1,48 @@
 
+'use client';
+
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { UserCircle2 } from 'lucide-react';
+import { UserCircle2, Pencil } from 'lucide-react';
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { EditAboutForm } from '@/components/forms/edit-about-form';
 
-export default function AboutSection() {
+type AboutSectionProps = {
+  aboutMe: string;
+  setAboutMe: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export default function AboutSection({ aboutMe, setAboutMe }: AboutSectionProps) {
   const profilePic = PlaceHolderImages.find(p => p.id === 'profile-picture');
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
     <section id="about" className="py-20 lg:py-32 bg-secondary flex-1 flex items-center">
       <div className="container">
-          <div className="flex justify-center mb-12">
+          <div className="flex justify-between items-center mb-12">
             <div className="flex items-center gap-4">
                 <UserCircle2 className="h-10 w-10 text-primary" />
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">About Me</h2>
             </div>
+             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button variant="outline">
+                    <Pencil className="mr-2 h-4 w-4"/>
+                    Edit
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[625px]">
+                <DialogHeader>
+                  <DialogTitle>Edit About Me</DialogTitle>
+                  <DialogDescription>
+                    Update your professional summary.
+                  </DialogDescription>
+                </DialogHeader>
+                <EditAboutForm setDialogOpen={setIsDialogOpen} setAboutMe={setAboutMe} currentDescription={aboutMe} />
+              </DialogContent>
+            </Dialog>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
             <div className="md:col-span-1 flex justify-center animate-fade-in">
@@ -30,7 +59,7 @@ export default function AboutSection() {
             </div>
             <div className="md:col-span-2 animate-fade-in-up">
             <p className="text-lg text-muted-foreground leading-relaxed">
-                Passionate developer aiming to become a Computer Scientist specializing in Cybersecurity, AI, and Full-Stack Development. With a strong foundation in modern web technologies and a drive for continuous learning, I am dedicated to building efficient, scalable, and secure applications. I thrive in collaborative environments and am always eager to take on new challenges that push the boundaries of technology.
+                {aboutMe}
             </p>
             </div>
         </div>

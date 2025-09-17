@@ -12,7 +12,7 @@ import EducationSection from '@/components/education-section';
 import PostSection from '@/components/post-section';
 import ContactSection from '@/components/contact-section';
 import Footer from '@/components/footer';
-import { skills as initialSkills, projects as initialProjects, experience as initialExperience, education as initialEducation, posts as initialPosts, skillIcons as initialSkillIcons } from '@/app/portfolio-data';
+import { skills as initialSkills, projects as initialProjects, experience as initialExperience, education as initialEducation, posts as initialPosts, skillIcons as initialSkillIcons, aboutMe as initialAboutMe } from '@/app/portfolio-data';
 
 export type Section = 'home' | 'about' | 'skills' | 'projects' | 'experience' | 'education' | 'posts' | 'contact';
 
@@ -24,13 +24,14 @@ export default function Home() {
   const [experience, setExperience] = useState(initialExperience);
   const [education, setEducation] = useState(initialEducation);
   const [posts, setPosts] = useState(initialPosts);
+  const [aboutMe, setAboutMe] = useState(initialAboutMe);
 
   const renderSection = () => {
     switch (activeSection) {
       case 'home':
         return <HeroSection setActiveSection={setActiveSection} />;
       case 'about':
-        return <AboutSection />;
+        return <AboutSection aboutMe={aboutMe} setAboutMe={setAboutMe} />;
       case 'skills':
         return <SkillsSection skills={skills} setSkills={setSkills} skillIcons={skillIcons} setSkillIcons={setSkillIcons} />;
       case 'projects':
