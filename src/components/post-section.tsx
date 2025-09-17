@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { posts } from '@/app/posts-data';
@@ -46,9 +47,11 @@ export default function PostSection() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button disabled>
-                      Coming Soon
-                      <ArrowRight className="ml-2 h-4 w-4" />
+                  <Button asChild>
+                      <Link href={`/posts/${post.slug}`}>
+                        Read More
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
                   </Button>
                 </CardFooter>
               </Card>
