@@ -1,7 +1,8 @@
 
 import { education, educationIcons } from '@/app/portfolio-data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { GraduationCap } from 'lucide-react';
+import { GraduationCap, PlusCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function EducationSection() {
   const edu = education[0];
@@ -13,12 +14,18 @@ export default function EducationSection() {
   return (
     <section id="education" className="py-20 lg:py-32 bg-secondary flex-1 flex items-center">
       <div className="container">
-        <div className="text-center mb-12">
-            <div className="flex items-center justify-center gap-4 mb-4">
-                <GraduationCap className="h-10 w-10 text-primary" />
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Education</h2>
+        <div className="flex justify-between items-center mb-12">
+            <div className='text-left'>
+                <div className="flex items-center gap-4 mb-4">
+                    <GraduationCap className="h-10 w-10 text-primary" />
+                    <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Education</h2>
+                </div>
+              <p className="mt-4 max-w-2xl text-lg text-muted-foreground">My academic background and qualifications.</p>
             </div>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">My academic background and qualifications.</p>
+            <Button>
+                <PlusCircle className="mr-2 h-5 w-5"/>
+                Add Education
+            </Button>
         </div>
         <div className="max-w-3xl mx-auto">
           <Card className="overflow-hidden shadow-lg transition-all hover:shadow-xl hover:-translate-y-1">

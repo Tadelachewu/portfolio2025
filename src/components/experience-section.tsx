@@ -1,17 +1,24 @@
 
 import { experience } from '@/app/portfolio-data';
-import { Briefcase, CheckCircle } from 'lucide-react';
+import { Briefcase, CheckCircle, PlusCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function ExperienceSection() {
   return (
     <section id="experience" className="py-20 lg:py-32 flex-1 flex items-center">
       <div className="container">
-        <div className="text-center mb-16">
-            <div className="flex items-center justify-center gap-4 mb-4">
-                <Briefcase className="h-10 w-10 text-primary" />
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Work Experience</h2>
+        <div className="flex justify-between items-center mb-16">
+            <div className='text-left'>
+                <div className="flex items-center gap-4 mb-4">
+                    <Briefcase className="h-10 w-10 text-primary" />
+                    <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Work Experience</h2>
+                </div>
+              <p className="mt-4 max-w-2xl text-lg text-muted-foreground">My professional journey and key contributions.</p>
             </div>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">My professional journey and key contributions.</p>
+            <Button>
+                <PlusCircle className="mr-2 h-5 w-5"/>
+                Add Experience
+            </Button>
         </div>
         <div className="relative">
           {/* Timeline Line */}

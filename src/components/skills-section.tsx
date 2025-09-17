@@ -1,18 +1,25 @@
 
 import { skills, skillIcons } from '@/app/portfolio-data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Wrench } from 'lucide-react';
+import { Wrench, PlusCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function SkillsSection() {
   return (
     <section id="skills" className="py-20 lg:py-32 flex-1 flex items-center">
       <div className="container">
-        <div className="text-center mb-12">
-            <div className="flex items-center justify-center gap-4 mb-4">
-                <Wrench className="h-10 w-10 text-primary" />
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">My Technical Skills</h2>
+        <div className="flex justify-between items-center mb-12">
+            <div className='text-left'>
+                <div className="flex items-center gap-4 mb-4">
+                    <Wrench className="h-10 w-10 text-primary" />
+                    <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">My Technical Skills</h2>
+                </div>
+              <p className="mt-4 max-w-2xl text-lg text-muted-foreground">A snapshot of the technologies and tools I work with.</p>
             </div>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">A snapshot of the technologies and tools I work with.</p>
+            <Button>
+                <PlusCircle className="mr-2 h-5 w-5"/>
+                Add Skill
+            </Button>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {skills.map((skillCategory, index) => (
