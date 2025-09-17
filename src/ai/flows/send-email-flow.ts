@@ -9,7 +9,6 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
-import { contactInfo } from '@/app/data';
 
 const SendEmailInputSchema = z.object({
   name: z.string().describe('The name of the person sending the message.'),
@@ -41,7 +40,7 @@ const sendEmailFlow = ai.defineFlow(
     
     console.log('New Contact Form Submission:');
     console.log(`From: ${input.name} <${input.email}>`);
-    console.log(`To: ${contactInfo.email}`);
+    console.log(`To: tade2024bdu@gmail.com`);
     console.log('Message:');
     console.log(input.message);
 
