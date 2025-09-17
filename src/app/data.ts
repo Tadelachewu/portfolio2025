@@ -72,3 +72,8 @@ export const educationIcons = {
     cgpa: Star,
     exitExam: Award
 }
+
+export const contactInfo = {
+    email: 'tade2024bdu@gmail.com',
+    phone: '+251 912 345678'
+}

@@ -10,6 +10,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Github, Linkedin, Mail, Phone, Send } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import { sendEmail, SendEmailInput } from "@/ai/flows/send-email-flow";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -19,6 +21,7 @@ const formSchema = z.object({
 
 export default function ContactSection() {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -29,13 +32,25 @@ export default function ContactSection() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("Form submitted:", values);
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for reaching out. I'll get back to you soon.",
-    });
-    form.reset();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
+    try {
+      await sendEmail(values as SendEmailInput);
+      toast({
+        title: "Message Sent!",
+        description: "Thank you for reaching out. I'll get back to you soon.",
+      });
+      form.reset();
+    } catch (error) {
+        console.error("Failed to send email", error);
+        toast({
+            title: "Uh oh! Something went wrong.",
+            description: "There was a problem sending your message. Please try again later.",
+            variant: "destructive",
+        });
+    } finally {
+        setIsSubmitting(false);
+    }
   }
 
   return (
@@ -54,7 +69,7 @@ export default function ContactSection() {
             <div className="space-y-4 text-lg">
                 <div className="flex items-center gap-4">
                     <Mail className="h-6 w-6 text-primary"/>
-                    <span>tadelemesfinb@gmail.com</span>
+                    <span>tade2024bdu@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-4">
                     <Phone className="h-6 w-6 text-primary"/>
@@ -114,9 +129,11 @@ export default function ContactSection() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" size="lg">
-                    <Send className="mr-2 h-5 w-5"/>
-                    Send Message
+                <Button type="submit" size="lg" disabled={isSubmitting}>
+                    {isSubmitting ? 'Sending...' : <>
+                        <Send className="mr-2 h-5 w-5"/>
+                        Send Message
+                    </>}
                 </Button>
               </form>
             </Form>
