@@ -72,6 +72,12 @@
       "description": "Cybersecurity concept art",
       "imageUrl": "https://picsum.photos/seed/post3/600/400",
       "imageHint": "cyber security"
+    },
+    {
+      "id": "gerd-post",
+      "description": "The Grand Ethiopian Renaissance Dam",
+      "imageUrl": "https://picsum.photos/seed/gerd/600/400",
+      "imageHint": "hydroelectric dam"
     }
   ]
 }

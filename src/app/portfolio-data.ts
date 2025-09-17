@@ -102,6 +102,14 @@ export const education = [
 
 export const posts = [
   {
+    title: "GERD Nearing Completion, Requires Additional Funding",
+    date: "2024-07-29",
+    tags: ["Ethiopia", "Development", "GERD"],
+    description: "The Grand Ethiopian Renaissance Dam (GERD) is nearing completion but requires an additional 80 billion Birr to be finalized, showcasing a major milestone in national development.",
+    image: "gerd-post",
+    slug: "gerd-nearing-completion"
+  },
+  {
     title: "The Future of Web Development with AI",
     date: "2024-07-28",
     tags: ["Web Dev", "Next.js", "AI"],
