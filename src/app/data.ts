@@ -58,6 +58,14 @@ export const projects = [
     image: "nib-data-bot"
   },
   {
+    title: "NIB Security Analyst Bot",
+    description: "A Telegram bot for security analysis at NIB, providing alerts and system information.",
+    tech: ["Python", "Telegram Bot", "AI"],
+    github: "https://github.com/Tadelachewu/SecurityBotSystem.git",
+    live: "https://t.me/NIB_SECURITY_bot",
+    image: "nib-security-bot"
+  },
+  {
     title: "Employee Management System",
     description: "Full-stack app with React frontend and Express + SQL Server backend, enabling comprehensive employee data management.",
     tech: ["React", "Express", "SQL Server"],

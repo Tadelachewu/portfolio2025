@@ -48,6 +48,12 @@
       "description": "Screenshot of NIB Data Analysis Bot",
       "imageUrl": "https://picsum.photos/seed/nib-data/600/400",
       "imageHint": "data analysis bot"
+    },
+    {
+      "id": "nib-security-bot",
+      "description": "Screenshot of NIB Security Analyst Bot",
+      "imageUrl": "https://picsum.photos/seed/nib-security/600/400",
+      "imageHint": "security bot"
     }
   ]
 }
