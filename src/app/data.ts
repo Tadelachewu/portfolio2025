@@ -1,3 +1,4 @@
+
 import { CodeXml, Smartphone, Server, ServerCog, Database, Flame, Container, GitBranch, Briefcase, GraduationCap, Building, Star, Award, Bot, MousePointerClick, AppWindow } from 'lucide-react';
 
 export const skills = [
@@ -36,7 +37,7 @@ export const projects = [
     title: "YouTube Automation",
     description: "Generates a video from a user's prompt and automatically uploads it to YouTube.",
     tech: ["Python", "AI", "Playwright"],
-    github: "#",
+    github: "https://github.com/Tadelachewu/youtubeautomation.git",
     live: "#",
     image: "youtube-automation"
   },
