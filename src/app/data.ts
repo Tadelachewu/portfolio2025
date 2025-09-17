@@ -4,10 +4,18 @@ export const skills = [
   { category: "Frontend", items: ["React", "React Native", "Qwik.js"] },
   { category: "Backend", items: ["Node.js", "Express"] },
   { category: "Database", items: ["MongoDB", "SQL Server"] },
-  { category: "Other", items: ["Firebase", "Docker", "Git", "Python", "AI"] }
+  { category: "Other", items: ["Firebase", "Docker", "Git", "Python", "AI", "Telegram Bot"] }
 ];
 
 export const projects = [
+  {
+    title: "CV and Application Generator",
+    description: "An application that uses AI to generate CVs and applications, accessible via a Telegram bot.",
+    tech: ["AI", "Python", "Telegram Bot"],
+    github: "#",
+    live: "#",
+    image: "cv-generator"
+  },
   {
     title: "Employee Management System",
     description: "Full-stack app with React frontend and Express + SQL Server backend, enabling comprehensive employee data management.",
@@ -64,6 +72,7 @@ export const skillIcons: { [key: string]: React.ElementType } = {
   "Git": GitBranch,
   "Python": CodeXml,
   "AI": Bot,
+  "Telegram Bot": Bot,
 };
 
 export const educationIcons = {

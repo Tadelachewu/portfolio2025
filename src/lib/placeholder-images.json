@@ -17,6 +17,12 @@
       "description": "Screenshot of Chat Application",
       "imageUrl": "https://picsum.photos/seed/chat/600/400",
       "imageHint": "chat application"
+    },
+    {
+      "id": "cv-generator",
+      "description": "Screenshot of CV and Application generator app",
+      "imageUrl": "https://picsum.photos/seed/cv-gen/600/400",
+      "imageHint": "resume builder"
     }
   ]
 }
