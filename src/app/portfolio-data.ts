@@ -2,7 +2,7 @@
 import { CodeXml, Smartphone, Server, ServerCog, Database, Flame, Container, GitBranch, Briefcase, GraduationCap, Building, Star, Award, Bot, MousePointerClick, AppWindow } from 'lucide-react';
 
 export const skills = [
-  { category: "Frontend", items: ["React", "React Native", "Qwik.js", "Next.js", "Streamlit"] },
+  { category: "Frontend", items: ["React", "React Native", "Qwik.js", "Next.js", "Streamlit", "Typescript"] },
   { category: "Backend", items: ["Node.js", "Express", "Flask", "Django", "FastAPI"] },
   { category: "Database", items: ["MongoDB", "SQL Server", "PostgreSQL", "MySQL", "Oracle"] },
   { category: "Other", items: ["Firebase", "Docker", "Git", "Python", "AI", "Telegram Bot", "Playwright"] }
@@ -158,6 +158,7 @@ export const skillIcons: { [key: string]: React.ElementType } = {
   "FastAPI": ServerCog,
   "MySQL": Database,
   "Oracle": Database,
+  "Typescript": CodeXml
 };
 
 export const educationIcons = {
