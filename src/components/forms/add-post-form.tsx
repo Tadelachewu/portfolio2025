@@ -17,7 +17,7 @@ const formSchema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters."),
   description: z.string().min(10, "Description must be at least 10 characters."),
   tags: z.string().min(2, "Enter at least one tag, separated by commas."),
-  image: z.string().min(2, "Image ID must be at least 2 characters."),
+  imageUrl: z.string().url("Please enter a valid image URL."),
 });
 
 type AddPostFormProps = {
@@ -35,7 +35,7 @@ export function AddPostForm({ setDialogOpen, setPosts }: AddPostFormProps) {
       title: "",
       description: "",
       tags: "",
-      image: "",
+      imageUrl: "",
     },
   });
 
@@ -104,12 +104,12 @@ export function AddPostForm({ setDialogOpen, setPosts }: AddPostFormProps) {
         />
         <FormField
           control={form.control}
-          name="image"
+          name="imageUrl"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Image ID</FormLabel>
+              <FormLabel>Image URL</FormLabel>
               <FormControl>
-                <Input placeholder="A unique ID for the placeholder image" {...field} />
+                <Input placeholder="https://example.com/image.jpg" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

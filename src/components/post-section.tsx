@@ -3,7 +3,6 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -52,17 +51,15 @@ export default function PostSection({ posts, setPosts }: PostSectionProps) {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post, index) => {
-            const postImage = PlaceHolderImages.find(p => p.id === post.image);
             return (
               <Card key={index} className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-                {postImage && (
+                {post.imageUrl && (
                   <Image
-                    src={postImage.imageUrl}
+                    src={post.imageUrl}
                     alt={post.title}
                     width={600}
                     height={400}
                     className="w-full h-auto object-cover"
-                    data-ai-hint={postImage.imageHint}
                   />
                 )}
                 <CardHeader>

@@ -2,7 +2,6 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { posts } from '@/app/portfolio-data';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Badge } from '@/components/ui/badge';
 import { Calendar } from 'lucide-react';
 
@@ -18,8 +17,6 @@ export default function PostPage({ params }: { params: { slug: string } }) {
   if (!post) {
     notFound();
   }
-
-  const postImage = PlaceHolderImages.find(p => p.id === post.image);
 
   return (
     <div className="bg-background text-foreground">
@@ -44,15 +41,14 @@ export default function PostPage({ params }: { params: { slug: string } }) {
             </div>
           </header>
 
-          {postImage && (
+          {post.imageUrl && (
             <div className="mb-8 rounded-lg overflow-hidden shadow-lg">
               <Image
-                src={postImage.imageUrl}
+                src={post.imageUrl}
                 alt={post.title}
                 width={1200}
                 height={630}
                 className="w-full object-cover"
-                data-ai-hint={postImage.imageHint}
               />
             </div>
           )}

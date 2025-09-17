@@ -106,7 +106,7 @@ export const posts = [
     date: "2024-07-29",
     tags: ["Ethiopia", "Development", "GERD"],
     description: "The Grand Ethiopian Renaissance Dam (GERD) is nearing completion but requires an additional 80 billion Birr to be finalized, showcasing a major milestone in national development.",
-    image: "gerd-post",
+    imageUrl: "https://picsum.photos/seed/gerd/600/400",
     slug: "gerd-nearing-completion"
   },
   {
@@ -114,7 +114,7 @@ export const posts = [
     date: "2024-07-28",
     tags: ["Web Dev", "Next.js", "AI"],
     description: "Exploring the latest trends shaping the future of web development, from server components to AI-driven UIs.",
-    image: "post-1",
+    imageUrl: "https://picsum.photos/seed/post1/600/400",
     slug: "future-of-web-dev"
   },
   {
@@ -122,7 +122,7 @@ export const posts = [
     date: "2024-07-20",
     tags: ["AI", "Python", "Genkit"],
     description: "A beginner-friendly guide to understanding and implementing generative AI models in your own projects.",
-    image: "post-2",
+    imageUrl: "https://picsum.photos/seed/post2/600/400",
     slug: "getting-started-genai"
   },
   {
@@ -130,7 +130,7 @@ export const posts = [
     date: "2024-07-15",
     tags: ["Cybersecurity", "Development", "Security"],
     description: "Essential security practices that every developer should know to build more secure and resilient applications.",
-    image: "post-3",
+    imageUrl: "https://picsum.photos/seed/post3/600/400",
     slug: "cybersecurity-best-practices"
   }
 ];
