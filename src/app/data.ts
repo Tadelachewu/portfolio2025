@@ -56,14 +56,6 @@ export const projects = [
     github: "https://github.com/Tadelachewu/hrapp.git",
     live: "#",
     image: "employee-management"
-  },
-  {
-    title: "Chat Application",
-    description: "Real-time chat app with Firebase backend for instant messaging and user authentication.",
-    tech: ["React", "Firebase"],
-    github: "#",
-    live: "#",
-    image: "chat-app"
   }
 ];
 
