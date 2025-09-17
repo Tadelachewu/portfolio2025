@@ -46,11 +46,9 @@ export default function PostSection() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button asChild variant="link" className="p-0 h-auto">
-                    <Link href={`/blog/${post.slug}`}>
-                      Read More
+                  <Button disabled>
+                      Coming Soon
                       <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
                   </Button>
                 </CardFooter>
               </Card>
