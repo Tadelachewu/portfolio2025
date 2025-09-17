@@ -32,6 +32,9 @@ export function AddSkillForm({ setDialogOpen }: AddSkillFormProps) {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      skillName: "",
+    },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
