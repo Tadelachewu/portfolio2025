@@ -40,6 +40,12 @@ const nextConfig: NextConfig = {
         hostname: 'www.bdu.edu.et',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'archive.org',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
