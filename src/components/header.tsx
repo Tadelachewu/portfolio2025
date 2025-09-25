@@ -42,7 +42,7 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
   };
 
   return (
-    <header className={cn("sticky top-0 z-50 w-full transition-all duration-300", isScrolled ? "bg-background/80 backdrop-blur-sm border-b" : "bg-transparent")}>
+    <header className={cn("sticky top-0 z-50 w-full transition-all duration-300 bg-secondary border-b", isScrolled ? "shadow-md" : "")}>
       <div className="container flex items-center justify-between h-16">
         <button onClick={() => handleLinkClick('home')} className="text-xl font-bold text-primary">
           Mesfin.Dev
@@ -78,7 +78,7 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
                 <span className="sr-only">Open menu</span>
                 </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px] p-0">
+            <SheetContent side="right" className="w-[300px] sm:w-[400px] p-0 bg-secondary">
                 <SheetHeader className="p-4 border-b">
                     <SheetTitle className="sr-only">Menu</SheetTitle>
                     <SheetDescription className="sr-only">Main navigation menu</SheetDescription>
@@ -100,7 +100,7 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
                         onClick={() => handleLinkClick(link.section)}
                         className={cn(
                             "text-lg font-medium w-full p-3 rounded-md flex items-center gap-3 transition-colors",
-                            activeSection === link.section ? 'bg-muted text-primary' : 'hover:bg-muted'
+                            activeSection === link.section ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
                         )}
                     >
                         <link.icon className="h-5 w-5 text-primary" />
