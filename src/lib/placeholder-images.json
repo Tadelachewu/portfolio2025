@@ -1,82 +1,81 @@
-
 {
   "placeholderImages": [
     {
       "id": "profile-picture",
       "description": "Profile picture of Tadele Mesfin Belay",
-      "imageUrl": "https://picsum.photos/seed/tadele/400/400",
+      "imageUrl": "https://i.postimg.cc/9fXSbkKR/5956510394602343002.jpg",
       "imageHint": "man portrait"
     },
     {
       "id": "employee-management",
       "description": "Screenshot of Employee Management System",
-      "imageUrl": "https://picsum.photos/seed/ems/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1584917510862-425dd7cf70e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxIUiUyMGRhc2hib2FyZHxlbnwwfHx8fDE3NTg3OTc1MzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "HR dashboard"
     },
     {
       "id": "cv-generator",
       "description": "Screenshot of CV and Application generator app",
-      "imageUrl": "https://picsum.photos/seed/cv-gen/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1659353590852-7c986eb6fd26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxyZXN1bWUlMjBidWlsZGVyfGVufDB8fHx8MTc1ODc5NzUzNHww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "resume builder"
     },
     {
       "id": "online-editor",
       "description": "Screenshot of Online Editor App",
-      "imageUrl": "https://picsum.photos/seed/editor/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1753998943413-8cba1b923c0e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjb2RlJTIwZWRpdG9yfGVufDB8fHx8MTc1ODcyOTUyOHww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "code editor"
     },
     {
       "id": "application-letter-bot",
       "description": "Screenshot of Application Letter Bot",
-      "imageUrl": "https://picsum.photos/seed/app-letter/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1588338949207-cbe369b3af86?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxsZXR0ZXIlMjB3cml0aW5nfGVufDB8fHx8MTc1ODc5NzUzNHww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "letter writing"
     },
     {
       "id": "youtube-automation",
       "description": "Screenshot of YouTube Automation app",
-      "imageUrl": "https://picsum.photos/seed/youtube-auto/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1732365898552-c03468c85a18?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx2aWRlbyUyMGF1dG9tYXRpb258ZW58MHx8fHwxNzU4Nzk3NTM0fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "video automation"
     },
     {
       "id": "nibpmo-automation",
       "description": "Screenshot of NIBPMO Login Automation",
-      "imageUrl": "https://picsum.photos/seed/nib-auto/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1584131688247-27fe529d6717?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxzZWN1cmUlMjBsb2dpbnxlbnwwfHx8fDE3NTg3OTc1MzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "secure login"
     },
     {
       "id": "nib-data-bot",
       "description": "Screenshot of NIB Data Analysis Bot",
-      "imageUrl": "https://picsum.photos/seed/nib-data/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1542744173-05336fcc7ad4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxleGNlbCUyMHNwcmVhZHNoZWV0fGVufDB8fHx8MTc1ODc5NzUzM3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "excel spreadsheet"
     },
     {
       "id": "nib-security-bot",
       "description": "Screenshot of NIB Security Analyst Bot",
-      "imageUrl": "https://picsum.photos/seed/nib-security/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1677617587258-685aaf1b1e1c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxzZWN1cml0eSUyMGRhc2hib2FyZHxlbnwwfHx8fDE3NTg3OTc1MzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "security dashboard"
     },
     {
       "id": "post-1",
       "description": "Abstract technology background",
-      "imageUrl": "https://picsum.photos/seed/post1/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1644088379091-d574269d422f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0ZWNoJTIwYWJzdHJhY3R8ZW58MHx8fHwxNzU4NzI1ODcxfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "tech abstract"
     },
     {
       "id": "post-2",
       "description": "AI brain concept",
-      "imageUrl": "https://picsum.photos/seed/post2/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1679639539537-0d2e452890f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxBSSUyMGJyYWlufGVufDB8fHx8MTc1ODY5MTUyM3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "AI brain"
     },
     {
       "id": "post-3",
       "description": "Cybersecurity concept art",
-      "imageUrl": "https://picsum.photos/seed/post3/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1548092372-0d1bd40894a3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjeWJlciUyMHNlY3VyaXR5fGVufDB8fHx8MTc1ODcwOTQ2MXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "cyber security"
     },
     {
       "id": "gerd-post",
       "description": "The Grand Ethiopian Renaissance Dam",
-      "imageUrl": "https://picsum.photos/seed/gerd/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1626603343424-ac55063ba5c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxoeWRyb2VsZWN0cmljJTIwZGFtfGVufDB8fHx8MTc1ODc0MDQyMXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "hydroelectric dam"
     }
   ]
