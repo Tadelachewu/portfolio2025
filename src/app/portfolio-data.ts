@@ -99,7 +99,7 @@ export const education = [
     cgpa: "3.78",
     exitExam: "76%",
     year: "Graduated 2023",
-    logoUrl: "https://www.bdu.edu.et/sites/default/files/bdu-logo_1.png"
+    logoUrl: "https://www.bdu.edu.et/sites/default/files/logo_0_0.png"
   }
 ];
 
