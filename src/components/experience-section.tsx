@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { AddExperienceForm } from '@/components/forms/add-experience-form';
 import { useState } from 'react';
 import type { experience } from '@/app/portfolio-data';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
 type ExperienceSectionProps = {
   experience: typeof experience;
@@ -45,36 +46,27 @@ export default function ExperienceSection({ experience, setExperience }: Experie
               </DialogContent>
             </Dialog>
         </div>
-        <div className="relative">
-          {/* Timeline Line */}
-          <div className="absolute left-1/2 -translate-x-1/2 md:left-1/2 md:-translate-x-1/2 w-1 h-full bg-border rounded-full"></div>
-
+        <div className="max-w-3xl mx-auto space-y-8">
           {experience.map((item, index) => (
-            <div key={index} className={`mb-12 flex justify-between items-center w-full ${index % 2 === 0 ? 'flex-row-reverse' : ''}`}>
-              <div className="hidden md:block w-5/12"></div>
-              
-              {/* Timeline Dot */}
-              <div className="z-10 absolute left-1/2 -translate-x-1/2 md:left-1/2 md:-translate-x-1/2">
-                <div className="bg-primary rounded-full h-8 w-8 flex items-center justify-center ring-4 ring-background">
-                  <Briefcase className="h-4 w-4 text-primary-foreground" />
+            <Card key={index} className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+              <CardHeader className="flex flex-row flex-wrap items-start justify-between gap-2">
+                <div>
+                    <CardTitle className="text-xl font-bold text-primary">{item.role}</CardTitle>
+                    <CardDescription className="text-md font-semibold text-muted-foreground">{item.company}</CardDescription>
                 </div>
-              </div>
-              
-              {/* Timeline Card */}
-              <div className="w-full md:w-5/12 bg-card p-6 rounded-lg shadow-lg border border-border transition-all hover:shadow-xl hover:border-primary">
-                <p className="text-sm text-muted-foreground mb-1">{item.duration}</p>
-                <h3 className="text-xl font-bold text-primary">{item.role}</h3>
-                <p className="text-md font-semibold text-muted-foreground mb-4">{item.company}</p>
-                <ul className="space-y-2">
+                <p className="text-sm text-muted-foreground font-medium bg-secondary px-3 py-1 rounded-full">{item.duration}</p>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
                   {item.responsibilities.map((resp, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <CheckCircle className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
-                      <span className="text-sm">{resp}</span>
+                    <li key={i} className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-accent mt-0.5 flex-shrink-0" />
+                      <span>{resp}</span>
                     </li>
                   ))}
                 </ul>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>
