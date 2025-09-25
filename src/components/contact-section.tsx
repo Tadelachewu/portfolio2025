@@ -106,7 +106,7 @@ export default function ContactSection() {
             </div>
             <h3 className="text-2xl font-semibold pt-6">Follow Me</h3>
              <div className="flex items-center gap-4">
-                <Button asChild variant="outline" size="icon">
+                <Button asChild variant="outline" size="icon" disabled>
                     <Link href="#" target="_blank"><Linkedin /></Link>
                 </Button>
                 <Button asChild variant="outline" size="icon">
@@ -118,7 +118,7 @@ export default function ContactSection() {
                 <Button asChild variant="outline" size="icon">
                     <Link href="https://t.me/TadeleMesfin" target="_blank"><Send /></Link>
                 </Button>
-                 <Button asChild variant="outline" size="icon">
+                 <Button asChild variant="outline" size="icon" disabled>
                     <Link href="#" target="_blank"><TikTokIcon className="h-5 w-5"/></Link>
                 </Button>
             </div>

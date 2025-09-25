@@ -77,13 +77,20 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
                   </div>
                 </CardContent>
                 <CardFooter className="flex gap-4">
-                  <Button asChild variant="outline" disabled={project.github === '#'}>
-                    <Link href={project.github} target="_blank">
-                      <Github className="mr-2 h-4 w-4" />
-                      GitHub
-                    </Link>
-                  </Button>
-                  {project.live !== '#' ? (
+                  {project.github && project.github !== '#' ? (
+                    <Button asChild variant="outline">
+                      <Link href={project.github} target="_blank">
+                        <Github className="mr-2 h-4 w-4" />
+                        GitHub
+                      </Link>
+                    </Button>
+                  ) : (
+                     <Button variant="outline" disabled>
+                        <Github className="mr-2 h-4 w-4" />
+                        Coming Soon
+                      </Button>
+                  )}
+                  {project.live && project.live !== '#' ? (
                     <Button asChild>
                       <Link href={project.live} target="_blank">
                         <ExternalLink className="mr-2 h-4 w-4" />

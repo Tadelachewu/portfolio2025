@@ -25,7 +25,7 @@ export default function Footer() {
           © {new Date().getFullYear()} Tadele Mesfin. All Rights Reserved.
         </p>
         <div className="flex items-center gap-2">
-            <Button asChild variant="ghost" size="icon">
+            <Button asChild variant="ghost" size="icon" disabled>
                 <Link href="#" target="_blank" aria-label="LinkedIn">
                     <Linkedin className="h-5 w-5" />
                 </Link>
@@ -45,7 +45,7 @@ export default function Footer() {
                     <Send className="h-5 w-5" />
                 </Link>
             </Button>
-            <Button asChild variant="ghost" size="icon">
+            <Button asChild variant="ghost" size="icon" disabled>
                 <Link href="#" target="_blank" aria-label="TikTok">
                     <TikTokIcon className="h-5 w-5" />
                 </Link>
