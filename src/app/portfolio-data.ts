@@ -98,7 +98,8 @@ export const education = [
     institution: "Bahir Dar University",
     cgpa: "3.78",
     exitExam: "76%",
-    year: "Graduated 2023"
+    year: "Graduated 2023",
+    logoUrl: "https://www.bdu.edu.et/sites/default/files/bdu-logo_1.png"
   }
 ];
 

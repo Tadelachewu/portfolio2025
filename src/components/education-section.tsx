@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { AddEducationForm } from '@/components/forms/add-education-form';
 import { useState } from 'react';
 import type { education } from '@/app/portfolio-data';
+import Image from 'next/image';
 
 type EducationSectionProps = {
   education: typeof education;
@@ -17,11 +18,9 @@ type EducationSectionProps = {
 
 export default function EducationSection({ education, setEducation }: EducationSectionProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const edu = education[0];
-  const DegreeIcon = educationIcons.degree;
-  const InstitutionIcon = educationIcons.institution;
   const CgpaIcon = educationIcons.cgpa;
   const ExitExamIcon = educationIcons.exitExam;
+  const InstitutionIcon = educationIcons.institution;
 
   return (
     <section id="education" className="py-20 lg:py-32 bg-secondary flex-1 flex items-center">
@@ -57,9 +56,17 @@ export default function EducationSection({ education, setEducation }: EducationS
             <Card key={index} className="overflow-hidden shadow-lg transition-all hover:shadow-xl hover:-translate-y-1 mb-8 last:mb-0">
               <CardHeader className="bg-muted p-6">
                 <div className="flex items-center gap-4">
-                  <div className="bg-primary text-primary-foreground p-3 rounded-lg">
-                    <DegreeIcon className="h-8 w-8" />
-                  </div>
+                  {edu.logoUrl && (
+                     <div className="bg-white p-2 rounded-full flex-shrink-0">
+                        <Image
+                            src={edu.logoUrl}
+                            alt={`${edu.institution} logo`}
+                            width={48}
+                            height={48}
+                            className="object-contain"
+                        />
+                    </div>
+                  )}
                   <div>
                     <CardTitle className="text-2xl font-bold">{edu.degree}</CardTitle>
                     <p className="text-lg text-muted-foreground font-medium">{edu.year}</p>
