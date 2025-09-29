@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 type AuthContextType = {
   isAdmin: boolean;
@@ -11,7 +11,32 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdminState] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    try {
+      const storedIsAdmin = localStorage.getItem('isAdmin') === 'true';
+      setIsAdminState(storedIsAdmin);
+    } catch (error) {
+        console.warn('Could not read admin status from localStorage', error);
+    }
+    setIsLoading(false);
+  }, []);
+
+  const setIsAdmin = (isAdmin: boolean) => {
+    try {
+      localStorage.setItem('isAdmin', String(isAdmin));
+      setIsAdminState(isAdmin);
+    } catch (error) {
+      console.warn('Could not persist admin status to localStorage', error);
+      setIsAdminState(isAdmin);
+    }
+  };
+  
+  if (isLoading) {
+    return null; 
+  }
 
   return (
     <AuthContext.Provider value={{ isAdmin, setIsAdmin }}>
