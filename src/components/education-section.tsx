@@ -48,7 +48,7 @@ export default function EducationSection({ education, setEducation }: EducationS
 
 
   return (
-    <section id="education" className="py-20 lg:py-32 bg-secondary flex-1 flex items-center">
+    <section id="education" className="py-20 lg:py-32 bg-secondary">
       <div className="container">
         <div className="flex justify-between items-center mb-12">
             <div className='text-left'>

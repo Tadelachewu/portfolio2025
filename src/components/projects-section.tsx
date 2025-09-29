@@ -57,7 +57,7 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
 
 
   return (
-    <section id="projects" className="py-20 lg:py-32 bg-secondary flex-1 flex items-center">
+    <section id="projects" className="py-20 lg:py-32 bg-secondary">
       <div className="container">
         <div className="flex justify-between items-center mb-12">
             <div className='text-left'>

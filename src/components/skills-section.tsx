@@ -46,7 +46,7 @@ export default function SkillsSection({ skills, setSkills, skillIcons, setSkillI
   };
 
   return (
-    <section id="skills" className="py-20 lg:py-32 flex-1 flex items-center">
+    <section id="skills" className="py-20 lg:py-32">
       <div className="container">
         <div className="flex justify-between items-center mb-12">
             <div className='text-left'>
@@ -78,7 +78,7 @@ export default function SkillsSection({ skills, setSkills, skillIcons, setSkillI
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {skills.map((skillCategory, index) => (
-            <Card key={index} className="flex flex-col transition-transform transform hover:-translate-y-2 hover:shadow-xl group">
+            <Card key={index} className="flex flex-col transition-transform transform hover:-translate-y-1 hover:shadow-xl group">
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle className="text-xl font-semibold text-primary">{skillCategory.category}</CardTitle>
                 {isAdmin && (

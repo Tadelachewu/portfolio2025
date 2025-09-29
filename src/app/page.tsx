@@ -14,7 +14,6 @@ import ContactSection from '@/components/contact-section';
 import Footer from '@/components/footer';
 import { skills as initialSkills, projects as initialProjects, experience as initialExperience, education as initialEducation, posts as initialPosts, skillIcons as initialSkillIcons, aboutMe as initialAboutMe } from '@/app/portfolio-data';
 import { useAuth } from '@/hooks/use-auth';
-import LoginComponent from '@/components/login-component';
 
 export type Section = 'home' | 'about' | 'skills' | 'projects' | 'experience' | 'education' | 'posts' | 'contact';
 
@@ -27,7 +26,7 @@ export default function Home() {
   const [education, setEducation] = useState(initialEducation);
   const [posts, setPosts] = useState(initialPosts);
   const [aboutMe, setAboutMe] = useState(initialAboutMe);
-  const { isAdmin, setIsAdmin } = useAuth();
+  const { isAdmin } = useAuth();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -50,9 +49,9 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
+    <div className="flex flex-col min-h-screen bg-background text-foreground font-body">
       <Header activeSection={activeSection} setActiveSection={setActiveSection} />
-      <main className="flex-1 flex flex-col">
+      <main className="flex-1 flex flex-col items-center">
         <HeroSection setActiveSection={setActiveSection} />
         <AboutSection aboutMe={aboutMe} setAboutMe={setAboutMe} />
         <SkillsSection skills={skills} setSkills={setSkills} skillIcons={skillIcons} setSkillIcons={setSkillIcons} />

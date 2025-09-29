@@ -32,7 +32,7 @@ export default function AboutSection({ aboutMe, setAboutMe }: AboutSectionProps)
   };
 
   return (
-    <section id="about" className="py-20 lg:py-32 bg-secondary flex-1 flex items-center">
+    <section id="about" className="py-20 lg:py-32 bg-secondary">
       <div className="container">
           <div className="flex justify-between items-center mb-12">
             <div className="flex items-center gap-4">

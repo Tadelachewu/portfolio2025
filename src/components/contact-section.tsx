@@ -106,7 +106,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-20 lg:py-32 flex-1 flex items-center">
+    <section id="contact" className="py-20 lg:py-32 bg-secondary">
       <div className="container">
         <div className="text-center mb-12">
             <div className="flex items-center justify-center gap-4 mb-4">
@@ -244,5 +244,3 @@ export default function ContactSection() {
     </section>
   );
 }
-
-    

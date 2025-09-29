@@ -30,7 +30,7 @@ export default function PostSection({ posts, setPosts }: PostSectionProps) {
   };
 
   return (
-    <section id="posts" className="py-20 lg:py-32 flex-1 flex items-center">
+    <section id="posts" className="py-20 lg:py-32">
       <div className="container">
         <div className="flex justify-between items-center mb-12">
             <div className='text-left'>

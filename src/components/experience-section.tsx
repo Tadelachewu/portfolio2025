@@ -44,7 +44,7 @@ export default function ExperienceSection({ experience, setExperience }: Experie
 
 
   return (
-    <section id="experience" className="py-20 lg:py-32 flex-1 flex items-center">
+    <section id="experience" className="py-20 lg:py-32">
       <div className="container">
         <div className="flex justify-between items-center mb-16">
             <div className='text-left'>
@@ -78,7 +78,7 @@ export default function ExperienceSection({ experience, setExperience }: Experie
           {experience.map((item, index) => {
             return (
               <Card key={index} className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative group">
-                <CardHeader className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                <CardHeader className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 p-6">
                   <div className="flex items-start gap-4">
                       {item.logoUrl && (
                          <div className="relative flex-shrink-0">
@@ -116,7 +116,7 @@ export default function ExperienceSection({ experience, setExperience }: Experie
                     {item.duration}
                   </p>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="p-6 pt-0">
                   <ul className="space-y-3">
                     {item.responsibilities.map((resp, i) => (
                       <li key={i} className="flex items-start gap-3">
