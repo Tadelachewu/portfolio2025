@@ -3,11 +3,13 @@
 
 import { educationIcons } from '@/app/portfolio-data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { GraduationCap, PlusCircle, Pencil } from 'lucide-react';
+import { GraduationCap, PlusCircle, Pencil, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 import { AddEducationForm } from '@/components/forms/add-education-form';
 import { EditImageForm } from '@/components/forms/edit-image-form';
+import { EditEducationForm } from '@/components/forms/edit-education-form';
 import { useState } from 'react';
 import type { education } from '@/app/portfolio-data';
 import Image from 'next/image';
@@ -21,6 +23,8 @@ type EducationSectionProps = {
 export default function EducationSection({ education, setEducation }: EducationSectionProps) {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editImageState, setEditImageState] = useState<{ dialogOpen: boolean; currentImageUrl?: string, index?: number }>({ dialogOpen: false });
+  const [editEducationState, setEditEducationState] = useState<{ dialogOpen: boolean; education?: typeof education[0], index?: number }>({ dialogOpen: false });
+
   const { isAdmin } = useAuth();
   const CgpaIcon = educationIcons.cgpa;
   const ExitExamIcon = educationIcons.exitExam;
@@ -36,6 +40,10 @@ export default function EducationSection({ education, setEducation }: EducationS
         return edu;
     });
     setEducation(updatedEducation);
+  };
+
+  const handleDeleteEducation = (indexToDelete: number) => {
+    setEducation(prevEducation => prevEducation.filter((_, index) => index !== indexToDelete));
   };
 
 
@@ -72,7 +80,7 @@ export default function EducationSection({ education, setEducation }: EducationS
         </div>
         <div className="max-w-3xl mx-auto">
           {education.map((edu, index) => (
-            <Card key={index} className="overflow-hidden shadow-lg transition-all hover:shadow-xl hover:-translate-y-1 mb-8 last:mb-0">
+            <Card key={index} className="overflow-hidden shadow-lg transition-all hover:shadow-xl hover:-translate-y-1 mb-8 last:mb-0 relative group">
               <CardHeader className="bg-muted p-6">
                 <div className="flex items-center gap-4">
                   {edu.logoUrl && (
@@ -131,6 +139,34 @@ export default function EducationSection({ education, setEducation }: EducationS
                   </div>
                 </div>
               </CardContent>
+                {isAdmin && (
+                    <div className="absolute top-4 right-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Button variant="outline" size="icon" onClick={() => setEditEducationState({ dialogOpen: true, education: edu, index: index })}>
+                            <Pencil className="h-4 w-4" />
+                            <span className="sr-only">Edit Education</span>
+                        </Button>
+                         <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                                <Button variant="destructive" size="icon">
+                                    <Trash2 className="h-4 w-4" />
+                                    <span className="sr-only">Delete Education</span>
+                                </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action cannot be undone. This will permanently delete this education entry.
+                                </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction onClick={() => handleDeleteEducation(index)}>Delete</AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
+                    </div>
+                )}
             </Card>
           ))}
         </div>
@@ -155,6 +191,25 @@ export default function EducationSection({ education, setEducation }: EducationS
                 </DialogContent>
             )}
         </Dialog>
+        <Dialog open={editEducationState.dialogOpen} onOpenChange={(isOpen) => setEditEducationState({ ...editEducationState, dialogOpen: isOpen })}>
+             {editEducationState.education && editEducationState.index !== undefined && (
+                <DialogContent className="sm:max-w-[625px]">
+                    <DialogHeader>
+                        <DialogTitle>Edit Education</DialogTitle>
+                        <DialogDescription>
+                        Make changes to your education entry here. Click save when you're done.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <EditEducationForm
+                        setDialogOpen={(isOpen) => setEditEducationState({ ...editEducationState, dialogOpen: isOpen })}
+                        setEducation={setEducation}
+                        education={editEducationState.education}
+                        index={editEducationState.index}
+                    />
+                </DialogContent>
+             )}
+        </Dialog>
+
       </div>
     </section>
   );

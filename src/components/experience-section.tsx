@@ -1,11 +1,13 @@
 
 'use client';
 
-import { CheckCircle, PlusCircle, Briefcase, Pencil } from 'lucide-react';
+import { CheckCircle, PlusCircle, Briefcase, Pencil, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 import { AddExperienceForm } from '@/components/forms/add-experience-form';
 import { EditImageForm } from '@/components/forms/edit-image-form';
+import { EditExperienceForm } from '@/components/forms/edit-experience-form';
 import { useState } from 'react';
 import type { Experience } from '@/app/portfolio-data';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -20,6 +22,8 @@ type ExperienceSectionProps = {
 export default function ExperienceSection({ experience, setExperience }: ExperienceSectionProps) {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editImageState, setEditImageState] = useState<{ dialogOpen: boolean; currentImageUrl?: string; index?: number }>({ dialogOpen: false });
+  const [editExperienceState, setEditExperienceState] = useState<{ dialogOpen: boolean; experience?: Experience, index?: number }>({ dialogOpen: false });
+
   const { isAdmin } = useAuth();
   
   const handleImageUpdate = (newUrl: string) => {
@@ -32,6 +36,10 @@ export default function ExperienceSection({ experience, setExperience }: Experie
         return exp;
     });
     setExperience(updatedExperience);
+  };
+
+  const handleDeleteExperience = (indexToDelete: number) => {
+    setExperience(prevExperience => prevExperience.filter((_, index) => index !== indexToDelete));
   };
 
 
@@ -69,7 +77,7 @@ export default function ExperienceSection({ experience, setExperience }: Experie
         <div className="max-w-3xl mx-auto space-y-8">
           {experience.map((item, index) => {
             return (
-              <Card key={index} className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+              <Card key={index} className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative group">
                 <CardHeader className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                   <div className="flex items-start gap-4">
                       {item.logoUrl && (
@@ -118,6 +126,34 @@ export default function ExperienceSection({ experience, setExperience }: Experie
                     ))}
                   </ul>
                 </CardContent>
+                {isAdmin && (
+                    <div className="absolute top-4 right-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Button variant="outline" size="icon" onClick={() => setEditExperienceState({ dialogOpen: true, experience: item, index: index })}>
+                            <Pencil className="h-4 w-4" />
+                            <span className="sr-only">Edit Experience</span>
+                        </Button>
+                         <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                                <Button variant="destructive" size="icon">
+                                    <Trash2 className="h-4 w-4" />
+                                    <span className="sr-only">Delete Experience</span>
+                                </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action cannot be undone. This will permanently delete this experience entry.
+                                </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction onClick={() => handleDeleteExperience(index)}>Delete</AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
+                    </div>
+                )}
               </Card>
             );
           })}
@@ -143,6 +179,25 @@ export default function ExperienceSection({ experience, setExperience }: Experie
                   />
                 </DialogContent>
             )}
+        </Dialog>
+
+        <Dialog open={editExperienceState.dialogOpen} onOpenChange={(isOpen) => setEditExperienceState({ ...editExperienceState, dialogOpen: isOpen })}>
+             {editExperienceState.experience && editExperienceState.index !== undefined && (
+                <DialogContent className="sm:max-w-[625px]">
+                    <DialogHeader>
+                        <DialogTitle>Edit Experience</DialogTitle>
+                        <DialogDescription>
+                        Make changes to your work experience here. Click save when you're done.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <EditExperienceForm
+                        setDialogOpen={(isOpen) => setEditExperienceState({ ...editExperienceState, dialogOpen: isOpen })}
+                        setExperience={setExperience}
+                        experience={editExperienceState.experience}
+                        index={editExperienceState.index}
+                    />
+                </DialogContent>
+             )}
         </Dialog>
 
       </div>

@@ -7,10 +7,12 @@ import { PlaceHolderImages, updatePlaceholderImage } from '@/lib/placeholder-ima
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Github, ExternalLink, Lightbulb, PlusCircle, Pencil } from 'lucide-react';
+import { Github, ExternalLink, Lightbulb, PlusCircle, Pencil, Trash2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 import { AddProjectForm } from '@/components/forms/add-project-form';
 import { EditImageForm } from '@/components/forms/edit-image-form';
+import { EditProjectForm } from '@/components/forms/edit-project-form';
 import { useState, useEffect } from 'react';
 import type { projects } from '@/app/portfolio-data';
 import { useAuth } from '@/hooks/use-auth';
@@ -23,6 +25,7 @@ type ProjectsSectionProps = {
 export default function ProjectsSection({ projects, setProjects }: ProjectsSectionProps) {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editImageState, setEditImageState] = useState<{ dialogOpen: boolean; imageId?: string; currentImageUrl?: string }>({ dialogOpen: false });
+  const [editProjectState, setEditProjectState] = useState<{ dialogOpen: boolean; project?: typeof projects[0] }>({ dialogOpen: false });
 
   const { isAdmin } = useAuth();
   
@@ -46,6 +49,10 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
     const updatedImages = updatePlaceholderImage(images, id, newUrl);
     setImages(updatedImages);
     window.dispatchEvent(new Event('storage'));
+  };
+
+  const handleDeleteProject = (titleToDelete: string) => {
+    setProjects(prevProjects => prevProjects.filter(p => p.title !== titleToDelete));
   };
 
 
@@ -126,32 +133,62 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
                     ))}
                   </div>
                 </CardContent>
-                <CardFooter className="flex gap-4">
-                  {project.github && project.github !== '#' ? (
-                    <Button asChild variant="outline">
-                      <Link href={project.github} target="_blank">
-                        <Github className="mr-2 h-4 w-4" />
-                        GitHub
-                      </Link>
-                    </Button>
-                  ) : (
-                     <Button variant="outline" disabled>
-                        <Github className="mr-2 h-4 w-4" />
-                        Coming Soon
-                      </Button>
-                  )}
-                  {project.live && project.live !== '#' ? (
-                    <Button asChild>
-                      <Link href={project.live} target="_blank">
+                <CardFooter className="flex justify-between items-center">
+                  <div className="flex gap-4">
+                    {project.github && project.github !== '#' ? (
+                        <Button asChild variant="outline">
+                        <Link href={project.github} target="_blank">
+                            <Github className="mr-2 h-4 w-4" />
+                            GitHub
+                        </Link>
+                        </Button>
+                    ) : (
+                        <Button variant="outline" disabled>
+                            <Github className="mr-2 h-4 w-4" />
+                            Coming Soon
+                        </Button>
+                    )}
+                    {project.live && project.live !== '#' ? (
+                        <Button asChild>
+                        <Link href={project.live} target="_blank">
+                            <ExternalLink className="mr-2 h-4 w-4" />
+                            Live Demo
+                        </Link>
+                        </Button>
+                    ) : (
+                        <Button disabled>
                         <ExternalLink className="mr-2 h-4 w-4" />
-                        Live Demo
-                      </Link>
-                    </Button>
-                  ) : (
-                    <Button disabled>
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      Coming Soon
-                    </Button>
+                        Coming Soon
+                        </Button>
+                    )}
+                  </div>
+                  {isAdmin && (
+                      <div className="flex gap-2">
+                          <Button variant="outline" size="icon" onClick={() => setEditProjectState({ dialogOpen: true, project: project })}>
+                              <Pencil className="h-4 w-4" />
+                              <span className="sr-only">Edit Project</span>
+                          </Button>
+                           <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                  <Button variant="destructive" size="icon">
+                                      <Trash2 className="h-4 w-4" />
+                                      <span className="sr-only">Delete Project</span>
+                                  </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                  <AlertDialogHeader>
+                                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                      This action cannot be undone. This will permanently delete this project.
+                                  </AlertDialogDescription>
+                                  </AlertDialogHeader>
+                                  <AlertDialogFooter>
+                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                  <AlertDialogAction onClick={() => handleDeleteProject(project.title)}>Delete</AlertDialogAction>
+                                  </AlertDialogFooter>
+                              </AlertDialogContent>
+                          </AlertDialog>
+                      </div>
                   )}
                 </CardFooter>
               </Card>
@@ -179,6 +216,25 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
                 </DialogContent>
             )}
         </Dialog>
+
+        <Dialog open={editProjectState.dialogOpen} onOpenChange={(isOpen) => setEditProjectState({ ...editProjectState, dialogOpen: isOpen })}>
+             {editProjectState.project && (
+                <DialogContent className="sm:max-w-[625px]">
+                    <DialogHeader>
+                        <DialogTitle>Edit Project</DialogTitle>
+                        <DialogDescription>
+                        Make changes to your project here. Click save when you're done.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <EditProjectForm
+                        setDialogOpen={(isOpen) => setEditProjectState({ ...editProjectState, dialogOpen: isOpen })}
+                        setProjects={setProjects}
+                        project={editProjectState.project}
+                    />
+                </DialogContent>
+             )}
+        </Dialog>
+
       </div>
     </section>
   );
