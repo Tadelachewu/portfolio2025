@@ -3,12 +3,15 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, UserCircle2, Wrench, Lightbulb, Briefcase, GraduationCap, Rss, MessageCircle } from 'lucide-react';
+import { Menu, X, UserCircle2, Wrench, Lightbulb, Briefcase, GraduationCap, Rss, MessageCircle, LogIn, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import type { Section } from '@/app/page';
 import { ThemeToggle } from './theme-toggle';
+import { useAuth } from '@/hooks/use-auth';
+import LoginComponent from './login-component';
+import { Dialog, DialogTrigger, DialogContent } from './ui/dialog';
 
 const navLinks: { section: Section; label: string; icon: React.ElementType }[] = [
   { section: 'about', label: 'About', icon: UserCircle2 },
@@ -27,6 +30,8 @@ interface HeaderProps {
 export default function Header({ activeSection, setActiveSection }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const { isAdmin, setIsAdmin } = useAuth();
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +44,11 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
   const handleLinkClick = (section: Section) => {
     setActiveSection(section);
     setIsSheetOpen(false);
+  };
+
+  const handleLogout = () => {
+    setIsAdmin(false);
+    // You might want to add a toast notification here
   };
 
   return (
@@ -71,6 +81,24 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
             </Button>
             </nav>
             <ThemeToggle />
+
+            {isAdmin ? (
+               <Button variant="ghost" size="icon" onClick={handleLogout} aria-label="Logout">
+                <LogOut className="h-5 w-5" />
+              </Button>
+            ) : (
+              <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
+                <DialogTrigger asChild>
+                   <Button variant="ghost" size="icon" aria-label="Admin Login">
+                    <LogIn className="h-5 w-5" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                   <LoginComponent setLoginOpen={setIsLoginOpen} />
+                </DialogContent>
+              </Dialog>
+            )}
+
             <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild className="md:hidden">
                 <Button variant="ghost" size="icon">

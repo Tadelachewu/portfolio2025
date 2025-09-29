@@ -10,6 +10,7 @@ import { AddEducationForm } from '@/components/forms/add-education-form';
 import { useState } from 'react';
 import type { education } from '@/app/portfolio-data';
 import Image from 'next/image';
+import { useAuth } from '@/hooks/use-auth';
 
 type EducationSectionProps = {
   education: typeof education;
@@ -18,6 +19,7 @@ type EducationSectionProps = {
 
 export default function EducationSection({ education, setEducation }: EducationSectionProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { isAdmin } = useAuth();
   const CgpaIcon = educationIcons.cgpa;
   const ExitExamIcon = educationIcons.exitExam;
   const InstitutionIcon = educationIcons.institution;
@@ -33,23 +35,25 @@ export default function EducationSection({ education, setEducation }: EducationS
                 </div>
               <p className="mt-4 max-w-2xl text-lg text-muted-foreground">My academic background and qualifications.</p>
             </div>
-            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <DialogTrigger asChild>
-                <Button>
-                    <PlusCircle className="mr-2 h-5 w-5"/>
-                    Add Education
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[625px]">
-                <DialogHeader>
-                  <DialogTitle>Add New Education</DialogTitle>
-                  <DialogDescription>
-                    Fill out the form below to add a new education entry.
-                  </DialogDescription>
-                </DialogHeader>
-                <AddEducationForm setDialogOpen={setIsDialogOpen} setEducation={setEducation} />
-              </DialogContent>
-            </Dialog>
+            {isAdmin && (
+              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button>
+                      <PlusCircle className="mr-2 h-5 w-5"/>
+                      Add Education
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[625px]">
+                  <DialogHeader>
+                    <DialogTitle>Add New Education</DialogTitle>
+                    <DialogDescription>
+                      Fill out the form below to add a new education entry.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <AddEducationForm setDialogOpen={setIsDialogOpen} setEducation={setEducation} />
+                </DialogContent>
+              </Dialog>
+            )}
         </div>
         <div className="max-w-3xl mx-auto">
           {education.map((edu, index) => (

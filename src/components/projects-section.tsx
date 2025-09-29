@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { AddProjectForm } from '@/components/forms/add-project-form';
 import { useState } from 'react';
 import type { projects } from '@/app/portfolio-data';
+import { useAuth } from '@/hooks/use-auth';
 
 type ProjectsSectionProps = {
   projects: typeof projects;
@@ -20,6 +21,7 @@ type ProjectsSectionProps = {
 
 export default function ProjectsSection({ projects, setProjects }: ProjectsSectionProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { isAdmin } = useAuth();
 
   return (
     <section id="projects" className="py-20 lg:py-32 bg-secondary flex-1 flex items-center">
@@ -32,23 +34,25 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
                 </div>
               <p className="mt-4 max-w-2xl text-lg text-muted-foreground">Here are some of the projects I'm proud to have worked on.</p>
             </div>
-            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <DialogTrigger asChild>
-                <Button>
-                    <PlusCircle className="mr-2 h-5 w-5"/>
-                    Add Project
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[625px]">
-                <DialogHeader>
-                  <DialogTitle>Add New Project</DialogTitle>
-                  <DialogDescription>
-                    Fill out the form below to add a new project to your portfolio.
-                  </DialogDescription>
-                </DialogHeader>
-                <AddProjectForm setDialogOpen={setIsDialogOpen} setProjects={setProjects} />
-              </DialogContent>
-            </Dialog>
+            {isAdmin && (
+              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button>
+                      <PlusCircle className="mr-2 h-5 w-5"/>
+                      Add Project
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[625px]">
+                  <DialogHeader>
+                    <DialogTitle>Add New Project</DialogTitle>
+                    <DialogDescription>
+                      Fill out the form below to add a new project to your portfolio.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <AddProjectForm setDialogOpen={setIsDialogOpen} setProjects={setProjects} />
+                </DialogContent>
+              </Dialog>
+            )}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => {

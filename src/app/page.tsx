@@ -13,6 +13,8 @@ import PostSection from '@/components/post-section';
 import ContactSection from '@/components/contact-section';
 import Footer from '@/components/footer';
 import { skills as initialSkills, projects as initialProjects, experience as initialExperience, education as initialEducation, posts as initialPosts, skillIcons as initialSkillIcons, aboutMe as initialAboutMe } from '@/app/portfolio-data';
+import { useAuth } from '@/hooks/use-auth';
+import LoginComponent from '@/components/login-component';
 
 export type Section = 'home' | 'about' | 'skills' | 'projects' | 'experience' | 'education' | 'posts' | 'contact';
 
@@ -25,6 +27,12 @@ export default function Home() {
   const [education, setEducation] = useState(initialEducation);
   const [posts, setPosts] = useState(initialPosts);
   const [aboutMe, setAboutMe] = useState(initialAboutMe);
+  const { isAdmin, setIsAdmin } = useAuth();
+
+  // For now, we won't force login to see the page
+  // if (!isAdmin) {
+  //   return <LoginComponent />;
+  // }
 
   const renderSection = () => {
     switch (activeSection) {

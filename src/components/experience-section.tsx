@@ -8,6 +8,7 @@ import { AddExperienceForm } from '@/components/forms/add-experience-form';
 import { useState } from 'react';
 import type { experience } from '@/app/portfolio-data';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { useAuth } from '@/hooks/use-auth';
 
 type ExperienceSectionProps = {
   experience: typeof experience;
@@ -16,6 +17,7 @@ type ExperienceSectionProps = {
 
 export default function ExperienceSection({ experience, setExperience }: ExperienceSectionProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { isAdmin } = useAuth();
 
   return (
     <section id="experience" className="py-20 lg:py-32 flex-1 flex items-center">
@@ -28,23 +30,25 @@ export default function ExperienceSection({ experience, setExperience }: Experie
                 </div>
               <p className="mt-4 max-w-2xl text-lg text-muted-foreground">My professional journey and key contributions.</p>
             </div>
-            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <DialogTrigger asChild>
-                <Button>
-                    <PlusCircle className="mr-2 h-5 w-5"/>
-                    Add Experience
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[625px]">
-                <DialogHeader>
-                  <DialogTitle>Add New Experience</DialogTitle>
-                  <DialogDescription>
-                    Fill out the form below to add a new work experience.
-                  </DialogDescription>
-                </DialogHeader>
-                <AddExperienceForm setDialogOpen={setIsDialogOpen} setExperience={setExperience} />
-              </DialogContent>
-            </Dialog>
+            {isAdmin && (
+              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button>
+                      <PlusCircle className="mr-2 h-5 w-5"/>
+                      Add Experience
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[625px]">
+                  <DialogHeader>
+                    <DialogTitle>Add New Experience</DialogTitle>
+                    <DialogDescription>
+                      Fill out the form below to add a new work experience.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <AddExperienceForm setDialogOpen={setIsDialogOpen} setExperience={setExperience} />
+                </DialogContent>
+              </Dialog>
+            )}
         </div>
         <div className="max-w-3xl mx-auto space-y-8">
           {experience.map((item, index) => (

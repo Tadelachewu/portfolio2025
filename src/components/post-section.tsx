@@ -11,6 +11,7 @@ import { AddPostForm } from '@/components/forms/add-post-form';
 import { useState } from 'react';
 import type { posts } from '@/app/portfolio-data';
 import ImageWithFallback from '@/components/image-with-fallback';
+import { useAuth } from '@/hooks/use-auth';
 
 type PostSectionProps = {
   posts: typeof posts;
@@ -19,6 +20,7 @@ type PostSectionProps = {
 
 export default function PostSection({ posts, setPosts }: PostSectionProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { isAdmin } = useAuth();
 
   return (
     <section id="posts" className="py-20 lg:py-32 flex-1 flex items-center">
@@ -31,23 +33,25 @@ export default function PostSection({ posts, setPosts }: PostSectionProps) {
                 </div>
               <p className="mt-4 max-w-2xl text-lg text-muted-foreground">Check out my latest articles and thoughts on technology.</p>
             </div>
-            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <DialogTrigger asChild>
-                <Button>
-                    <PlusCircle className="mr-2 h-5 w-5"/>
-                    Add Post
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[625px]">
-                <DialogHeader>
-                  <DialogTitle>Create New Post</DialogTitle>
-                  <DialogDescription>
-                    Fill out the form below to create a new blog post.
-                  </DialogDescription>
-                </DialogHeader>
-                <AddPostForm setDialogOpen={setIsDialogOpen} setPosts={setPosts} />
-              </DialogContent>
-            </Dialog>
+            {isAdmin && (
+              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button>
+                      <PlusCircle className="mr-2 h-5 w-5"/>
+                      Add Post
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[625px]">
+                  <DialogHeader>
+                    <DialogTitle>Create New Post</DialogTitle>
+                    <DialogDescription>
+                      Fill out the form below to create a new blog post.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <AddPostForm setDialogOpen={setIsDialogOpen} setPosts={setPosts} />
+                </DialogContent>
+              </Dialog>
+            )}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post, index) => {

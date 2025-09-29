@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { AddSkillForm } from '@/components/forms/add-skill-form';
 import { useState } from 'react';
 import type { skills } from '@/app/portfolio-data';
+import { useAuth } from '@/hooks/use-auth';
 
 type SkillsSectionProps = {
   skills: typeof skills;
@@ -19,6 +20,7 @@ type SkillsSectionProps = {
 
 export default function SkillsSection({ skills, setSkills, skillIcons, setSkillIcons }: SkillsSectionProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { isAdmin } = useAuth();
 
   return (
     <section id="skills" className="py-20 lg:py-32 flex-1 flex items-center">
@@ -31,23 +33,25 @@ export default function SkillsSection({ skills, setSkills, skillIcons, setSkillI
                 </div>
               <p className="mt-4 max-w-2xl text-lg text-muted-foreground">A snapshot of the technologies and tools I work with.</p>
             </div>
-             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <DialogTrigger asChild>
-                <Button>
-                    <PlusCircle className="mr-2 h-5 w-5"/>
-                    Add Skill
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                  <DialogTitle>Add New Skill</DialogTitle>
-                  <DialogDescription>
-                    Select a category and enter the skill name.
-                  </DialogDescription>
-                </DialogHeader>
-                <AddSkillForm setDialogOpen={setIsDialogOpen} setSkills={setSkills} setSkillIcons={setSkillIcons}/>
-              </DialogContent>
-            </Dialog>
+            {isAdmin && (
+              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button>
+                      <PlusCircle className="mr-2 h-5 w-5"/>
+                      Add Skill
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Add New Skill</DialogTitle>
+                    <DialogDescription>
+                      Select a category and enter the skill name.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <AddSkillForm setDialogOpen={setIsDialogOpen} setSkills={setSkills} setSkillIcons={setSkillIcons}/>
+                </DialogContent>
+              </Dialog>
+            )}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {skills.map((skillCategory, index) => (
