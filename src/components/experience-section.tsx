@@ -6,44 +6,34 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AddExperienceForm } from '@/components/forms/add-experience-form';
 import { EditImageForm } from '@/components/forms/edit-image-form';
-import { useState, useEffect } from 'react';
-import type { experience } from '@/app/portfolio-data';
+import { useState } from 'react';
+import type { Experience } from '@/app/portfolio-data';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useAuth } from '@/hooks/use-auth';
-import { PlaceHolderImages, updatePlaceholderImage } from '@/lib/placeholder-images';
 import Image from 'next/image';
 
 type ExperienceSectionProps = {
-  experience: typeof experience;
-  setExperience: React.Dispatch<React.SetStateAction<typeof experience>>;
+  experience: Experience[];
+  setExperience: React.Dispatch<React.SetStateAction<Experience[]>>;
 };
 
 export default function ExperienceSection({ experience, setExperience }: ExperienceSectionProps) {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [editImageState, setEditImageState] = useState<{ dialogOpen: boolean; imageId?: string; currentImageUrl?: string }>({ dialogOpen: false });
+  const [editImageState, setEditImageState] = useState<{ dialogOpen: boolean; currentImageUrl?: string; index?: number }>({ dialogOpen: false });
   const { isAdmin } = useAuth();
   
-  const [images, setImages] = useState(PlaceHolderImages);
-
-  useEffect(() => {
-    const handleStorageChange = () => {
-      const storedImages = localStorage.getItem('placeholderImages');
-      if (storedImages) {
-        setImages(JSON.parse(storedImages));
-      }
-    };
-    window.addEventListener('storage', handleStorageChange);
-    handleStorageChange();
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, []);
-
-  const handleImageUpdate = (id: string, newUrl: string) => {
-    const updatedImages = updatePlaceholderImage(images, id, newUrl);
-    setImages(updatedImages);
-    window.dispatchEvent(new Event('storage'));
+  const handleImageUpdate = (newUrl: string) => {
+    if (editImageState.index === undefined) return;
+    
+    const updatedExperience = experience.map((exp, index) => {
+        if (index === editImageState.index) {
+            return { ...exp, logoUrl: newUrl };
+        }
+        return exp;
+    });
+    setExperience(updatedExperience);
   };
+
 
   return (
     <section id="experience" className="py-20 lg:py-32 flex-1 flex items-center">
@@ -78,20 +68,19 @@ export default function ExperienceSection({ experience, setExperience }: Experie
         </div>
         <div className="max-w-3xl mx-auto space-y-8">
           {experience.map((item, index) => {
-            const companyLogo = images.find(p => p.id === item.logoId);
             return (
               <Card key={index} className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                 <CardHeader className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                   <div className="flex items-start gap-4">
-                      {companyLogo && (
+                      {item.logoUrl && (
                          <div className="relative flex-shrink-0">
                             <Image
-                                src={companyLogo.imageUrl}
+                                src={item.logoUrl}
                                 alt={`${item.company} logo`}
                                 width={56}
                                 height={56}
                                 className="rounded-md object-contain border bg-white p-1"
-                                key={companyLogo.imageUrl}
+                                key={item.logoUrl}
                             />
                              {isAdmin && (
                                 <Button
@@ -100,8 +89,8 @@ export default function ExperienceSection({ experience, setExperience }: Experie
                                     className="absolute -bottom-2 -right-2 h-7 w-7 rounded-full"
                                     onClick={() => setEditImageState({
                                         dialogOpen: true,
-                                        imageId: companyLogo.id,
-                                        currentImageUrl: companyLogo.imageUrl
+                                        currentImageUrl: item.logoUrl,
+                                        index: index
                                     })}
                                 >
                                     <Pencil className="h-4 w-4" />
@@ -138,7 +127,7 @@ export default function ExperienceSection({ experience, setExperience }: Experie
             open={editImageState.dialogOpen}
             onOpenChange={(isOpen) => setEditImageState({ ...editImageState, dialogOpen: isOpen })}
           >
-            {editImageState.imageId && editImageState.currentImageUrl && (
+            {editImageState.currentImageUrl && editImageState.index !== undefined && (
                 <DialogContent className="sm:max-w-[525px]">
                   <DialogHeader>
                     <DialogTitle>Edit Company Logo</DialogTitle>
@@ -148,9 +137,9 @@ export default function ExperienceSection({ experience, setExperience }: Experie
                   </DialogHeader>
                   <EditImageForm
                     setDialogOpen={(isOpen) => setEditImageState({ ...editImageState, dialogOpen: isOpen })}
-                    onImageUpdate={handleImageUpdate}
+                    onImageUpdate={(id_unused, newUrl) => handleImageUpdate(newUrl)}
                     currentImageUrl={editImageState.currentImageUrl}
-                    imageId={editImageState.imageId}
+                    imageId={`experience-logo-${editImageState.index}`}
                   />
                 </DialogContent>
             )}

@@ -77,20 +77,28 @@ export const projects = [
   }
 ];
 
-export const experience = [
+export type Experience = {
+  role: string;
+  company: string;
+  duration: string;
+  responsibilities: string[];
+  logoUrl?: string;
+};
+
+export const experience: Experience[] = [
   {
     role: "Junior IT Officer",
     company: "ET Inclusive Finance Technology (ETIFT)",
     duration: "2025 – Present",
     responsibilities: ["Database management and optimization", "Providing comprehensive IT support to staff", "Remote desktop troubleshooting and assistance"],
-    logoId: "etift-logo"
+    logoUrl: "https://images.unsplash.com/photo-1687523327554-fa9f50423489?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjb21wYW55JTIwbG9nb3xlbnwwfHx8fDE3NTkwODM4NDV8MA&ixlib=rb-4.1.0&q=80&w=1080"
   },
   {
     role: "IT Trainee",
     company: "NIB Bank (Technical Program Department)",
     duration: "2025",
     responsibilities: ["USSD app API integration", "Database scripting", "Deployment", "Web app and API development", "Business ideas"],
-    logoId: "nib-logo"
+    logoUrl: "https://images.unsplash.com/photo-1692565649291-0341123f29d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxiYW5rJTIwbG9nb3xlbnwwfHx8fDE3NTkxMjM3OTl8MA&ixlib=rb-4.1.0&q=80&w=1080"
   }
 ];
 

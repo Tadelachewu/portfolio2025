@@ -11,20 +11,19 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { PlusCircle } from "lucide-react";
 import React from "react";
-import type { experience } from "@/app/portfolio-data";
-import { updatePlaceholderImage, PlaceHolderImages } from "@/lib/placeholder-images";
+import type { Experience } from "@/app/portfolio-data";
 
 const formSchema = z.object({
   role: z.string().min(2, "Role is required."),
   company: z.string().min(2, "Company is required."),
   duration: z.string().min(5, "Duration is required (e.g., 2025 - Present)."),
   responsibilities: z.string().min(10, "Enter at least one responsibility, separated by new lines."),
-  logoId: z.string().min(2, "Logo ID is required (e.g., company-name-logo)."),
+  logoUrl: z.string().url("Please enter a valid URL for the logo.").optional().or(z.literal('')),
 });
 
 type AddExperienceFormProps = {
   setDialogOpen: (open: boolean) => void;
-  setExperience: React.Dispatch<React.SetStateAction<typeof experience>>;
+  setExperience: React.Dispatch<React.SetStateAction<Experience[]>>;
 };
 
 export function AddExperienceForm({ setDialogOpen, setExperience }: AddExperienceFormProps) {
@@ -38,37 +37,22 @@ export function AddExperienceForm({ setDialogOpen, setExperience }: AddExperienc
       company: "",
       duration: "",
       responsibilities: "",
-      logoId: "",
+      logoUrl: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     
-    const newExperience = {
-      ...values,
+    const newExperience: Experience = {
+      role: values.role,
+      company: values.company,
+      duration: values.duration,
       responsibilities: values.responsibilities.split('\n').filter(r => r.trim() !== ''),
+      logoUrl: values.logoUrl || `https://picsum.photos/seed/${values.company.toLowerCase().replace(/\s/g, '-')}/200/200`
     };
     
     setExperience(prevExperience => [newExperience, ...prevExperience]);
-
-    // Add a placeholder image for the new logo
-    const newLogoImage = {
-      id: values.logoId,
-      description: `${values.company} Logo`,
-      imageUrl: `https://picsum.photos/seed/${values.logoId}/200/200`,
-      imageHint: "company logo"
-    };
-
-    try {
-        const storedImages = JSON.parse(localStorage.getItem('placeholderImages') || JSON.stringify(PlaceHolderImages));
-        const updatedImages = [...storedImages, newLogoImage];
-        localStorage.setItem('placeholderImages', JSON.stringify(updatedImages));
-        window.dispatchEvent(new Event('storage'));
-    } catch (error) {
-        console.error("Failed to update image URL in localStorage", error);
-    }
-
 
     toast({
         title: "Experience Added!",
@@ -82,20 +66,20 @@ export function AddExperienceForm({ setDialogOpen, setExperience }: AddExperienc
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="role"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Role</FormLabel>
-              <FormControl>
-                <Input placeholder="e.g., Junior IT Officer" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <div className="grid grid-cols-2 gap-4">
+            <FormField
+            control={form.control}
+            name="role"
+            render={({ field }) => (
+                <FormItem>
+                <FormLabel>Role</FormLabel>
+                <FormControl>
+                    <Input placeholder="e.g., Junior IT Officer" {...field} />
+                </FormControl>
+                <FormMessage />
+                </FormItem>
+            )}
+            />
             <FormField
             control={form.control}
             name="company"
@@ -104,19 +88,6 @@ export function AddExperienceForm({ setDialogOpen, setExperience }: AddExperienc
                 <FormLabel>Company</FormLabel>
                 <FormControl>
                     <Input placeholder="e.g., ET Inclusive Finance Technology" {...field} />
-                </FormControl>
-                <FormMessage />
-                </FormItem>
-            )}
-            />
-            <FormField
-            control={form.control}
-            name="logoId"
-            render={({ field }) => (
-                <FormItem>
-                <FormLabel>Logo ID</FormLabel>
-                <FormControl>
-                    <Input placeholder="e.g., etift-logo" {...field} />
                 </FormControl>
                 <FormMessage />
                 </FormItem>
@@ -131,6 +102,19 @@ export function AddExperienceForm({ setDialogOpen, setExperience }: AddExperienc
               <FormLabel>Duration</FormLabel>
               <FormControl>
                 <Input placeholder="e.g., 2025 – Present" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="logoUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Company Logo URL (Optional)</FormLabel>
+              <FormControl>
+                <Input placeholder="https://example.com/logo.png" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
