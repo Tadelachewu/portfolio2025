@@ -4,10 +4,16 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/theme-provider';
 import { AuthProvider } from '@/hooks/use-auth';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
+
+const profilePic = PlaceHolderImages.find(p => p.id === 'profile-picture');
 
 export const metadata: Metadata = {
   title: 'Mesfin.Dev | Software Developer',
   description: 'Portfolio of Tadele Mesfin Belay, a full-stack and AI-powered solutions developer.',
+  icons: {
+    icon: profilePic?.imageUrl || '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
