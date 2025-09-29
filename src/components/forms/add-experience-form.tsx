@@ -12,12 +12,14 @@ import { useToast } from "@/hooks/use-toast";
 import { PlusCircle } from "lucide-react";
 import React from "react";
 import type { experience } from "@/app/portfolio-data";
+import { updatePlaceholderImage, PlaceHolderImages } from "@/lib/placeholder-images";
 
 const formSchema = z.object({
   role: z.string().min(2, "Role is required."),
   company: z.string().min(2, "Company is required."),
   duration: z.string().min(5, "Duration is required (e.g., 2025 - Present)."),
   responsibilities: z.string().min(10, "Enter at least one responsibility, separated by new lines."),
+  logoId: z.string().min(2, "Logo ID is required (e.g., company-name-logo)."),
 });
 
 type AddExperienceFormProps = {
@@ -36,6 +38,7 @@ export function AddExperienceForm({ setDialogOpen, setExperience }: AddExperienc
       company: "",
       duration: "",
       responsibilities: "",
+      logoId: "",
     },
   });
 
@@ -48,6 +51,24 @@ export function AddExperienceForm({ setDialogOpen, setExperience }: AddExperienc
     };
     
     setExperience(prevExperience => [newExperience, ...prevExperience]);
+
+    // Add a placeholder image for the new logo
+    const newLogoImage = {
+      id: values.logoId,
+      description: `${values.company} Logo`,
+      imageUrl: `https://picsum.photos/seed/${values.logoId}/200/200`,
+      imageHint: "company logo"
+    };
+
+    try {
+        const storedImages = JSON.parse(localStorage.getItem('placeholderImages') || JSON.stringify(PlaceHolderImages));
+        const updatedImages = [...storedImages, newLogoImage];
+        localStorage.setItem('placeholderImages', JSON.stringify(updatedImages));
+        window.dispatchEvent(new Event('storage'));
+    } catch (error) {
+        console.error("Failed to update image URL in localStorage", error);
+    }
+
 
     toast({
         title: "Experience Added!",
@@ -74,19 +95,34 @@ export function AddExperienceForm({ setDialogOpen, setExperience }: AddExperienc
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="company"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Company</FormLabel>
-              <FormControl>
-                <Input placeholder="e.g., ET Inclusive Finance Technology" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-2 gap-4">
+            <FormField
+            control={form.control}
+            name="company"
+            render={({ field }) => (
+                <FormItem>
+                <FormLabel>Company</FormLabel>
+                <FormControl>
+                    <Input placeholder="e.g., ET Inclusive Finance Technology" {...field} />
+                </FormControl>
+                <FormMessage />
+                </FormItem>
+            )}
+            />
+            <FormField
+            control={form.control}
+            name="logoId"
+            render={({ field }) => (
+                <FormItem>
+                <FormLabel>Logo ID</FormLabel>
+                <FormControl>
+                    <Input placeholder="e.g., etift-logo" {...field} />
+                </FormControl>
+                <FormMessage />
+                </FormItem>
+            )}
+            />
+        </div>
         <FormField
           control={form.control}
           name="duration"

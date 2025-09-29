@@ -82,13 +82,15 @@ export const experience = [
     role: "Junior IT Officer",
     company: "ET Inclusive Finance Technology (ETIFT)",
     duration: "2025 – Present",
-    responsibilities: ["Database management and optimization", "Providing comprehensive IT support to staff", "Remote desktop troubleshooting and assistance"]
+    responsibilities: ["Database management and optimization", "Providing comprehensive IT support to staff", "Remote desktop troubleshooting and assistance"],
+    logoId: "etift-logo"
   },
   {
     role: "IT Trainee",
     company: "NIB Bank (Technical Program Department)",
     duration: "2025",
-    responsibilities: ["USSD app API integration", "Database scripting", "Deployment", "Web app and API development", "Business ideas"]
+    responsibilities: ["USSD app API integration", "Database scripting", "Deployment", "Web app and API development", "Business ideas"],
+    logoId: "nib-logo"
   }
 ];
 

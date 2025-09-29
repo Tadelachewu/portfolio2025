@@ -7,6 +7,18 @@
       "imageHint": "man portrait"
     },
     {
+      "id": "etift-logo",
+      "description": "ET Inclusive Finance Technology Logo",
+      "imageUrl": "https://images.unsplash.com/photo-1687523327554-fa9f50423489?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjb21wYW55JTIwbG9nb3xlbnwwfHx8fDE3NTkwODM4NDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "company logo"
+    },
+    {
+      "id": "nib-logo",
+      "description": "NIB Bank Logo",
+      "imageUrl": "https://images.unsplash.com/photo-1692565649291-0341123f29d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxiYW5rJTIwbG9nb3xlbnwwfHx8fDE3NTkxMjM3OTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "bank logo"
+    },
+    {
       "id": "employee-management",
       "description": "Screenshot of Employee Management System",
       "imageUrl": "https://images.unsplash.com/photo-1584917510862-425dd7cf70e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxIUiUyMGRhc2hib2FyZHxlbnwwfHx8fDE3NTg3OTc1MzN8MA&ixlib=rb-4.1.0&q=80&w=1080",

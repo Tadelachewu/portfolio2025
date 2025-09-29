@@ -1,14 +1,17 @@
 
 'use client';
 
-import { CheckCircle, PlusCircle, Briefcase } from 'lucide-react';
+import { CheckCircle, PlusCircle, Briefcase, Pencil } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AddExperienceForm } from '@/components/forms/add-experience-form';
-import { useState } from 'react';
+import { EditImageForm } from '@/components/forms/edit-image-form';
+import { useState, useEffect } from 'react';
 import type { experience } from '@/app/portfolio-data';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useAuth } from '@/hooks/use-auth';
+import { PlaceHolderImages, updatePlaceholderImage } from '@/lib/placeholder-images';
+import Image from 'next/image';
 
 type ExperienceSectionProps = {
   experience: typeof experience;
@@ -16,8 +19,31 @@ type ExperienceSectionProps = {
 };
 
 export default function ExperienceSection({ experience, setExperience }: ExperienceSectionProps) {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [editImageState, setEditImageState] = useState<{ dialogOpen: boolean; imageId?: string; currentImageUrl?: string }>({ dialogOpen: false });
   const { isAdmin } = useAuth();
+  
+  const [images, setImages] = useState(PlaceHolderImages);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedImages = localStorage.getItem('placeholderImages');
+      if (storedImages) {
+        setImages(JSON.parse(storedImages));
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    handleStorageChange();
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
+  const handleImageUpdate = (id: string, newUrl: string) => {
+    const updatedImages = updatePlaceholderImage(images, id, newUrl);
+    setImages(updatedImages);
+    window.dispatchEvent(new Event('storage'));
+  };
 
   return (
     <section id="experience" className="py-20 lg:py-32 flex-1 flex items-center">
@@ -31,7 +57,7 @@ export default function ExperienceSection({ experience, setExperience }: Experie
               <p className="mt-4 max-w-2xl text-lg text-muted-foreground">My professional journey and key contributions.</p>
             </div>
             {isAdmin && (
-              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
                 <DialogTrigger asChild>
                   <Button>
                       <PlusCircle className="mr-2 h-5 w-5"/>
@@ -45,34 +71,91 @@ export default function ExperienceSection({ experience, setExperience }: Experie
                       Fill out the form below to add a new work experience.
                     </DialogDescription>
                   </DialogHeader>
-                  <AddExperienceForm setDialogOpen={setIsDialogOpen} setExperience={setExperience} />
+                  <AddExperienceForm setDialogOpen={setIsAddDialogOpen} setExperience={setExperience} />
                 </DialogContent>
               </Dialog>
             )}
         </div>
         <div className="max-w-3xl mx-auto space-y-8">
-          {experience.map((item, index) => (
-            <Card key={index} className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <CardHeader className="flex flex-row flex-wrap items-start justify-between gap-2">
-                <div>
-                    <CardTitle className="text-xl font-bold text-primary">{item.role}</CardTitle>
-                    <CardDescription className="text-md font-semibold text-muted-foreground">{item.company}</CardDescription>
-                </div>
-                <p className="text-sm text-muted-foreground font-medium bg-secondary px-3 py-1 rounded-full">{item.duration}</p>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3">
-                  {item.responsibilities.map((resp, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <CheckCircle className="h-5 w-5 text-accent mt-0.5 flex-shrink-0" />
-                      <span>{resp}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          ))}
+          {experience.map((item, index) => {
+            const companyLogo = images.find(p => p.id === item.logoId);
+            return (
+              <Card key={index} className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                <CardHeader className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                  <div className="flex items-start gap-4">
+                      {companyLogo && (
+                         <div className="relative flex-shrink-0">
+                            <Image
+                                src={companyLogo.imageUrl}
+                                alt={`${item.company} logo`}
+                                width={56}
+                                height={56}
+                                className="rounded-md object-contain border bg-white p-1"
+                                key={companyLogo.imageUrl}
+                            />
+                             {isAdmin && (
+                                <Button
+                                    variant="outline"
+                                    size="icon"
+                                    className="absolute -bottom-2 -right-2 h-7 w-7 rounded-full"
+                                    onClick={() => setEditImageState({
+                                        dialogOpen: true,
+                                        imageId: companyLogo.id,
+                                        currentImageUrl: companyLogo.imageUrl
+                                    })}
+                                >
+                                    <Pencil className="h-4 w-4" />
+                                    <span className="sr-only">Edit Logo</span>
+                                </Button>
+                            )}
+                         </div>
+                      )}
+                      <div>
+                          <CardTitle className="text-xl font-bold text-primary">{item.role}</CardTitle>
+                          <CardDescription className="text-md font-semibold text-muted-foreground">{item.company}</CardDescription>
+                      </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground font-medium bg-secondary px-3 py-1 rounded-full whitespace-nowrap self-start sm:self-center">
+                    {item.duration}
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-3">
+                    {item.responsibilities.map((resp, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <CheckCircle className="h-5 w-5 text-accent mt-0.5 flex-shrink-0" />
+                        <span>{resp}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
+        
+        <Dialog
+            open={editImageState.dialogOpen}
+            onOpenChange={(isOpen) => setEditImageState({ ...editImageState, dialogOpen: isOpen })}
+          >
+            {editImageState.imageId && editImageState.currentImageUrl && (
+                <DialogContent className="sm:max-w-[525px]">
+                  <DialogHeader>
+                    <DialogTitle>Edit Company Logo</DialogTitle>
+                    <DialogDescription>
+                      Update the URL for this company's logo.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <EditImageForm
+                    setDialogOpen={(isOpen) => setEditImageState({ ...editImageState, dialogOpen: isOpen })}
+                    onImageUpdate={handleImageUpdate}
+                    currentImageUrl={editImageState.currentImageUrl}
+                    imageId={editImageState.imageId}
+                  />
+                </DialogContent>
+            )}
+        </Dialog>
+
       </div>
     </section>
   );
