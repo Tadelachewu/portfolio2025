@@ -8,6 +8,11 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ setActiveSection }: HeroSectionProps) {
+  const handleContactClick = () => {
+    setActiveSection('contact');
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section id="home" className="container flex flex-col items-center justify-center flex-1 text-center py-20">
       <div className="animate-fade-in-up">
@@ -28,7 +33,7 @@ export default function HeroSection({ setActiveSection }: HeroSectionProps) {
               Download Resume
             </a>
           </Button>
-          <Button size="lg" variant="outline" onClick={() => setActiveSection('contact')}>
+          <Button size="lg" variant="outline" onClick={handleContactClick}>
               <MessageCircle className="mr-2 h-5 w-5" />
               Contact Me
           </Button>
