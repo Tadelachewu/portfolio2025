@@ -3,13 +3,14 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { PlaceHolderImages, updatePlaceholderImage } from '@/lib/placeholder-images';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Github, ExternalLink, Lightbulb, PlusCircle } from 'lucide-react';
+import { Github, ExternalLink, Lightbulb, PlusCircle, Pencil } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AddProjectForm } from '@/components/forms/add-project-form';
+import { EditImageForm } from '@/components/forms/edit-image-form';
 import { useState, useEffect } from 'react';
 import type { projects } from '@/app/portfolio-data';
 import { useAuth } from '@/hooks/use-auth';
@@ -20,7 +21,9 @@ type ProjectsSectionProps = {
 };
 
 export default function ProjectsSection({ projects, setProjects }: ProjectsSectionProps) {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [editImageState, setEditImageState] = useState<{ dialogOpen: boolean; imageId?: string; currentImageUrl?: string }>({ dialogOpen: false });
+
   const { isAdmin } = useAuth();
   
   const [images, setImages] = useState(PlaceHolderImages);
@@ -39,6 +42,12 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
     };
   }, []);
 
+  const handleImageUpdate = (id: string, newUrl: string) => {
+    const updatedImages = updatePlaceholderImage(images, id, newUrl);
+    setImages(updatedImages);
+    window.dispatchEvent(new Event('storage'));
+  };
+
 
   return (
     <section id="projects" className="py-20 lg:py-32 bg-secondary flex-1 flex items-center">
@@ -52,7 +61,7 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
               <p className="mt-4 max-w-2xl text-lg text-muted-foreground">Here are some of the projects I'm proud to have worked on.</p>
             </div>
             {isAdmin && (
-              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
                 <DialogTrigger asChild>
                   <Button>
                       <PlusCircle className="mr-2 h-5 w-5"/>
@@ -66,7 +75,7 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
                       Fill out the form below to add a new project to your portfolio.
                     </DialogDescription>
                   </DialogHeader>
-                  <AddProjectForm setDialogOpen={setIsDialogOpen} setProjects={setProjects} />
+                  <AddProjectForm setDialogOpen={setIsAddDialogOpen} setProjects={setProjects} />
                 </DialogContent>
               </Dialog>
             )}
@@ -76,17 +85,36 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
             const projectImage = images.find(p => p.id === project.image);
             return (
               <Card key={index} className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-                {projectImage && (
-                  <Image
-                    src={projectImage.imageUrl}
-                    alt={project.title}
-                    width={600}
-                    height={400}
-                    className="w-full h-auto object-cover"
-                    data-ai-hint={projectImage.imageHint}
-                    key={projectImage.imageUrl}
-                  />
-                )}
+                <div className="relative">
+                  {projectImage && (
+                    <>
+                      <Image
+                        src={projectImage.imageUrl}
+                        alt={project.title}
+                        width={600}
+                        height={400}
+                        className="w-full h-auto object-cover"
+                        data-ai-hint={projectImage.imageHint}
+                        key={projectImage.imageUrl}
+                      />
+                       {isAdmin && (
+                         <Button
+                            variant="outline"
+                            size="icon"
+                            className="absolute bottom-2 right-2 rounded-full"
+                            onClick={() => setEditImageState({
+                              dialogOpen: true,
+                              imageId: projectImage.id,
+                              currentImageUrl: projectImage.imageUrl
+                            })}
+                          >
+                            <Pencil className="h-4 w-4" />
+                            <span className="sr-only">Edit Image</span>
+                          </Button>
+                       )}
+                    </>
+                  )}
+                </div>
                 <CardHeader>
                   <CardTitle className="text-2xl font-bold">{project.title}</CardTitle>
                 </CardHeader>
@@ -130,6 +158,27 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
             );
           })}
         </div>
+         <Dialog
+            open={editImageState.dialogOpen}
+            onOpenChange={(isOpen) => setEditImageState({ ...editImageState, dialogOpen: isOpen })}
+          >
+            {editImageState.imageId && editImageState.currentImageUrl && (
+                <DialogContent className="sm:max-w-[525px]">
+                  <DialogHeader>
+                    <DialogTitle>Edit Project Image</DialogTitle>
+                    <DialogDescription>
+                      Update the URL for this project's image.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <EditImageForm
+                    setDialogOpen={(isOpen) => setEditImageState({ ...editImageState, dialogOpen: isOpen })}
+                    onImageUpdate={handleImageUpdate}
+                    currentImageUrl={editImageState.currentImageUrl}
+                    imageId={editImageState.imageId}
+                  />
+                </DialogContent>
+            )}
+        </Dialog>
       </div>
     </section>
   );
