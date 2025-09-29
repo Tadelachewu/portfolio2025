@@ -2,6 +2,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 type AuthContextType = {
   isAdmin: boolean;
@@ -18,6 +19,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       const storedIsAdmin = localStorage.getItem('isAdmin') === 'true';
       setIsAdminState(storedIsAdmin);
+
+      // Initialize placeholder images in localStorage if not present
+      if (!localStorage.getItem('placeholderImages')) {
+        localStorage.setItem('placeholderImages', JSON.stringify(PlaceHolderImages));
+      }
+
     } catch (error) {
         console.warn('Could not read admin status from localStorage', error);
     }

@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Github, ExternalLink, Lightbulb, PlusCircle } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AddProjectForm } from '@/components/forms/add-project-form';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { projects } from '@/app/portfolio-data';
 import { useAuth } from '@/hooks/use-auth';
 
@@ -22,6 +22,23 @@ type ProjectsSectionProps = {
 export default function ProjectsSection({ projects, setProjects }: ProjectsSectionProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { isAdmin } = useAuth();
+  
+  const [images, setImages] = useState(PlaceHolderImages);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedImages = localStorage.getItem('placeholderImages');
+      if (storedImages) {
+        setImages(JSON.parse(storedImages));
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    handleStorageChange();
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
 
   return (
     <section id="projects" className="py-20 lg:py-32 bg-secondary flex-1 flex items-center">
@@ -56,7 +73,7 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => {
-            const projectImage = PlaceHolderImages.find(p => p.id === project.image);
+            const projectImage = images.find(p => p.id === project.image);
             return (
               <Card key={index} className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
                 {projectImage && (
@@ -67,6 +84,7 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
                     height={400}
                     className="w-full h-auto object-cover"
                     data-ai-hint={projectImage.imageHint}
+                    key={projectImage.imageUrl}
                   />
                 )}
                 <CardHeader>

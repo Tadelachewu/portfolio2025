@@ -33,21 +33,36 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { isAdmin, setIsAdmin } = useAuth();
   const router = useRouter();
-  const profilePic = PlaceHolderImages.find(p => p.id === 'profile-picture');
+
+  const [images, setImages] = useState(PlaceHolderImages);
+  const profilePic = images.find(p => p.id === 'profile-picture');
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    const handleStorageChange = () => {
+      const storedImages = localStorage.getItem('placeholderImages');
+      if (storedImages) {
+        setImages(JSON.parse(storedImages));
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+
+    handleStorageChange(); // Initial load
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   const handleLinkClick = (section: Section) => {
     setActiveSection(section);
     setIsSheetOpen(false);
     
-    // If we are not on the home page, navigate there first
     if (window.location.pathname !== '/') {
         router.push('/#' + section);
     } else {
@@ -57,7 +72,6 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
 
   const handleLogout = () => {
     setIsAdmin(false);
-    // You might want to add a toast notification here
   };
 
   return (
@@ -72,6 +86,7 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
               height={32}
               className="rounded-full object-cover"
               data-ai-hint={profilePic.imageHint}
+              key={profilePic.imageUrl}
             />
           )}
           <span>Mesfin.Dev</span>
@@ -128,6 +143,7 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
                                 height={32}
                                 className="rounded-full object-cover"
                                 data-ai-hint={profilePic.imageHint}
+                                key={profilePic.imageUrl}
                                 />
                             )}
                             <span>Mesfin.Dev</span>
