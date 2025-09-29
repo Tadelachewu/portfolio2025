@@ -105,7 +105,16 @@ export const education = [
   }
 ];
 
-export const posts = [
+export type Post = {
+    title: string;
+    date: string;
+    tags: string[];
+    description: string;
+    imageUrl: string;
+    slug: string;
+};
+
+export const posts: Post[] = [
   {
     title: "GERD Nearing Completion, Requires Additional Funding",
     date: "2024-07-29",

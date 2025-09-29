@@ -5,22 +5,29 @@ import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Calendar, Rss, PlusCircle } from 'lucide-react';
+import { ArrowRight, Calendar, Rss, PlusCircle, Pencil, Trash2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 import { AddPostForm } from '@/components/forms/add-post-form';
+import { EditPostForm } from '@/components/forms/edit-post-form';
 import { useState } from 'react';
-import type { posts } from '@/app/portfolio-data';
+import type { Post } from '@/app/portfolio-data';
 import ImageWithFallback from '@/components/image-with-fallback';
 import { useAuth } from '@/hooks/use-auth';
 
 type PostSectionProps = {
-  posts: typeof posts;
-  setPosts: React.Dispatch<React.SetStateAction<typeof posts>>;
+  posts: Post[];
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
 };
 
 export default function PostSection({ posts, setPosts }: PostSectionProps) {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [editState, setEditState] = useState<{ dialogOpen: boolean; post?: Post }>({ dialogOpen: false });
   const { isAdmin } = useAuth();
+
+  const handleDeletePost = (slugToDelete: string) => {
+    setPosts(prevPosts => prevPosts.filter(p => p.slug !== slugToDelete));
+  };
 
   return (
     <section id="posts" className="py-20 lg:py-32 flex-1 flex items-center">
@@ -34,7 +41,7 @@ export default function PostSection({ posts, setPosts }: PostSectionProps) {
               <p className="mt-4 max-w-2xl text-lg text-muted-foreground">Check out my latest articles and thoughts on technology.</p>
             </div>
             {isAdmin && (
-              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
                 <DialogTrigger asChild>
                   <Button>
                       <PlusCircle className="mr-2 h-5 w-5"/>
@@ -48,15 +55,15 @@ export default function PostSection({ posts, setPosts }: PostSectionProps) {
                       Fill out the form below to create a new blog post.
                     </DialogDescription>
                   </DialogHeader>
-                  <AddPostForm setDialogOpen={setIsDialogOpen} setPosts={setPosts} />
+                  <AddPostForm setDialogOpen={setIsAddDialogOpen} setPosts={setPosts} />
                 </DialogContent>
               </Dialog>
             )}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((post, index) => {
+          {posts.map((post) => {
             return (
-              <Card key={index} className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+              <Card key={post.slug} className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
                 {post.imageUrl && (
                   <ImageWithFallback
                     src={post.imageUrl}
@@ -82,18 +89,64 @@ export default function PostSection({ posts, setPosts }: PostSectionProps) {
                     ))}
                   </div>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="flex justify-between items-center">
                     <Button asChild>
                       <Link href={`/posts/${post.slug}`}>
                         Read More
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
+                    {isAdmin && (
+                        <div className="flex gap-2">
+                            <Button variant="outline" size="icon" onClick={() => setEditState({ dialogOpen: true, post: post })}>
+                                <Pencil className="h-4 w-4" />
+                                <span className="sr-only">Edit Post</span>
+                            </Button>
+                             <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                    <Button variant="destructive" size="icon">
+                                        <Trash2 className="h-4 w-4" />
+                                        <span className="sr-only">Delete Post</span>
+                                    </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        This action cannot be undone. This will permanently delete this post.
+                                    </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction onClick={() => handleDeletePost(post.slug)}>Delete</AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
+                        </div>
+                    )}
                 </CardFooter>
               </Card>
             );
           })}
         </div>
+
+        <Dialog open={editState.dialogOpen} onOpenChange={(isOpen) => setEditState({ ...editState, dialogOpen: isOpen })}>
+             {editState.post && (
+                <DialogContent className="sm:max-w-[625px]">
+                    <DialogHeader>
+                        <DialogTitle>Edit Post</DialogTitle>
+                        <DialogDescription>
+                        Make changes to your post here. Click save when you're done.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <EditPostForm
+                        setDialogOpen={(isOpen) => setEditState({ ...editState, dialogOpen: isOpen })}
+                        setPosts={setPosts}
+                        post={editState.post}
+                    />
+                </DialogContent>
+             )}
+        </Dialog>
       </div>
     </section>
   );

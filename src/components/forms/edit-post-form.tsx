@@ -9,7 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { PlusCircle } from "lucide-react";
+import { Save } from "lucide-react";
 import React from "react";
 import type { Post } from "@/app/portfolio-data";
 
@@ -20,40 +20,41 @@ const formSchema = z.object({
   imageUrl: z.string().url("Please enter a valid image URL."),
 });
 
-type AddPostFormProps = {
+type EditPostFormProps = {
   setDialogOpen: (open: boolean) => void;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  post: Post;
 };
 
-export function AddPostForm({ setDialogOpen, setPosts }: AddPostFormProps) {
+export function EditPostForm({ setDialogOpen, setPosts, post }: EditPostFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      tags: "",
-      imageUrl: "",
+      title: post.title,
+      description: post.description,
+      tags: post.tags.join(', '),
+      imageUrl: post.imageUrl,
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     
-    const newPost: Post = {
+    const updatedPost = {
+        ...post,
         ...values,
-        date: new Date().toISOString().split('T')[0], // Set current date
         slug: values.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, ''),
         tags: values.tags.split(',').map(tag => tag.trim()).filter(t => t),
     }
 
-    setPosts(prevPosts => [newPost, ...prevPosts]);
+    setPosts(prevPosts => prevPosts.map(p => p.slug === post.slug ? updatedPost : p));
 
     toast({
-        title: "Post Created!",
-        description: "Your new post has been added.",
+        title: "Post Updated!",
+        description: "Your post has been successfully updated.",
     });
     setIsSubmitting(false);
     setDialogOpen(false);
@@ -117,9 +118,9 @@ export function AddPostForm({ setDialogOpen, setPosts }: AddPostFormProps) {
         />
         <div className="flex justify-end">
             <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? 'Creating...' : <>
-                    <PlusCircle className="mr-2 h-5 w-5"/>
-                    Create Post
+                {isSubmitting ? 'Saving...' : <>
+                    <Save className="mr-2 h-5 w-5"/>
+                    Save Changes
                 </>}
             </Button>
         </div>
