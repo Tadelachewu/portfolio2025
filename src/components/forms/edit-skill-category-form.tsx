@@ -8,62 +8,71 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Save } from "lucide-react";
+import { Save, CodeXml } from "lucide-react";
 import React from "react";
 import { skills as initialSkills, skillIcons as initialSkillIcons } from "@/app/portfolio-data";
+import { Textarea } from "../ui/textarea";
 
 const formSchema = z.object({
-  skillName: z.string().min(1, "Skill name cannot be empty."),
+  categoryName: z.string().min(1, "Category name cannot be empty."),
+  skills: z.string().min(1, "Please enter at least one skill."),
 });
 
-type EditSkillFormProps = {
+type EditSkillCategoryFormProps = {
   setDialogOpen: (open: boolean) => void;
   setSkills: React.Dispatch<React.SetStateAction<typeof initialSkills>>;
   setSkillIcons: React.Dispatch<React.SetStateAction<typeof initialSkillIcons>>;
-  currentCategory: string;
-  currentSkillName: string;
+  currentCategory: typeof initialSkills[0];
 };
 
-export function EditSkillForm({ setDialogOpen, setSkills, setSkillIcons, currentCategory, currentSkillName }: EditSkillFormProps) {
+export function EditSkillCategoryForm({ setDialogOpen, setSkills, setSkillIcons, currentCategory }: EditSkillCategoryFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      skillName: currentSkillName,
+      categoryName: currentCategory.category,
+      skills: currentCategory.items.join('\n'),
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     
+    const newSkillList = values.skills.split('\n').map(s => s.trim()).filter(Boolean);
+
     setSkills(prevSkills => {
       return prevSkills.map(cat => {
-        if (cat.category === currentCategory) {
+        if (cat.category === currentCategory.category) {
           return {
-            ...cat,
-            items: cat.items.map(item => item === currentSkillName ? values.skillName : item)
+            category: values.categoryName,
+            items: newSkillList
           };
         }
         return cat;
       });
     });
     
-    if (currentSkillName !== values.skillName) {
-        setSkillIcons(prevIcons => {
-            const newIcons = { ...prevIcons };
-            const icon = (newIcons as any)[currentSkillName];
-            delete (newIcons as any)[currentSkillName];
-            (newIcons as any)[values.skillName] = icon;
-            return newIcons;
+    setSkillIcons(prevIcons => {
+        const newIcons = { ...prevIcons };
+        // Remove old skills from this category
+        currentCategory.items.forEach(skill => {
+            delete (newIcons as any)[skill];
         });
-    }
+        // Add new/updated skills, defaulting to a generic icon
+        newSkillList.forEach(skill => {
+            if (!newIcons[skill]) {
+                (newIcons as any)[skill] = CodeXml;
+            }
+        });
+        return newIcons;
+    });
 
 
     toast({
-        title: "Skill Updated!",
-        description: `Skill "${currentSkillName}" has been updated to "${values.skillName}".`,
+        title: "Skill Category Updated!",
+        description: `Category "${currentCategory.category}" has been updated.`,
     });
     setIsSubmitting(false);
     setDialogOpen(false);
@@ -75,12 +84,25 @@ export function EditSkillForm({ setDialogOpen, setSkills, setSkillIcons, current
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
-          name="skillName"
+          name="categoryName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Skill Name</FormLabel>
+              <FormLabel>Category Name</FormLabel>
               <FormControl>
-                <Input placeholder="e.g., TypeScript" {...field} />
+                <Input placeholder="e.g., Frontend" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="skills"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Skills (one per line)</FormLabel>
+              <FormControl>
+                <Textarea placeholder="React&#10;Next.js&#10;TypeScript" className="min-h-[150px]" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

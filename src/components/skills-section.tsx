@@ -11,7 +11,7 @@ import { AddSkillForm } from '@/components/forms/add-skill-form';
 import { useState } from 'react';
 import type { skills } from '@/app/portfolio-data';
 import { useAuth } from '@/hooks/use-auth';
-import { EditSkillForm } from './forms/edit-skill-form';
+import { EditSkillCategoryForm } from './forms/edit-skill-category-form';
 
 type SkillsSectionProps = {
   skills: typeof skills;
@@ -22,23 +22,27 @@ type SkillsSectionProps = {
 
 export default function SkillsSection({ skills, setSkills, skillIcons, setSkillIcons }: SkillsSectionProps) {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [editState, setEditState] = useState<{ dialogOpen: boolean; category?: string, skill?: string }>({ dialogOpen: false });
+  const [editState, setEditState] = useState<{ dialogOpen: boolean; category?: typeof skills[0] }>({ dialogOpen: false });
 
   const { isAdmin } = useAuth();
 
-  const handleDeleteSkill = (category: string, skillToDelete: string) => {
-    setSkills(prevSkills => 
-        prevSkills.map(cat => 
-            cat.category === category 
-            ? { ...cat, items: cat.items.filter(item => item !== skillToDelete) }
-            : cat
-        )
-    );
+  const handleDeleteCategory = (categoryToDelete: string) => {
+    const category = skills.find(c => c.category === categoryToDelete);
+    if (!category) return;
+
+    // Remove the skills from the icons mapping
     setSkillIcons(prevIcons => {
         const newIcons = { ...prevIcons };
-        delete (newIcons as any)[skillToDelete];
+        category.items.forEach(skill => {
+            delete (newIcons as any)[skill];
+        });
         return newIcons;
     });
+    
+    // Remove the category from skills
+    setSkills(prevSkills => 
+        prevSkills.filter(cat => cat.category !== categoryToDelete)
+    );
   };
 
   return (
@@ -74,46 +78,46 @@ export default function SkillsSection({ skills, setSkills, skillIcons, setSkillI
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {skills.map((skillCategory, index) => (
-            <Card key={index} className="flex flex-col transition-transform transform hover:-translate-y-2 hover:shadow-xl">
-              <CardHeader>
+            <Card key={index} className="flex flex-col transition-transform transform hover:-translate-y-2 hover:shadow-xl group">
+              <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle className="text-xl font-semibold text-primary">{skillCategory.category}</CardTitle>
+                {isAdmin && (
+                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setEditState({ dialogOpen: true, category: skillCategory })}>
+                            <Pencil className="h-4 w-4" />
+                        </Button>
+                        <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                                <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive hover:text-destructive">
+                                    <Trash2 className="h-4 w-4" />
+                                </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                <AlertDialogTitle>Delete "{skillCategory.category}" category?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action cannot be undone. This will permanently delete this skill category and all skills within it.
+                                </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction onClick={() => handleDeleteCategory(skillCategory.category)}>Delete</AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
+                    </div>
+                )}
               </CardHeader>
               <CardContent className="flex-grow">
                 <ul className="space-y-4">
                   {skillCategory.items.map((item, itemIndex) => {
                     const Icon = skillIcons[item] || CodeXml;
                     return (
-                      <li key={itemIndex} className="flex items-center justify-between gap-3 group">
+                      <li key={itemIndex} className="flex items-center justify-between gap-3">
                         <div className="flex items-center gap-3">
                             {Icon && <Icon className="w-5 h-5 text-accent" />}
                             <span className="font-medium">{item}</span>
                         </div>
-                        {isAdmin && (
-                            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setEditState({ dialogOpen: true, category: skillCategory.category, skill: item })}>
-                                    <Pencil className="h-4 w-4" />
-                                </Button>
-                                <AlertDialog>
-                                    <AlertDialogTrigger asChild>
-                                        <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive hover:text-destructive">
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                    </AlertDialogTrigger>
-                                    <AlertDialogContent>
-                                        <AlertDialogHeader>
-                                        <AlertDialogTitle>Delete "{item}"?</AlertDialogTitle>
-                                        <AlertDialogDescription>
-                                            This action cannot be undone. This will permanently delete this skill.
-                                        </AlertDialogDescription>
-                                        </AlertDialogHeader>
-                                        <AlertDialogFooter>
-                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                        <AlertDialogAction onClick={() => handleDeleteSkill(skillCategory.category, item)}>Delete</AlertDialogAction>
-                                        </AlertDialogFooter>
-                                    </AlertDialogContent>
-                                </AlertDialog>
-                            </div>
-                        )}
                       </li>
                     );
                   })}
@@ -124,20 +128,19 @@ export default function SkillsSection({ skills, setSkills, skillIcons, setSkillI
         </div>
 
         <Dialog open={editState.dialogOpen} onOpenChange={(isOpen) => setEditState({ ...editState, dialogOpen: isOpen })}>
-             {editState.skill && editState.category && (
+             {editState.category && (
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
-                        <DialogTitle>Edit Skill</DialogTitle>
+                        <DialogTitle>Edit Skill Category</DialogTitle>
                         <DialogDescription>
-                        Make changes to your skill here. Click save when you're done.
+                        Update the category name and the skills within it.
                         </DialogDescription>
                     </DialogHeader>
-                    <EditSkillForm
+                    <EditSkillCategoryForm
                         setDialogOpen={(isOpen) => setEditState({ ...editState, dialogOpen: isOpen })}
                         setSkills={setSkills}
                         setSkillIcons={setSkillIcons}
                         currentCategory={editState.category}
-                        currentSkillName={editState.skill}
                     />
                 </DialogContent>
              )}
