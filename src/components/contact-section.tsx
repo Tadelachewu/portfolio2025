@@ -134,7 +134,7 @@ export default function ContactSection() {
                     <FormItem>
                       <FormLabel>Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your Name" {...field} className="text-base"/>
+                        <Input placeholder="Your Name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -147,7 +147,7 @@ export default function ContactSection() {
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="your.email@example.com" {...field} className="text-base"/>
+                        <Input placeholder="your.email@example.com" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -160,7 +160,7 @@ export default function ContactSection() {
                     <FormItem>
                       <FormLabel>Message</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Your message..." {...field} className="min-h-[150px] text-base" />
+                        <Textarea placeholder="Your message..." {...field} className="min-h-[150px]" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

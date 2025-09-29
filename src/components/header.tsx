@@ -44,6 +44,8 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
   const handleLinkClick = (section: Section) => {
     setActiveSection(section);
     setIsSheetOpen(false);
+    // Smooth scroll to the section
+    document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleLogout = () => {
@@ -131,7 +133,7 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
                             activeSection === link.section ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
                         )}
                     >
-                        <link.icon className="h-5 w-5 text-primary" />
+                        <link.icon className="h-5 w-5" />
                         <span>{link.label}</span>
                     </button>
                     ))}

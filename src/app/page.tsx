@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '@/components/header';
 import HeroSection from '@/components/hero-section';
 import AboutSection from '@/components/about-section';
@@ -29,39 +29,38 @@ export default function Home() {
   const [aboutMe, setAboutMe] = useState(initialAboutMe);
   const { isAdmin, setIsAdmin } = useAuth();
 
-  // For now, we won't force login to see the page
-  // if (!isAdmin) {
-  //   return <LoginComponent />;
-  // }
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id as Section);
+          }
+        });
+      },
+      { rootMargin: '-30% 0px -70% 0px' }
+    );
 
-  const renderSection = () => {
-    switch (activeSection) {
-      case 'home':
-        return <HeroSection setActiveSection={setActiveSection} />;
-      case 'about':
-        return <AboutSection aboutMe={aboutMe} setAboutMe={setAboutMe} />;
-      case 'skills':
-        return <SkillsSection skills={skills} setSkills={setSkills} skillIcons={skillIcons} setSkillIcons={setSkillIcons} />;
-      case 'projects':
-        return <ProjectsSection projects={projects} setProjects={setProjects} />;
-      case 'experience':
-        return <ExperienceSection experience={experience} setExperience={setExperience} />;
-      case 'education':
-        return <EducationSection education={education} setEducation={setEducation} />;
-      case 'posts':
-        return <PostSection posts={posts} setPosts={setPosts} />;
-      case 'contact':
-        return <ContactSection />;
-      default:
-        return <HeroSection setActiveSection={setActiveSection} />;
-    }
-  };
+    const sections = document.querySelectorAll('section');
+    sections.forEach((section) => observer.observe(section));
+
+    return () => {
+      sections.forEach((section) => observer.unobserve(section));
+    };
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
       <Header activeSection={activeSection} setActiveSection={setActiveSection} />
       <main className="flex-1 flex flex-col">
-        {renderSection()}
+        <HeroSection setActiveSection={setActiveSection} />
+        <AboutSection aboutMe={aboutMe} setAboutMe={setAboutMe} />
+        <SkillsSection skills={skills} setSkills={setSkills} skillIcons={skillIcons} setSkillIcons={setSkillIcons} />
+        <ProjectsSection projects={projects} setProjects={setProjects} />
+        <ExperienceSection experience={experience} setExperience={setExperience} />
+        <EducationSection education={education} setEducation={setEducation} />
+        <PostSection posts={posts} setPosts={setPosts} />
+        <ContactSection />
       </main>
       <Footer />
     </div>

@@ -57,7 +57,7 @@ export function EditAboutForm({ setDialogOpen, setAboutMe, currentDescription }:
               <FormControl>
                 <Textarea 
                   placeholder="Tell us a little bit about yourself"
-                  className="min-h-[150px] text-base"
+                  className="min-h-[150px]"
                   {...field} 
                 />
               </FormControl>
