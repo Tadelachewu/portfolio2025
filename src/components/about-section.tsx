@@ -109,4 +109,3 @@ export default function AboutSection({ aboutMe, setAboutMe }: AboutSectionProps)
     </section>
   );
 }
-
