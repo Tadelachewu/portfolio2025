@@ -94,7 +94,14 @@ export const experience = [
   }
 ];
 
-export const education = [
+export const education: {
+  degree: string;
+  institution: string;
+  cgpa: string;
+  exitExam: string;
+  year: string;
+  logoUrl?: string;
+}[] = [
   {
     degree: "BSc in Computer Science",
     institution: "Bahir Dar University",

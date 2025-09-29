@@ -18,6 +18,7 @@ const formSchema = z.object({
   cgpa: z.string().min(3, "CGPA is required."),
   exitExam: z.string().min(3, "Exit exam score is required."),
   year: z.string().min(4, "Graduation year is required."),
+  logoUrl: z.string().url("Please enter a valid URL for the logo.").optional().or(z.literal('')),
 });
 
 type AddEducationFormProps = {
@@ -37,13 +38,25 @@ export function AddEducationForm({ setDialogOpen, setEducation }: AddEducationFo
       cgpa: "",
       exitExam: "",
       year: "",
+      logoUrl: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     
-    setEducation(prevEducation => [values, ...prevEducation]);
+    // The education type in portfolio-data might not have logoUrl as optional
+    // so we construct the object carefully.
+    const newEducation: typeof education[0] = {
+      degree: values.degree,
+      institution: values.institution,
+      cgpa: values.cgpa,
+      exitExam: values.exitExam,
+      year: values.year,
+      ...(values.logoUrl ? { logoUrl: values.logoUrl } : { logoUrl: `https://picsum.photos/seed/${values.institution}/200/200` }),
+    };
+
+    setEducation(prevEducation => [newEducation, ...prevEducation]);
 
     toast({
         title: "Education Added!",
@@ -111,7 +124,7 @@ export function AddEducationForm({ setDialogOpen, setEducation }: AddEducationFo
             )}
             />
         </div>
-        <FormField
+         <FormField
           control={form.control}
           name="year"
           render={({ field }) => (
@@ -119,6 +132,19 @@ export function AddEducationForm({ setDialogOpen, setEducation }: AddEducationFo
               <FormLabel>Year</FormLabel>
               <FormControl>
                 <Input placeholder="e.g., Graduated 2023" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="logoUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Institution Logo URL</FormLabel>
+              <FormControl>
+                <Input placeholder="https://example.com/logo.png" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
