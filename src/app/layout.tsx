@@ -12,7 +12,14 @@ export const metadata: Metadata = {
   title: 'Mesfin.Dev | Software Developer',
   description: 'Portfolio of Tadele Mesfin Belay, a full-stack and AI-powered solutions developer.',
   icons: {
-    icon: profilePic?.imageUrl || '/favicon.ico',
+    icon: [
+      { url: profilePic?.imageUrl || '/favicon.ico', sizes: 'any' },
+      { url: profilePic?.imageUrl || '/favicon.ico', type: 'image/svg+xml' }
+    ],
+    shortcut: [profilePic?.imageUrl || '/favicon.ico'],
+    apple: [
+      { url: profilePic?.imageUrl || '/apple-icon.png' },
+    ],
   },
 };
 
