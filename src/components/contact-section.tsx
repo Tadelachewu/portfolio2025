@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { sendEmail, SendEmailInput } from "@/ai/flows/send-email-flow";
 import { contactInfo } from "@/app/portfolio-data";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -105,23 +106,60 @@ export default function ContactSection() {
                 </a>
             </div>
             <h3 className="text-2xl font-semibold pt-6">Follow Me</h3>
-             <div className="flex items-center gap-4">
-                <Button asChild variant="outline" size="icon" disabled>
-                    <Link href="#" target="_blank"><Linkedin /></Link>
-                </Button>
-                <Button asChild variant="outline" size="icon">
-                    <Link href="https://github.com/Tadelachewu" target="_blank"><Github /></Link>
-                </Button>
-                <Button asChild variant="outline" size="icon">
-                    <Link href="https://www.youtube.com/@EagleTube-ph6wh" target="_blank"><Youtube /></Link>
-                </Button>
-                <Button asChild variant="outline" size="icon">
-                    <Link href="https://t.me/TadeleMesfin" target="_blank"><Send /></Link>
-                </Button>
-                 <Button asChild variant="outline" size="icon" disabled>
-                    <Link href="#" target="_blank"><TikTokIcon className="h-5 w-5"/></Link>
-                </Button>
-            </div>
+             <TooltipProvider>
+              <div className="flex items-center gap-4">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button asChild variant="outline" size="icon" disabled>
+                      <Link href="#" target="_blank"><Linkedin /></Link>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>LinkedIn</p>
+                  </TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button asChild variant="outline" size="icon">
+                      <Link href="https://github.com/Tadelachewu" target="_blank"><Github /></Link>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>GitHub</p>
+                  </TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button asChild variant="outline" size="icon">
+                      <Link href="https://www.youtube.com/@EagleTube-ph6wh" target="_blank"><Youtube /></Link>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>YouTube</p>
+                  </TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button asChild variant="outline" size="icon">
+                        <Link href="https://t.me/TadeleMesfin" target="_blank"><Send /></Link>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Telegram</p>
+                  </TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button asChild variant="outline" size="icon" disabled>
+                        <Link href="#" target="_blank"><TikTokIcon className="h-5 w-5"/></Link>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>TikTok</p>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
+            </TooltipProvider>
           </div>
 
           <div>

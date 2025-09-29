@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Github, Linkedin, Youtube, Send } from 'lucide-react';
 import { Button } from './ui/button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 
 const TikTokIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg
@@ -24,33 +25,60 @@ export default function Footer() {
         <p className="text-sm text-muted-foreground">
           © {new Date().getFullYear()} Tadele Mesfin. All Rights Reserved.
         </p>
-        <div className="flex items-center gap-2">
-            <Button asChild variant="ghost" size="icon" disabled>
-                <Link href="#" target="_blank" aria-label="LinkedIn">
-                    <Linkedin className="h-5 w-5" />
-                </Link>
-            </Button>
-            <Button asChild variant="ghost" size="icon">
-                <Link href="https://github.com/Tadelachewu" target="_blank" aria-label="GitHub">
-                    <Github className="h-5 w-5" />
-                </Link>
-            </Button>
-            <Button asChild variant="ghost" size="icon">
-                <Link href="https://www.youtube.com/@EagleTube-ph6wh" target="_blank" aria-label="YouTube">
-                    <Youtube className="h-5 w-5" />
-                </Link>
-            </Button>
-            <Button asChild variant="ghost" size="icon">
-                <Link href="https://t.me/TadeleMesfin" target="_blank" aria-label="Telegram">
-                    <Send className="h-5 w-5" />
-                </Link>
-            </Button>
-            <Button asChild variant="ghost" size="icon" disabled>
-                <Link href="#" target="_blank" aria-label="TikTok">
-                    <TikTokIcon className="h-5 w-5" />
-                </Link>
-            </Button>
-        </div>
+        <TooltipProvider>
+            <div className="flex items-center gap-2">
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Button asChild variant="ghost" size="icon" disabled>
+                            <Link href="#" target="_blank" aria-label="LinkedIn">
+                                <Linkedin className="h-5 w-5" />
+                            </Link>
+                        </Button>
+                    </TooltipTrigger>
+                    <TooltipContent><p>LinkedIn</p></TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Button asChild variant="ghost" size="icon">
+                            <Link href="https://github.com/Tadelachewu" target="_blank" aria-label="GitHub">
+                                <Github className="h-5 w-5" />
+                            </Link>
+                        </Button>
+                    </TooltipTrigger>
+                    <TooltipContent><p>GitHub</p></TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Button asChild variant="ghost" size="icon">
+                            <Link href="https://www.youtube.com/@EagleTube-ph6wh" target="_blank" aria-label="YouTube">
+                                <Youtube className="h-5 w-5" />
+                            </Link>
+                        </Button>
+                    </TooltipTrigger>
+                    <TooltipContent><p>YouTube</p></TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Button asChild variant="ghost" size="icon">
+                            <Link href="https://t.me/TadeleMesfin" target="_blank" aria-label="Telegram">
+                                <Send className="h-5 w-5" />
+                            </Link>
+                        </Button>
+                    </TooltipTrigger>
+                    <TooltipContent><p>Telegram</p></TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Button asChild variant="ghost" size="icon" disabled>
+                            <Link href="#" target="_blank" aria-label="TikTok">
+                                <TikTokIcon className="h-5 w-5" />
+                            </Link>
+                        </Button>
+                    </TooltipTrigger>
+                    <TooltipContent><p>TikTok</p></TooltipContent>
+                </Tooltip>
+            </div>
+        </TooltipProvider>
       </div>
     </footer>
   );
