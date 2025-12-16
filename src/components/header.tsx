@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { Menu, X, UserCircle2, Wrench, Lightbulb, Briefcase, GraduationCap, Rss, MessageCircle, LogOut } from 'lucide-react';
+import { Menu, X, UserCircle2, Wrench, Lightbulb, Briefcase, GraduationCap, Rss, MessageCircle, LogOut, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
@@ -115,6 +115,12 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
             </Button>
             </nav>
             <ThemeToggle />
+            <Button asChild size="sm" variant="outline">
+              <a href="/cv/Tadele_Mesfin_CV.pdf" download className="flex items-center gap-2">
+                <Download className="h-4 w-4" />
+                <span>Resume</span>
+              </a>
+            </Button>
 
             {isAdmin && (
                <Button variant="ghost" size="icon" onClick={handleLogout} aria-label="Logout">
