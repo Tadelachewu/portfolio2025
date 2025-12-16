@@ -12,9 +12,8 @@ import { DialogHeader, DialogTitle, DialogDescription, DialogFooter } from './ui
 import { LogIn } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card';
 
-// This is a simplified, client-side-only login for demonstration.
-// In a real application, this should be handled by a secure backend service.
-const ADMIN_PASSWORD = 'admin'; // Hardcoded for now
+// Login now calls a secure server API that compares the SHA-256 hash of the
+// submitted password against `process.env.ADMIN_PASSWORD_HASH` on the server.
 
 export default function LoginComponent() {
   const [password, setPassword] = useState('');
@@ -25,22 +24,27 @@ export default function LoginComponent() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === ADMIN_PASSWORD) {
-      setIsAdmin(true);
-      setError('');
-      toast({
-        title: 'Login Successful',
-        description: 'You are now in admin mode.',
-      });
-      router.push('/');
-    } else {
-      setError('Incorrect password. Please try again.');
-      toast({
-        title: 'Login Failed',
-        description: 'Incorrect password. Please try again.',
-        variant: 'destructive'
-      });
-    }
+    fetch('/api/admin-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password }),
+    })
+      .then(async (res) => {
+        const data = await res.json()
+        if (res.ok && data.success) {
+          setIsAdmin(true)
+          setError('')
+          toast({ title: 'Login Successful', description: 'You are now in admin mode.' })
+          router.push('/')
+        } else {
+          setError(data.message || 'Incorrect password. Please try again.')
+          toast({ title: 'Login Failed', description: data.message || 'Incorrect password. Please try again.', variant: 'destructive' })
+        }
+      })
+      .catch(() => {
+        setError('Server error. Please try again later.')
+        toast({ title: 'Login Failed', description: 'Server error. Please try again later.', variant: 'destructive' })
+      })
   };
 
   return (
