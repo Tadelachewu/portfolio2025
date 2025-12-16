@@ -116,7 +116,7 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
             </nav>
             <ThemeToggle />
             <Button asChild size="sm" variant="outline">
-              <a href="/cv/Tadele_Mesfin_CV.pdf" download className="flex items-center gap-2">
+              <a href="/cv/Tadele_Mesfin_CV.pdf" download="Tadele_Mesfin_CV.pdf" className="flex items-center gap-2">
                 <Download className="h-4 w-4" />
                 <span>Resume</span>
               </a>
