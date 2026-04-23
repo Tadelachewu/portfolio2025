@@ -68,6 +68,22 @@ export const projects = [
     image: "nib-security-bot"
   },
   {
+    title: "NIB Chatbot",
+    description: "Customer-facing chatbot deployed for NIB Bank.",
+    tech: ["Chatbot", "Web"],
+    github: "#",
+    live: "https://nibterachatboat.nibbank.com.et/",
+    image: "nib-chatbot"
+  },
+  {
+    title: "NIB Procurement System",
+    description: "Procurement management system used by NIB Bank.",
+    tech: ["Procurement", "Enterprise", "Web"],
+    github: "#",
+    live: "https://nibprocure.nibbank.com.et/",
+    image: "nib-procure"
+  },
+  {
     title: "Employee Management System",
     description: "Full-stack app with React frontend and Express + SQL Server backend, enabling comprehensive employee data management.",
     tech: ["React", "Express", "SQL Server"],

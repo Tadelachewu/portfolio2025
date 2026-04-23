@@ -1,4 +1,4 @@
-# **App Name**: Mesfin.Dev
+# **App Name**: Tadele Mesfin
 
 ## Core Features:
 

@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react';
 import type { Metadata } from 'next';
 
 const generateMetadata = (profilePicUrl: string): Metadata => ({
-  title: 'Mesfin.Dev | Software Developer',
+  title: 'Tadele Mesfin | Software Developer',
   description: 'Portfolio of Tadele Mesfin Belay, a full-stack and AI-powered solutions developer.',
   icons: {
     icon: [
@@ -34,26 +34,26 @@ export default function RootLayout({
 
   useEffect(() => {
     const handleStorageChange = () => {
-        const images = JSON.parse(localStorage.getItem('placeholderImages') || JSON.stringify(PlaceHolderImages));
-        const newProfilePic = images.find((p: any) => p.id === 'profile-picture');
-        if (newProfilePic) {
-            setProfilePicUrl(newProfilePic.imageUrl);
-        }
+      const images = JSON.parse(localStorage.getItem('placeholderImages') || JSON.stringify(PlaceHolderImages));
+      const newProfilePic = images.find((p: any) => p.id === 'profile-picture');
+      if (newProfilePic) {
+        setProfilePicUrl(newProfilePic.imageUrl);
+      }
     };
-    
+
     // Listen for custom event from about-section
     window.addEventListener('storage', handleStorageChange);
-    
+
     // Initial load from localStorage
     handleStorageChange();
 
     return () => {
-        window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('storage', handleStorageChange);
     };
   }, []);
-  
+
   const metadata = generateMetadata(profilePicUrl);
-  
+
   // In a client component, we can't export metadata directly.
   // We need to update the document head dynamically.
   useEffect(() => {

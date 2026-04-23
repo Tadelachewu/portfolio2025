@@ -90,109 +90,151 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => {
             const projectImage = images.find(p => p.id === project.image);
-            return (
-              <Card key={index} className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-                <div className="relative">
-                  {projectImage && (
-                    <>
-                      <Image
-                        src={projectImage.imageUrl}
-                        alt={project.title}
-                        width={600}
-                        height={400}
-                        className="w-full h-auto object-cover"
-                        data-ai-hint={projectImage.imageHint}
-                        key={projectImage.imageUrl}
-                      />
-                       {isAdmin && (
-                         <Button
+
+            function ProjectCard({ proj, projImage }: { proj: typeof projects[0]; projImage?: typeof images[0] }) {
+              const localPath = projImage?.imagePath ?? (projImage ? `/images/${projImage.id}.png` : undefined);
+              const fallback = projImage?.imageUrl;
+              const [src, setSrc] = useState<string | undefined>(undefined);
+
+              useEffect(() => {
+                let mounted = true;
+                async function checkAndSet() {
+                  if (localPath) {
+                    try {
+                      const res = await fetch(localPath, { method: 'HEAD' });
+                      if (res.ok) {
+                        const ct = res.headers.get('content-type') || '';
+                        if (ct.startsWith('image')) {
+                          if (mounted) setSrc(localPath);
+                          return;
+                        }
+                      }
+                    } catch (e) {
+                      // ignore and fallback
+                    }
+                  }
+                  if (fallback && mounted) setSrc(fallback);
+                }
+
+                checkAndSet();
+                return () => { mounted = false; };
+              }, [localPath, fallback]);
+
+              return (
+                <Card key={index} className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+                  <div className="relative">
+                    {src && (
+                      <>
+                        <Image
+                          src={src}
+                          alt={proj.title}
+                          width={600}
+                          height={400}
+                          className="w-full h-auto object-cover"
+                          data-ai-hint={projImage?.imageHint}
+                          onError={() => {
+                            if (fallback && src !== fallback) setSrc(fallback);
+                          }}
+                          unoptimized
+                          key={src}
+                        />
+                        {isAdmin && projImage && (
+                          <Button
                             variant="outline"
                             size="icon"
                             className="absolute bottom-2 right-2 rounded-full"
                             onClick={() => setEditImageState({
                               dialogOpen: true,
-                              imageId: projectImage.id,
-                              currentImageUrl: projectImage.imageUrl
+                              imageId: projImage.id,
+                              currentImageUrl: projImage.imageUrl
                             })}
                           >
                             <Pencil className="h-4 w-4" />
                             <span className="sr-only">Edit Image</span>
                           </Button>
-                       )}
-                    </>
-                  )}
-                </div>
-                <CardHeader>
-                  <CardTitle className="text-2xl font-bold">{project.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="flex-grow">
-                  <p className="mb-4 text-base text-muted-foreground">{project.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech, techIndex) => (
-                      <Badge key={techIndex} variant="secondary">{tech}</Badge>
-                    ))}
+                        )}
+                      </>
+                    )}
                   </div>
-                </CardContent>
-                <CardFooter className="flex justify-between items-center">
-                  <div className="flex gap-4">
-                    {project.github && project.github !== '#' ? (
+                  <CardHeader>
+                    <CardTitle className="text-2xl font-bold">{proj.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="flex-grow">
+                    <p className="mb-4 text-base text-muted-foreground">{proj.description}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {proj.tech.map((tech, techIndex) => (
+                        <Badge key={techIndex} variant="secondary">{tech}</Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                  <CardFooter className="flex justify-between items-center">
+                    <div className="flex gap-4">
+                      {proj.github && proj.github !== '#' ? (
                         <Button asChild variant="outline">
-                        <Link href={project.github} target="_blank">
+                          <Link href={proj.github} target="_blank">
                             <Github className="mr-2 h-4 w-4" />
                             GitHub
-                        </Link>
+                          </Link>
                         </Button>
-                    ) : (
+                      ) : (
                         <Button variant="outline" disabled>
-                            <Github className="mr-2 h-4 w-4" />
-                            Coming Soon
+                          <Github className="mr-2 h-4 w-4" />
+                          Coming Soon
                         </Button>
-                    )}
-                    {project.live && project.live !== '#' ? (
+                      )}
+                      {proj.live && proj.live !== '#' ? (
                         <Button asChild>
-                        <Link href={project.live} target="_blank">
+                          <Link href={proj.live} target="_blank">
                             <ExternalLink className="mr-2 h-4 w-4" />
                             Live Demo
-                        </Link>
+                          </Link>
                         </Button>
-                    ) : (
+                      ) : (
                         <Button disabled>
-                        <ExternalLink className="mr-2 h-4 w-4" />
-                        Coming Soon
+                          <ExternalLink className="mr-2 h-4 w-4" />
+                          Coming Soon
                         </Button>
-                    )}
-                  </div>
-                  {isAdmin && (
+                      )}
+                    </div>
+                    {isAdmin && (
                       <div className="flex gap-2">
-                          <Button variant="outline" size="icon" onClick={() => setEditProjectState({ dialogOpen: true, project: project })}>
-                              <Pencil className="h-4 w-4" />
-                              <span className="sr-only">Edit Project</span>
-                          </Button>
-                           <AlertDialog>
-                              <AlertDialogTrigger asChild>
-                                  <Button variant="destructive" size="icon">
-                                      <Trash2 className="h-4 w-4" />
-                                      <span className="sr-only">Delete Project</span>
-                                  </Button>
-                              </AlertDialogTrigger>
-                              <AlertDialogContent>
-                                  <AlertDialogHeader>
-                                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                  <AlertDialogDescription>
-                                      This action cannot be undone. This will permanently delete this project.
-                                  </AlertDialogDescription>
-                                  </AlertDialogHeader>
-                                  <AlertDialogFooter>
-                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                  <AlertDialogAction onClick={() => handleDeleteProject(project.title)}>Delete</AlertDialogAction>
-                                  </AlertDialogFooter>
-                              </AlertDialogContent>
-                          </AlertDialog>
+                        <Button variant="outline" size="icon" onClick={() => setEditProjectState({ dialogOpen: true, project: proj })}>
+                          <Pencil className="h-4 w-4" />
+                          <span className="sr-only">Edit Project</span>
+                        </Button>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button variant="destructive" size="icon">
+                              <Trash2 className="h-4 w-4" />
+                              <span className="sr-only">Delete Project</span>
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete this project.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction onClick={() => handleDeleteProject(proj.title)}>Delete</AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
                       </div>
-                  )}
-                </CardFooter>
-              </Card>
-            );
+                    )}
+                    {isAdmin && (
+                      <div className="ml-4 text-sm text-muted-foreground">
+                        <a href={src} target="_blank" rel="noreferrer">Open image</a>
+                      </div>
+                    )}
+                  </CardFooter>
+                </Card>
+              );
+            }
+
+            return <ProjectCard key={project.title} proj={project} projImage={projectImage} />;
           })}
         </div>
          <Dialog

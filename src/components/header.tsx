@@ -62,11 +62,11 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
   const handleLinkClick = (section: Section) => {
     setActiveSection(section);
     setIsSheetOpen(false);
-    
+
     if (window.location.pathname !== '/') {
-        router.push('/#' + section);
+      router.push('/#' + section);
     } else {
-        document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
+      document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -89,100 +89,100 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
               key={profilePic.imageUrl}
             />
           )}
-          <span>Mesfin.Dev</span>
+          <span>Tadele Mesfin</span>
         </Link>
 
         <div className="flex items-center gap-2">
-            <nav className="hidden md:flex items-center gap-2">
+          <nav className="hidden md:flex items-center gap-2">
             {navLinks.map((link) => (
-                <button
+              <button
                 key={link.section}
                 onClick={() => handleLinkClick(link.section)}
                 className={cn(
-                    "text-sm font-medium transition-all px-3 py-2 rounded-md flex items-center gap-2",
-                    activeSection === link.section ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-primary hover:bg-muted'
+                  "text-sm font-medium transition-all px-3 py-2 rounded-md flex items-center gap-2",
+                  activeSection === link.section ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-primary hover:bg-muted'
                 )}
-                >
+              >
                 <link.icon className="h-4 w-4" />
                 <span>{link.label}</span>
-                </button>
+              </button>
             ))}
             <Button asChild size="sm" onClick={() => handleLinkClick('contact')}>
-                <button className={cn(activeSection === 'contact' ? 'bg-primary text-primary-foreground' : '')}>
-                    <MessageCircle className="mr-2 h-4 w-4" />
-                    Contact Me
-                </button>
+              <button className={cn(activeSection === 'contact' ? 'bg-primary text-primary-foreground' : '')}>
+                <MessageCircle className="mr-2 h-4 w-4" />
+                Contact Me
+              </button>
             </Button>
-            </nav>
-            <ThemeToggle />
-            <Button asChild size="sm" variant="outline">
-              <a href="/cv/Tadele_Mesfin_CV.pdf" download className="flex items-center gap-2">
-                <Download className="h-4 w-4" />
-                <span>Resume</span>
-              </a>
+          </nav>
+          <ThemeToggle />
+          <Button asChild size="sm" variant="outline">
+            <a href="/cv/Tadele_Mesfin_CV.pdf" download className="flex items-center gap-2">
+              <Download className="h-4 w-4" />
+              <span>Resume</span>
+            </a>
+          </Button>
+
+          {isAdmin && (
+            <Button variant="ghost" size="icon" onClick={handleLogout} aria-label="Logout">
+              <LogOut className="h-5 w-5" />
             </Button>
+          )}
 
-            {isAdmin && (
-               <Button variant="ghost" size="icon" onClick={handleLogout} aria-label="Logout">
-                <LogOut className="h-5 w-5" />
-              </Button>
-            )}
-
-            <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+          <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild className="md:hidden">
-                <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon">
                 <Menu className="w-6 h-6" />
                 <span className="sr-only">Open menu</span>
-                </Button>
+              </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px] p-0 bg-secondary">
-                <SheetHeader className="p-4 border-b">
-                    <SheetTitle className="sr-only">Menu</SheetTitle>
-                    <SheetDescription className="sr-only">Main navigation menu</SheetDescription>
-                    <div className="flex justify-between items-center">
-                        <Link href="/" onClick={() => handleLinkClick('home')} className="flex items-center gap-2 text-xl font-bold text-primary">
-                             {profilePic && (
-                                <Image
-                                src={profilePic.imageUrl}
-                                alt={profilePic.description}
-                                width={32}
-                                height={32}
-                                className="rounded-full object-cover"
-                                data-ai-hint={profilePic.imageHint}
-                                key={profilePic.imageUrl}
-                                />
-                            )}
-                            <span>Mesfin.Dev</span>
-                        </Link>
-                        <Button variant="ghost" size="icon" onClick={() => setIsSheetOpen(false)}>
-                            <X className="h-6 w-6" />
-                            <span className="sr-only">Close menu</span>
-                        </Button>
-                    </div>
-                </SheetHeader>
-                <div className="flex flex-col h-full">
-                <nav className="flex flex-col items-start gap-2 p-4">
-                    {navLinks.map((link) => (
-                    <button
-                        key={link.section}
-                        onClick={() => handleLinkClick(link.section)}
-                        className={cn(
-                            "text-lg font-medium w-full p-3 rounded-md flex items-center gap-3 transition-colors",
-                            activeSection === link.section ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
-                        )}
-                    >
-                        <link.icon className="h-5 w-5" />
-                        <span>{link.label}</span>
-                    </button>
-                    ))}
-                    <Button className="w-full mt-4" size="lg" onClick={() => handleLinkClick('contact')}>
-                        <MessageCircle className="mr-2 h-5 w-5"/>
-                        Contact Me
-                    </Button>
-                </nav>
+              <SheetHeader className="p-4 border-b">
+                <SheetTitle className="sr-only">Menu</SheetTitle>
+                <SheetDescription className="sr-only">Main navigation menu</SheetDescription>
+                <div className="flex justify-between items-center">
+                  <Link href="/" onClick={() => handleLinkClick('home')} className="flex items-center gap-2 text-xl font-bold text-primary">
+                    {profilePic && (
+                      <Image
+                        src={profilePic.imageUrl}
+                        alt={profilePic.description}
+                        width={32}
+                        height={32}
+                        className="rounded-full object-cover"
+                        data-ai-hint={profilePic.imageHint}
+                        key={profilePic.imageUrl}
+                      />
+                    )}
+                    <span>Tadele Mesfin</span>
+                  </Link>
+                  <Button variant="ghost" size="icon" onClick={() => setIsSheetOpen(false)}>
+                    <X className="h-6 w-6" />
+                    <span className="sr-only">Close menu</span>
+                  </Button>
                 </div>
+              </SheetHeader>
+              <div className="flex flex-col h-full">
+                <nav className="flex flex-col items-start gap-2 p-4">
+                  {navLinks.map((link) => (
+                    <button
+                      key={link.section}
+                      onClick={() => handleLinkClick(link.section)}
+                      className={cn(
+                        "text-lg font-medium w-full p-3 rounded-md flex items-center gap-3 transition-colors",
+                        activeSection === link.section ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
+                      )}
+                    >
+                      <link.icon className="h-5 w-5" />
+                      <span>{link.label}</span>
+                    </button>
+                  ))}
+                  <Button className="w-full mt-4" size="lg" onClick={() => handleLinkClick('contact')}>
+                    <MessageCircle className="mr-2 h-5 w-5" />
+                    Contact Me
+                  </Button>
+                </nav>
+              </div>
             </SheetContent>
-            </Sheet>
+          </Sheet>
         </div>
       </div>
     </header>
