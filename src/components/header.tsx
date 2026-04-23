@@ -113,6 +113,7 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
                 Contact Me
               </button>
             </Button>
+<<<<<<< HEAD
           </nav>
           <ThemeToggle />
           <Button asChild size="sm" variant="outline">
@@ -125,6 +126,15 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
           {isAdmin && (
             <Button variant="ghost" size="icon" onClick={handleLogout} aria-label="Logout">
               <LogOut className="h-5 w-5" />
+=======
+            </nav>
+            <ThemeToggle />
+            <Button asChild size="sm" variant="outline">
+              <a href="/cv/Tadele_Mesfin_CV.pdf" download="Tadele_Mesfin_CV.pdf" className="flex items-center gap-2">
+                <Download className="h-4 w-4" />
+                <span>Resume</span>
+              </a>
+>>>>>>> 8b788ce07bf6b1f14f348683b4177f79a97e325d
             </Button>
           )}
 

@@ -27,7 +27,7 @@ export default function HeroSection({ setActiveSection }: HeroSectionProps) {
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
           <Button size="lg" asChild>
-            <a href="https://archive.org/download/resume-example-sde/SDE-Resume-Example.pdf" download="Tadele-Mesfin-Resume.pdf">
+            <a href="/cv/Tadele_Mesfin_CV.pdf" download="Tadele_Mesfin_CV.pdf">
               <Download className="mr-2 h-5 w-5" />
               Download Resume
             </a>
