@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server'
-import crypto from 'crypto'
 
 export async function POST(request: Request) {
   try {
@@ -9,14 +8,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, message: 'Invalid payload' }, { status: 400 })
     }
 
-    const envHash = process.env.ADMIN_PASSWORD_HASH
-    if (!envHash) {
+    // Compare raw password from environment variable (ADMIN_PASSWORD)
+    const envPassword = process.env.ADMIN_PASSWORD
+    if (!envPassword) {
       return NextResponse.json({ success: false, message: 'Server not configured' }, { status: 500 })
     }
 
-    const hash = crypto.createHash('sha256').update(password).digest('hex')
-
-    if (hash === envHash) {
+    if (password === envPassword) {
       return NextResponse.json({ success: true })
     }
 

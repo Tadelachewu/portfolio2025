@@ -39,7 +39,7 @@ const sendEmailFlow = ai.defineFlow(
     console.log('--- Starting sendEmailFlow ---');
 
     const { name, email, message } = input;
-    const toEmail = 'tade2024bdu@gmail.com';
+    const toEmail = process.env.EMAIL_DESTINATION || process.env.EMAIL_TO || 'tade2024bdu@gmail.com';
 
     const emailServerUser = process.env.EMAIL_SERVER_USER;
     const emailServerPassword = process.env.EMAIL_SERVER_PASSWORD;
@@ -48,11 +48,11 @@ const sendEmailFlow = ai.defineFlow(
       console.error('EMAIL_SERVER_USER environment variable not set.');
       return { success: false, error: 'Server configuration error: Missing email user.' };
     }
-     if (!emailServerPassword) {
+    if (!emailServerPassword) {
       console.error('EMAIL_SERVER_PASSWORD environment variable not set.');
       return { success: false, error: 'Server configuration error: Missing email password.' };
     }
-    
+
     console.log(`EMAIL_SERVER_USER is set: ${!!emailServerUser}`);
     console.log(`EMAIL_SERVER_PASSWORD is set: ${!!emailServerPassword}`);
 
@@ -91,7 +91,7 @@ const sendEmailFlow = ai.defineFlow(
       return { success: true };
     } catch (error: any) {
       console.error('Failed to send email. Error details:', error);
-      
+
       let errorMessage = 'An unknown error occurred while sending the email.';
       if (error.code === 'EAUTH') {
         errorMessage = 'Authentication failed. Please check your EMAIL_SERVER_USER and EMAIL_SERVER_PASSWORD credentials. For Gmail, you may need to use an "App Password".';

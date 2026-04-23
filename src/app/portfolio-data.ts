@@ -25,7 +25,7 @@ export const projects = [
     tech: ["Python", "Telegram Bot"],
     github: "https://github.com/Tadelachewu/BotApplicationLetter.git",
     live: "https://t.me/ApplicationLetterByTade_bot",
-    image: "application-letter-bot" 
+    image: "application-letter-bot"
   },
   {
     title: "Online Editor App",
@@ -126,23 +126,24 @@ export const education: {
   year: string;
   logoUrl?: string;
 }[] = [
-  {
-    degree: "BSc in Computer Science",
-    institution: "Bahir Dar University",
-    cgpa: "3.78",
-    exitExam: "76%",
-    year: "Graduated 2023",
-    logoUrl: "https://archive.org/services/img/bdu_20250925"
-  }
-];
+    {
+      degree: "BSc in Computer Science",
+      institution: "Bahir Dar University",
+      cgpa: "3.78",
+      exitExam: "76%",
+      year: "Graduated 2023",
+      logoUrl: "https://archive.org/services/img/bdu_20250925"
+    }
+  ];
 
 export type Post = {
-    title: string;
-    date: string;
-    tags: string[];
-    description: string;
-    imageUrl: string;
-    slug: string;
+  title: string;
+  date: string;
+  tags: string[];
+  description: string;
+  imageUrl: string;
+  originalImageUrl?: string;
+  slug: string;
 };
 
 export const posts: Post[] = [
@@ -152,6 +153,7 @@ export const posts: Post[] = [
     tags: ["Ethiopia", "Development", "GERD"],
     description: "The Grand Ethiopian Renaissance Dam (GERD) is nearing completion but requires an additional 80 billion Birr to be finalized, showcasing a major milestone in national development.",
     imageUrl: "https://picsum.photos/seed/gerd-2/600/400",
+    originalImageUrl: "https://picsum.photos/seed/gerd-2/600/400",
     slug: "gerd-nearing-completion"
   },
   {
@@ -160,6 +162,7 @@ export const posts: Post[] = [
     tags: ["Web Dev", "Next.js", "AI"],
     description: "Exploring the latest trends shaping the future of web development, from server components to AI-driven UIs.",
     imageUrl: "https://picsum.photos/seed/post1/600/400",
+    originalImageUrl: "https://picsum.photos/seed/post1/600/400",
     slug: "future-of-web-dev"
   },
   {
@@ -168,6 +171,7 @@ export const posts: Post[] = [
     tags: ["AI", "Python", "Genkit"],
     description: "A beginner-friendly guide to understanding and implementing generative AI models in your own projects.",
     imageUrl: "https://picsum.photos/seed/post2/600/400",
+    originalImageUrl: "https://picsum.photos/seed/post2/600/400",
     slug: "getting-started-genai"
   },
   {
@@ -176,6 +180,7 @@ export const posts: Post[] = [
     tags: ["Cybersecurity", "Development", "Security"],
     description: "Essential security practices that every developer should know to build more secure and resilient applications.",
     imageUrl: "https://picsum.photos/seed/post3/600/400",
+    originalImageUrl: "https://picsum.photos/seed/post3/600/400",
     slug: "cybersecurity-best-practices"
   }
 ];
@@ -207,13 +212,13 @@ export const skillIcons: { [key: string]: React.ElementType } = {
 };
 
 export const educationIcons = {
-    degree: GraduationCap,
-    institution: Building,
-    cgpa: Star,
-    exitExam: Award
+  degree: GraduationCap,
+  institution: Building,
+  cgpa: Star,
+  exitExam: Award
 }
 
 export const contactInfo = {
-    email: 'tade2024bdu@gmail.com',
-    phone: '+251949847581'
+  email: 'tade2024bdu@gmail.com',
+  phone: '+251949847581'
 }

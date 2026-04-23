@@ -28,38 +28,60 @@ export default function Home() {
   const [aboutMe, setAboutMe] = useState(initialAboutMe);
   const { isAdmin } = useAuth();
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id as Section);
-          }
-        });
-      },
-      { rootMargin: '-30% 0px -70% 0px' }
-    );
-
-    const sections = document.querySelectorAll('section');
-    sections.forEach((section) => observer.observe(section));
-
-    return () => {
-      sections.forEach((section) => observer.unobserve(section));
-    };
-  }, []);
+  // For SPA behavior we no longer auto-detect sections by scroll.
+  // Navigation will control which single section is rendered.
 
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground font-body">
       <Header activeSection={activeSection} setActiveSection={setActiveSection} />
-      <main className="flex-1 flex flex-col items-center">
-        <HeroSection setActiveSection={setActiveSection} />
-        <AboutSection aboutMe={aboutMe} setAboutMe={setAboutMe} />
-        <SkillsSection skills={skills} setSkills={setSkills} skillIcons={skillIcons} setSkillIcons={setSkillIcons} />
-        <ProjectsSection projects={projects} setProjects={setProjects} />
-        <ExperienceSection experience={experience} setExperience={setExperience} />
-        <EducationSection education={education} setEducation={setEducation} />
-        <PostSection posts={posts} setPosts={setPosts} />
-        <ContactSection />
+      <main className="flex-1 flex flex-col items-center w-full">
+        {activeSection === 'home' && (
+          <div className="w-full">
+            <HeroSection setActiveSection={setActiveSection} />
+          </div>
+        )}
+
+        {activeSection === 'about' && (
+          <div className="w-full">
+            <AboutSection aboutMe={aboutMe} setAboutMe={setAboutMe} />
+          </div>
+        )}
+
+        {activeSection === 'skills' && (
+          <div className="w-full">
+            <SkillsSection skills={skills} setSkills={setSkills} skillIcons={skillIcons} setSkillIcons={setSkillIcons} />
+          </div>
+        )}
+
+        {activeSection === 'projects' && (
+          <div className="w-full">
+            <ProjectsSection projects={projects} setProjects={setProjects} />
+          </div>
+        )}
+
+        {activeSection === 'experience' && (
+          <div className="w-full">
+            <ExperienceSection experience={experience} setExperience={setExperience} />
+          </div>
+        )}
+
+        {activeSection === 'education' && (
+          <div className="w-full">
+            <EducationSection education={education} setEducation={setEducation} />
+          </div>
+        )}
+
+        {activeSection === 'posts' && (
+          <div className="w-full">
+            <PostSection posts={posts} setPosts={setPosts} />
+          </div>
+        )}
+
+        {activeSection === 'contact' && (
+          <div className="w-full">
+            <ContactSection />
+          </div>
+        )}
       </main>
       <Footer />
     </div>

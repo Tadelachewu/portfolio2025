@@ -36,6 +36,7 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
 
   const [images, setImages] = useState(PlaceHolderImages);
   const profilePic = images.find(p => p.id === 'profile-picture');
+  const [imageSrc, setImageSrc] = useState<string | null>(profilePic?.imageUrl || null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,35 +60,88 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
     };
   }, []);
 
+  // ensure header avatar falls back to originalImageUrl if uploaded file is missing
+  useEffect(() => {
+    async function check(p: any) {
+      if (!p) return setImageSrc(null);
+      const tryUrl = p.imageUrl;
+      const original = p.originalImageUrl || null;
+      try {
+        const res = await fetch(tryUrl, { method: 'HEAD' });
+        if (res.ok) return setImageSrc(tryUrl);
+      } catch (e) {
+        // ignore
+      }
+      const ok = await new Promise<boolean>((resolve) => {
+        const img = new window.Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = tryUrl;
+      });
+      if (ok) setImageSrc(tryUrl);
+      else if (original) setImageSrc(original);
+      else setImageSrc(tryUrl);
+    }
+    check(profilePic);
+  }, [profilePic]);
+
   const handleLinkClick = (section: Section) => {
+    // SPA behavior: switch section client-side without scrolling or pushing a new URL
     setActiveSection(section);
     setIsSheetOpen(false);
-
-    if (window.location.pathname !== '/') {
-      router.push('/#' + section);
-    } else {
-      document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
-    }
   };
 
   const handleLogout = () => {
     setIsAdmin(false);
   };
 
+  const handleResumeUpload = async () => {
+    try {
+      const input = document.createElement('input')
+      input.type = 'file'
+      input.accept = 'application/pdf'
+      input.click()
+      input.onchange = async () => {
+        const file = input.files?.[0]
+        if (!file) return
+        const adminPwd = window.prompt('Enter admin password to upload resume')
+        if (!adminPwd) return
+        const fd = new FormData()
+        fd.append('file', file)
+        fd.append('adminPassword', adminPwd)
+
+        const res = await fetch('/api/upload-resume', { method: 'POST', body: fd })
+        const data = await res.json()
+        if (data?.ok) {
+          alert('Resume uploaded — served at ' + data.url)
+        } else {
+          alert('Upload failed: ' + (data?.error || res.statusText))
+        }
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err)
+      alert('Unexpected error uploading resume')
+    }
+  }
+
   return (
     <header className={cn("sticky top-0 z-50 w-full transition-all duration-300 bg-secondary border-b", isScrolled ? "shadow-md" : "")}>
       <div className="container flex items-center justify-between h-16">
         <Link href="/" onClick={() => setActiveSection('home')} className="flex items-center gap-2 text-xl font-bold text-primary">
           {profilePic && (
-            <Image
-              src={profilePic.imageUrl}
-              alt={profilePic.description}
-              width={32}
-              height={32}
-              className="rounded-full object-cover"
-              data-ai-hint={profilePic.imageHint}
-              key={profilePic.imageUrl}
-            />
+            <div className="relative w-8 h-8 rounded-full overflow-hidden">
+              <Image
+                src={imageSrc || profilePic.imageUrl}
+                alt={profilePic.description}
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="32px"
+                priority
+                data-ai-hint={profilePic.imageHint}
+                key={imageSrc || profilePic.imageUrl}
+              />
+            </div>
           )}
           <span>Tadele Mesfin</span>
         </Link>
@@ -113,28 +167,24 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
                 Contact Me
               </button>
             </Button>
-<<<<<<< HEAD
           </nav>
           <ThemeToggle />
           <Button asChild size="sm" variant="outline">
-            <a href="/cv/Tadele_Mesfin_CV.pdf" download className="flex items-center gap-2">
+            <a href="/cv/Tadele_Mesfin_CV.pdf" download="Tadele_Mesfin_CV.pdf" className="flex items-center gap-2">
               <Download className="h-4 w-4" />
               <span>Resume</span>
             </a>
           </Button>
 
           {isAdmin && (
+            <Button size="sm" variant="outline" onClick={handleResumeUpload}>
+              <span className="flex items-center gap-2">Upload Resume</span>
+            </Button>
+          )}
+
+          {isAdmin && (
             <Button variant="ghost" size="icon" onClick={handleLogout} aria-label="Logout">
               <LogOut className="h-5 w-5" />
-=======
-            </nav>
-            <ThemeToggle />
-            <Button asChild size="sm" variant="outline">
-              <a href="/cv/Tadele_Mesfin_CV.pdf" download="Tadele_Mesfin_CV.pdf" className="flex items-center gap-2">
-                <Download className="h-4 w-4" />
-                <span>Resume</span>
-              </a>
->>>>>>> 8b788ce07bf6b1f14f348683b4177f79a97e325d
             </Button>
           )}
 
@@ -152,15 +202,18 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
                 <div className="flex justify-between items-center">
                   <Link href="/" onClick={() => handleLinkClick('home')} className="flex items-center gap-2 text-xl font-bold text-primary">
                     {profilePic && (
-                      <Image
-                        src={profilePic.imageUrl}
-                        alt={profilePic.description}
-                        width={32}
-                        height={32}
-                        className="rounded-full object-cover"
-                        data-ai-hint={profilePic.imageHint}
-                        key={profilePic.imageUrl}
-                      />
+                      <div className="relative w-8 h-8 rounded-full overflow-hidden">
+                        <Image
+                          src={imageSrc || profilePic.imageUrl}
+                          alt={profilePic.description}
+                          fill
+                          style={{ objectFit: 'cover' }}
+                          sizes="32px"
+                          priority
+                          data-ai-hint={profilePic.imageHint}
+                          key={imageSrc || profilePic.imageUrl}
+                        />
+                      </div>
                     )}
                     <span>Tadele Mesfin</span>
                   </Link>

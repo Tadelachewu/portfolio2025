@@ -33,32 +33,32 @@ export default function PostSection({ posts, setPosts }: PostSectionProps) {
     <section id="posts" className="py-20 lg:py-32">
       <div className="container">
         <div className="flex justify-between items-center mb-12">
-            <div className='text-left'>
-                <div className="flex items-center gap-4 mb-4">
-                    <Rss className="h-10 w-10 text-primary" />
-                    <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">News & Ideas</h2>
-                </div>
-              <p className="mt-4 max-w-2xl text-lg text-muted-foreground">Check out my latest articles and thoughts on technology.</p>
+          <div className='text-left'>
+            <div className="flex items-center gap-4 mb-4">
+              <Rss className="h-10 w-10 text-primary" />
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">News & Ideas</h2>
             </div>
-            {isAdmin && (
-              <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button>
-                      <PlusCircle className="mr-2 h-5 w-5"/>
-                      Add Post
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[625px]">
-                  <DialogHeader>
-                    <DialogTitle>Create New Post</DialogTitle>
-                    <DialogDescription>
-                      Fill out the form below to create a new blog post.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <AddPostForm setDialogOpen={setIsAddDialogOpen} setPosts={setPosts} />
-                </DialogContent>
-              </Dialog>
-            )}
+            <p className="mt-4 max-w-2xl text-lg text-muted-foreground">Check out my latest articles and thoughts on technology.</p>
+          </div>
+          {isAdmin && (
+            <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+              <DialogTrigger asChild>
+                <Button>
+                  <PlusCircle className="mr-2 h-5 w-5" />
+                  Add Post
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[625px]">
+                <DialogHeader>
+                  <DialogTitle>Create New Post</DialogTitle>
+                  <DialogDescription>
+                    Fill out the form below to create a new blog post.
+                  </DialogDescription>
+                </DialogHeader>
+                <AddPostForm setDialogOpen={setIsAddDialogOpen} setPosts={setPosts} />
+              </DialogContent>
+            </Dialog>
+          )}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post) => {
@@ -67,6 +67,7 @@ export default function PostSection({ posts, setPosts }: PostSectionProps) {
                 {post.imageUrl && (
                   <ImageWithFallback
                     src={post.imageUrl}
+                    originalSrc={(post as any).originalImageUrl || null}
                     alt={post.title}
                     width={600}
                     height={400}
@@ -90,40 +91,40 @@ export default function PostSection({ posts, setPosts }: PostSectionProps) {
                   </div>
                 </CardContent>
                 <CardFooter className="flex justify-between items-center">
-                    <Button asChild>
-                      <Link href={`/posts/${post.slug}`}>
-                        Read More
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                    {isAdmin && (
-                        <div className="flex gap-2">
-                            <Button variant="outline" size="icon" onClick={() => setEditState({ dialogOpen: true, post: post })}>
-                                <Pencil className="h-4 w-4" />
-                                <span className="sr-only">Edit Post</span>
-                            </Button>
-                             <AlertDialog>
-                                <AlertDialogTrigger asChild>
-                                    <Button variant="destructive" size="icon">
-                                        <Trash2 className="h-4 w-4" />
-                                        <span className="sr-only">Delete Post</span>
-                                    </Button>
-                                </AlertDialogTrigger>
-                                <AlertDialogContent>
-                                    <AlertDialogHeader>
-                                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                        This action cannot be undone. This will permanently delete this post.
-                                    </AlertDialogDescription>
-                                    </AlertDialogHeader>
-                                    <AlertDialogFooter>
-                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                    <AlertDialogAction onClick={() => handleDeletePost(post.slug)}>Delete</AlertDialogAction>
-                                    </AlertDialogFooter>
-                                </AlertDialogContent>
-                            </AlertDialog>
-                        </div>
-                    )}
+                  <Button asChild>
+                    <Link href={`/posts/${post.slug}`}>
+                      Read More
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                  {isAdmin && (
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="icon" onClick={() => setEditState({ dialogOpen: true, post: post })}>
+                        <Pencil className="h-4 w-4" />
+                        <span className="sr-only">Edit Post</span>
+                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="destructive" size="icon">
+                            <Trash2 className="h-4 w-4" />
+                            <span className="sr-only">Delete Post</span>
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This action cannot be undone. This will permanently delete this post.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => handleDeletePost(post.slug)}>Delete</AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </div>
+                  )}
                 </CardFooter>
               </Card>
             );
@@ -131,21 +132,21 @@ export default function PostSection({ posts, setPosts }: PostSectionProps) {
         </div>
 
         <Dialog open={editState.dialogOpen} onOpenChange={(isOpen) => setEditState({ ...editState, dialogOpen: isOpen })}>
-             {editState.post && (
-                <DialogContent className="sm:max-w-[625px]">
-                    <DialogHeader>
-                        <DialogTitle>Edit Post</DialogTitle>
-                        <DialogDescription>
-                        Make changes to your post here. Click save when you're done.
-                        </DialogDescription>
-                    </DialogHeader>
-                    <EditPostForm
-                        setDialogOpen={(isOpen) => setEditState({ ...editState, dialogOpen: isOpen })}
-                        setPosts={setPosts}
-                        post={editState.post}
-                    />
-                </DialogContent>
-             )}
+          {editState.post && (
+            <DialogContent className="sm:max-w-[625px]">
+              <DialogHeader>
+                <DialogTitle>Edit Post</DialogTitle>
+                <DialogDescription>
+                  Make changes to your post here. Click save when you're done.
+                </DialogDescription>
+              </DialogHeader>
+              <EditPostForm
+                setDialogOpen={(isOpen) => setEditState({ ...editState, dialogOpen: isOpen })}
+                setPosts={setPosts}
+                post={editState.post}
+              />
+            </DialogContent>
+          )}
         </Dialog>
       </div>
     </section>

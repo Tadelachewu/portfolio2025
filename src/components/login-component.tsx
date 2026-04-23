@@ -12,8 +12,8 @@ import { DialogHeader, DialogTitle, DialogDescription, DialogFooter } from './ui
 import { LogIn } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card';
 
-// Login now calls a secure server API that compares the SHA-256 hash of the
-// submitted password against `process.env.ADMIN_PASSWORD_HASH` on the server.
+// Login now calls a server API that compares the submitted password against
+// `process.env.ADMIN_PASSWORD` on the server.
 
 export default function LoginComponent() {
   const [password, setPassword] = useState('');

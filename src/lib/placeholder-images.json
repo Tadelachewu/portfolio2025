@@ -3,7 +3,7 @@
     {
       "id": "profile-picture",
       "description": "Profile picture of Tadele Mesfin Belay",
-      "imageUrl": "https://i.postimg.cc/9fXSbkKR/5956510394602343002.jpg",
+      "imageUrl": "/uploads/profile-1776947452058.jpg",
       "imageHint": "man portrait"
     },
     {
@@ -85,8 +85,7 @@
       "description": "The Grand Ethiopian Renaissance Dam",
       "imageUrl": "https://images.unsplash.com/photo-1626603343424-ac55063ba5c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxoeWRyb2VsZWN0cmljJTIwZGFtfGVufDB8fHx8MTc1ODc0MDQyMXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "hydroelectric dam"
-    }
-    ,
+    },
     {
       "id": "nib-chatbot",
       "description": "Screenshot of NIB Chatbot interface",

@@ -37,7 +37,29 @@ export default function RootLayout({
       const images = JSON.parse(localStorage.getItem('placeholderImages') || JSON.stringify(PlaceHolderImages));
       const newProfilePic = images.find((p: any) => p.id === 'profile-picture');
       if (newProfilePic) {
-        setProfilePicUrl(newProfilePic.imageUrl);
+        // Check if uploaded image exists; if not, fall back to originalImageUrl or default
+        const tryUrl = newProfilePic.imageUrl;
+        const original = newProfilePic.originalImageUrl || null;
+        (async () => {
+          try {
+            const res = await fetch(tryUrl, { method: 'HEAD' });
+            if (res.ok) {
+              setProfilePicUrl(tryUrl);
+              return;
+            }
+          } catch (e) {
+            // ignore
+          }
+          const ok = await new Promise<boolean>((resolve) => {
+            const img = new window.Image();
+            img.onload = () => resolve(true);
+            img.onerror = () => resolve(false);
+            img.src = tryUrl;
+          });
+          if (ok) setProfilePicUrl(tryUrl);
+          else if (original) setProfilePicUrl(original);
+          else setProfilePicUrl('/favicon.ico');
+        })();
       }
     };
 
