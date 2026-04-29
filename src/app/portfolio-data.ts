@@ -20,6 +20,14 @@ export const projects = [
     image: "cv-generator"
   },
   {
+    title: "RAG Chat Bot",
+    description: "Knowledge-base RAG chatbot that accepts one or more documents, stores them in a Chroma vector DB, and answers user queries; replies 'Not found' when no relevant answer exists.",
+    tech: ["Python", "FastAPI", "python-telegram-bot", "RAG", "Chroma (Vector DB)"],
+    github: "https://github.com/Tadelachewu/My_Rag_Bot.git",
+    live: "https://t.me/Ragchabott_bot",
+    image: "rag-chat-bot"
+  },
+  {
     title: "Application Letter Bot",
     description: "A Telegram bot that assists in generating application letters.",
     tech: ["Python", "Telegram Bot"],
