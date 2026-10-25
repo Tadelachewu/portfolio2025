@@ -10,15 +10,16 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: { DEFAULT: "1rem", sm: "1.5rem", lg: "2rem" },
       screens: {
-        "2xl": "1400px",
+        "2xl": "1280px",
       },
     },
     extend: {
       fontFamily: {
-        body: ['Inter', 'sans-serif'],
-        headline: ['Inter', 'sans-serif'],
+        body: ['Inter', 'system-ui', 'sans-serif'],
+        headline: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['"Playfair Display"', 'Georgia', 'serif'],
       },
       colors: {
         background: 'hsl(var(--background))',
@@ -34,6 +35,7 @@ export default {
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
+          ink: 'hsl(var(--primary-ink))',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
@@ -51,6 +53,7 @@ export default {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))',
         },
+        chrome: 'hsl(var(--chrome))',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -94,6 +97,10 @@ export default {
             transform: 'translateY(0)',
           },
         },
+        blob: {
+          '0%, 100%': { borderRadius: '58% 42% 38% 62% / 52% 46% 54% 48%' },
+          '50%': { borderRadius: '42% 58% 62% 38% / 44% 58% 42% 56%' },
+        },
         'fade-in': {
           '0%': {
             opacity: '0',
@@ -108,6 +115,7 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
         'fade-in': 'fade-in 0.6s ease-out forwards',
+        blob: 'blob 14s ease-in-out infinite',
       },
     },
   },

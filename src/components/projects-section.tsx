@@ -7,7 +7,7 @@ import { PlaceHolderImages, updatePlaceholderImage } from '@/lib/placeholder-ima
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Github, ExternalLink, Lightbulb, PlusCircle, Pencil, Trash2 } from 'lucide-react';
+import { Github, ExternalLink, Globe, Lightbulb, PlusCircle, Pencil, Trash2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 import { AddProjectForm } from '@/components/forms/add-project-form';
@@ -16,6 +16,11 @@ import { EditProjectForm } from '@/components/forms/edit-project-form';
 import { useState, useEffect } from 'react';
 import type { projects } from '@/app/portfolio-data';
 import { useAuth } from '@/hooks/use-auth';
+import { usePagination } from '@/hooks/use-pagination';
+import PaginationControls from '@/components/pagination-controls';
+import SectionHeader from '@/components/section-header';
+
+const PROJECTS_PER_PAGE = 6;
 
 type ProjectsSectionProps = {
   projects: typeof projects;
@@ -28,7 +33,8 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
   const [editProjectState, setEditProjectState] = useState<{ dialogOpen: boolean; project?: typeof projects[0] }>({ dialogOpen: false });
 
   const { isAdmin } = useAuth();
-  
+  const pagination = usePagination(projects, { pageSize: PROJECTS_PER_PAGE, jumpOnAdd: 'last' });
+
   const [images, setImages] = useState(PlaceHolderImages);
 
   useEffect(() => {
@@ -57,17 +63,14 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
 
 
   return (
-    <section id="projects" className="py-20 lg:py-32 bg-secondary">
+    <section id="projects" className="py-16 md:py-24 bg-secondary scroll-mt-16">
       <div className="container">
-        <div className="flex justify-between items-center mb-12">
-            <div className='text-left'>
-                <div className="flex items-center gap-4 mb-4">
-                    <Lightbulb className="h-10 w-10 text-primary" />
-                    <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Featured Projects</h2>
-                </div>
-              <p className="mt-4 max-w-2xl text-lg text-muted-foreground">Here are some of the projects I'm proud to have worked on.</p>
-            </div>
-            {isAdmin && (
+        <SectionHeader
+          eyebrow="Portfolio"
+          icon={Lightbulb}
+          title="Featured Projects"
+          description="Mobile apps, AI tools, bots and enterprise systems I have designed, built and shipped."
+          action={isAdmin && (
               <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
                 <DialogTrigger asChild>
                   <Button>
@@ -86,9 +89,9 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
                 </DialogContent>
               </Dialog>
             )}
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((project, index) => {
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+          {pagination.pageItems.map((project, index) => {
             const projectImage = images.find(p => p.id === project.image);
 
             function ProjectCard({ proj, projImage }: { proj: typeof projects[0]; projImage?: typeof images[0] }) {
@@ -121,8 +124,8 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
               }, [localPath, fallback]);
 
               return (
-                <Card key={index} className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-                  <div className="relative">
+                <Card key={index} className="group flex flex-col overflow-hidden transition-all duration-300 hover:border-primary/40 hover:shadow-lg">
+                  <div className="relative aspect-[3/2] overflow-hidden border-b bg-muted">
                     {src && (
                       <>
                         <Image
@@ -130,7 +133,7 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
                           alt={proj.title}
                           width={600}
                           height={400}
-                          className="w-full h-auto object-cover"
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                           data-ai-hint={projImage?.imageHint}
                           onError={() => {
                             if (fallback && src !== fallback) setSrc(fallback);
@@ -156,43 +159,51 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
                       </>
                     )}
                   </div>
-                  <CardHeader>
-                    <CardTitle className="text-2xl font-bold">{proj.title}</CardTitle>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="font-headline text-xl font-semibold leading-snug">{proj.title}</CardTitle>
                   </CardHeader>
                   <CardContent className="flex-grow">
-                    <p className="mb-4 text-base text-muted-foreground">{proj.description}</p>
+                    <p className="mb-5 text-sm leading-relaxed text-muted-foreground">{proj.description}</p>
                     <div className="flex flex-wrap gap-2">
                       {proj.tech.map((tech, techIndex) => (
-                        <Badge key={techIndex} variant="secondary">{tech}</Badge>
+                        <Badge key={techIndex} variant="secondary" className="rounded-md font-medium">{tech}</Badge>
                       ))}
                     </div>
                   </CardContent>
-                  <CardFooter className="flex justify-between items-center">
-                    <div className="flex gap-4">
+                  <CardFooter className="flex justify-between items-center border-t pt-4">
+                    <div className="flex flex-wrap gap-2">
                       {proj.github && proj.github !== '#' ? (
-                        <Button asChild variant="outline">
+                        <Button asChild variant="outline" size="sm">
                           <Link href={proj.github} target="_blank">
                             <Github className="mr-2 h-4 w-4" />
                             GitHub
                           </Link>
                         </Button>
                       ) : (
-                        <Button variant="outline" disabled>
+                        <Button variant="outline" size="sm" disabled>
                           <Github className="mr-2 h-4 w-4" />
                           Coming Soon
                         </Button>
                       )}
                       {proj.live && proj.live !== '#' ? (
-                        <Button asChild>
+                        <Button asChild size="sm">
                           <Link href={proj.live} target="_blank">
                             <ExternalLink className="mr-2 h-4 w-4" />
-                            Live Demo
+                            {proj.liveLabel ?? 'Live Demo'}
                           </Link>
                         </Button>
                       ) : (
-                        <Button disabled>
+                        <Button size="sm" disabled>
                           <ExternalLink className="mr-2 h-4 w-4" />
                           Coming Soon
+                        </Button>
+                      )}
+                      {proj.web && (
+                        <Button asChild variant="secondary" size="sm">
+                          <Link href={proj.web} target="_blank">
+                            <Globe className="mr-2 h-4 w-4" />
+                            {proj.webLabel ?? 'Web App'}
+                          </Link>
                         </Button>
                       )}
                     </div>
@@ -237,6 +248,16 @@ export default function ProjectsSection({ projects, setProjects }: ProjectsSecti
             return <ProjectCard key={project.title} proj={project} projImage={projectImage} />;
           })}
         </div>
+        <PaginationControls
+          page={pagination.page}
+          totalPages={pagination.totalPages}
+          start={pagination.start}
+          end={pagination.end}
+          total={pagination.total}
+          itemLabel="projects"
+          onPageChange={pagination.setPage}
+          scrollTargetId="projects"
+        />
          <Dialog
             open={editImageState.dialogOpen}
             onOpenChange={(isOpen) => setEditImageState({ ...editImageState, dialogOpen: isOpen })}

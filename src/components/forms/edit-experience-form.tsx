@@ -44,6 +44,7 @@ export function EditExperienceForm({ setDialogOpen, setExperience, experience, i
     setIsSubmitting(true);
     
     const updatedExperience: Experience = {
+      ...experience,
       role: values.role,
       company: values.company,
       duration: values.duration,

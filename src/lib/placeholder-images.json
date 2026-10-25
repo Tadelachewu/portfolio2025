@@ -99,6 +99,34 @@
       "imageUrl": "/images/nib-procure.png",
       "imagePath": "/images/nib-procure.png",
       "imageHint": "NIB procurement dashboard"
+    },
+    {
+      "id": "rag-chat-bot",
+      "description": "Screenshot of RAG Chat Bot",
+      "imageUrl": "/images/rag-chat-bot.png",
+      "imagePath": "/images/rag-chat-bot.png",
+      "imageHint": "RAG chatbot telegram"
+    },
+    {
+      "id": "flutter-portfolio-app",
+      "description": "Screenshot of Flutter Portfolio mobile app",
+      "imageUrl": "/images/flutter-portfolio-app.png",
+      "imagePath": "/images/flutter-portfolio-app.png",
+      "imageHint": "mobile portfolio app"
+    },
+    {
+      "id": "ai-scientific-calculator",
+      "description": "Screenshots of AI Scientific Calculator mobile app",
+      "imageUrl": "/images/ai-scientific-calculator.png",
+      "imagePath": "/images/ai-scientific-calculator.png",
+      "imageHint": "scientific calculator app"
+    },
+    {
+      "id": "ai-calculator-web",
+      "description": "Screenshot of AI Scientific Calculator web app",
+      "imageUrl": "/images/ai-scientific-calculator.png",
+      "imagePath": "/images/ai-calculator-web.png",
+      "imageHint": "AI calculator web app"
     }
   ]
 }

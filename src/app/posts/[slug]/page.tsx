@@ -23,7 +23,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <article className="max-w-4xl mx-auto">
           <header className="mb-8">
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-primary mb-4">{post.title}</h1>
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-primary-ink mb-4">{post.title}</h1>
             <div className="flex items-center space-x-4 text-muted-foreground">
               <div className="flex items-center gap-2">
                 <Calendar className="h-5 w-5" />

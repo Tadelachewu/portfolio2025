@@ -46,6 +46,7 @@ export function EditProjectForm({ setDialogOpen, setProjects, project }: EditPro
     setIsSubmitting(true);
     
     const updatedProject = {
+      ...project,
       ...values,
       tech: values.tech.split(',').map(t => t.trim()).filter(t => t),
       github: values.github || '#',

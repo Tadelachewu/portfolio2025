@@ -14,6 +14,7 @@ import { useState } from 'react';
 import type { education } from '@/app/portfolio-data';
 import Image from 'next/image';
 import { useAuth } from '@/hooks/use-auth';
+import SectionHeader from '@/components/section-header';
 
 type EducationSectionProps = {
   education: typeof education;
@@ -48,17 +49,14 @@ export default function EducationSection({ education, setEducation }: EducationS
 
 
   return (
-    <section id="education" className="py-20 lg:py-32 bg-secondary">
+    <section id="education" className="py-16 md:py-24 bg-secondary">
       <div className="container">
-        <div className="flex justify-between items-center mb-12">
-            <div className='text-left'>
-                <div className="flex items-center gap-4 mb-4">
-                    <GraduationCap className="h-10 w-10 text-primary" />
-                    <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Education</h2>
-                </div>
-              <p className="mt-4 max-w-2xl text-lg text-muted-foreground">My academic background and qualifications.</p>
-            </div>
-            {isAdmin && (
+        <SectionHeader
+          eyebrow="Academics"
+          icon={GraduationCap}
+          title="Education"
+          description="My academic background and qualifications."
+          action={isAdmin && (
               <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
                 <DialogTrigger asChild>
                   <Button>
@@ -77,11 +75,11 @@ export default function EducationSection({ education, setEducation }: EducationS
                 </DialogContent>
               </Dialog>
             )}
-        </div>
+        />
         <div className="max-w-3xl mx-auto">
           {education.map((edu, index) => (
-            <Card key={index} className="overflow-hidden shadow-lg transition-all hover:shadow-xl hover:-translate-y-1 mb-8 last:mb-0 relative group">
-              <CardHeader className="bg-muted p-6">
+            <Card key={index} className="overflow-hidden transition-all duration-300 hover:border-primary/40 hover:shadow-lg mb-6 last:mb-0 relative group">
+              <CardHeader className="border-b bg-muted/50 p-6">
                 <div className="flex items-center gap-4">
                   {edu.logoUrl && (
                      <div className="bg-white p-2 rounded-full flex-shrink-0 relative">
@@ -111,28 +109,28 @@ export default function EducationSection({ education, setEducation }: EducationS
                     </div>
                   )}
                   <div>
-                    <CardTitle className="text-2xl font-bold">{edu.degree}</CardTitle>
-                    <p className="text-lg text-muted-foreground font-medium">{edu.year}</p>
+                    <CardTitle className="font-headline text-lg font-semibold leading-snug">{edu.degree}</CardTitle>
+                    <p className="mt-1 text-sm text-muted-foreground font-medium">{edu.year}</p>
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-6 text-lg">
+              <CardContent className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm">
                 <div className="flex items-center gap-3">
-                  <InstitutionIcon className="h-6 w-6 text-accent" />
+                  <InstitutionIcon className="h-5 w-5 text-accent" />
                   <div>
                     <span className="font-semibold">Institution: </span>
                     <span>{edu.institution}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <CgpaIcon className="h-6 w-6 text-accent" />
+                  <CgpaIcon className="h-5 w-5 text-accent" />
                   <div>
                     <span className="font-semibold">CGPA: </span>
                     <span>{edu.cgpa}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 col-span-1 sm:col-span-2">
-                  <ExitExamIcon className="h-6 w-6 text-accent" />
+                  <ExitExamIcon className="h-5 w-5 text-accent" />
                   <div>
                     <span className="font-semibold">Exit Exam Score: </span>
                     <span>{edu.exitExam}</span>

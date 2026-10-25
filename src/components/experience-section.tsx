@@ -11,7 +11,9 @@ import { EditExperienceForm } from '@/components/forms/edit-experience-form';
 import { useState } from 'react';
 import type { Experience } from '@/app/portfolio-data';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/hooks/use-auth';
+import SectionHeader from '@/components/section-header';
 import Image from 'next/image';
 
 type ExperienceSectionProps = {
@@ -44,17 +46,14 @@ export default function ExperienceSection({ experience, setExperience }: Experie
 
 
   return (
-    <section id="experience" className="py-20 lg:py-32">
+    <section id="experience" className="py-16 md:py-24">
       <div className="container">
-        <div className="flex justify-between items-center mb-16">
-            <div className='text-left'>
-                <div className="flex items-center gap-4 mb-4">
-                    <Briefcase className="h-10 w-10 text-primary" />
-                    <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Work Experience</h2>
-                </div>
-              <p className="mt-4 max-w-2xl text-lg text-muted-foreground">My professional journey and key contributions.</p>
-            </div>
-            {isAdmin && (
+        <SectionHeader
+          eyebrow="Career"
+          icon={Briefcase}
+          title="Work Experience"
+          description="My professional journey and key contributions."
+          action={isAdmin && (
               <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
                 <DialogTrigger asChild>
                   <Button>
@@ -73,11 +72,11 @@ export default function ExperienceSection({ experience, setExperience }: Experie
                 </DialogContent>
               </Dialog>
             )}
-        </div>
-        <div className="max-w-3xl mx-auto space-y-8">
+        />
+        <div className="max-w-3xl mx-auto space-y-6">
           {experience.map((item, index) => {
             return (
-              <Card key={index} className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative group">
+              <Card key={index} className="overflow-hidden transition-all duration-300 hover:border-primary/40 hover:shadow-lg relative group">
                 <CardHeader className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 p-6">
                   <div className="flex items-start gap-4">
                       {item.logoUrl && (
@@ -108,23 +107,30 @@ export default function ExperienceSection({ experience, setExperience }: Experie
                          </div>
                       )}
                       <div>
-                          <CardTitle className="text-xl font-bold text-primary">{item.role}</CardTitle>
-                          <CardDescription className="text-md font-semibold text-muted-foreground">{item.company}</CardDescription>
+                          <CardTitle className="font-headline text-lg font-semibold leading-snug">{item.role}</CardTitle>
+                          <CardDescription className="mt-1 text-sm font-medium text-primary-ink">{item.company}</CardDescription>
                       </div>
                   </div>
-                  <p className="text-sm text-muted-foreground font-medium bg-secondary px-3 py-1 rounded-full whitespace-nowrap self-start sm:self-center">
+                  <p className="text-xs text-muted-foreground font-medium bg-muted px-3 py-1 rounded-full whitespace-nowrap self-start">
                     {item.duration}
                   </p>
                 </CardHeader>
                 <CardContent className="p-6 pt-0">
-                  <ul className="space-y-3">
+                  <ul className="space-y-2.5 text-sm leading-relaxed">
                     {item.responsibilities.map((resp, i) => (
                       <li key={i} className="flex items-start gap-3">
-                        <CheckCircle className="h-5 w-5 text-accent mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-accent mt-1 flex-shrink-0" />
                         <span>{resp}</span>
                       </li>
                     ))}
                   </ul>
+                  {item.skills && item.skills.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      {item.skills.map((skill, i) => (
+                        <Badge key={i} variant="secondary" className="rounded-md font-medium">{skill}</Badge>
+                      ))}
+                    </div>
+                  )}
                 </CardContent>
                 {isAdmin && (
                     <div className="absolute top-4 right-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">

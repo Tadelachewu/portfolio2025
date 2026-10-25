@@ -11,6 +11,7 @@ import { AddSkillForm } from '@/components/forms/add-skill-form';
 import { useState } from 'react';
 import type { skills } from '@/app/portfolio-data';
 import { useAuth } from '@/hooks/use-auth';
+import SectionHeader from '@/components/section-header';
 import { EditSkillCategoryForm } from './forms/edit-skill-category-form';
 
 type SkillsSectionProps = {
@@ -46,17 +47,14 @@ export default function SkillsSection({ skills, setSkills, skillIcons, setSkillI
   };
 
   return (
-    <section id="skills" className="py-20 lg:py-32">
+    <section id="skills" className="py-16 md:py-24">
       <div className="container">
-        <div className="flex justify-between items-center mb-12">
-            <div className='text-left'>
-                <div className="flex items-center gap-4 mb-4">
-                    <Wrench className="h-10 w-10 text-primary" />
-                    <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">My Technical Skills</h2>
-                </div>
-              <p className="mt-4 max-w-2xl text-lg text-muted-foreground">A snapshot of the technologies and tools I work with.</p>
-            </div>
-            {isAdmin && (
+        <SectionHeader
+          eyebrow="Expertise"
+          icon={Wrench}
+          title="Technical Skills"
+          description="The languages, frameworks and tools I use to build reliable software."
+          action={isAdmin && (
               <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
                 <DialogTrigger asChild>
                   <Button>
@@ -75,12 +73,12 @@ export default function SkillsSection({ skills, setSkills, skillIcons, setSkillI
                 </DialogContent>
               </Dialog>
             )}
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {skills.map((skillCategory, index) => (
-            <Card key={index} className="flex flex-col transition-transform transform hover:-translate-y-1 hover:shadow-xl group">
+            <Card key={index} className="flex flex-col transition-all duration-300 hover:border-primary/40 hover:shadow-lg group">
               <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle className="text-xl font-semibold text-primary">{skillCategory.category}</CardTitle>
+                <CardTitle className="font-headline text-sm font-semibold uppercase tracking-[0.12em] text-primary-ink">{skillCategory.category}</CardTitle>
                 {isAdmin && (
                     <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                         <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setEditState({ dialogOpen: true, category: skillCategory })}>
@@ -109,14 +107,14 @@ export default function SkillsSection({ skills, setSkills, skillIcons, setSkillI
                 )}
               </CardHeader>
               <CardContent className="flex-grow">
-                <ul className="space-y-4">
+                <ul className="space-y-3">
                   {skillCategory.items.map((item, itemIndex) => {
                     const Icon = skillIcons[item] || CodeXml;
                     return (
                       <li key={itemIndex} className="flex items-center justify-between gap-3">
                         <div className="flex items-center gap-3">
-                            {Icon && <Icon className="w-5 h-5 text-accent" />}
-                            <span className="font-medium">{item}</span>
+                            {Icon && <Icon className="w-4 h-4 text-accent" />}
+                            <span className="text-sm font-medium">{item}</span>
                         </div>
                       </li>
                     );

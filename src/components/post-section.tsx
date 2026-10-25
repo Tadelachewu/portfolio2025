@@ -14,6 +14,11 @@ import { useState } from 'react';
 import type { Post } from '@/app/portfolio-data';
 import ImageWithFallback from '@/components/image-with-fallback';
 import { useAuth } from '@/hooks/use-auth';
+import SectionHeader from '@/components/section-header';
+import { usePagination } from '@/hooks/use-pagination';
+import PaginationControls from '@/components/pagination-controls';
+
+const POSTS_PER_PAGE = 6;
 
 type PostSectionProps = {
   posts: Post[];
@@ -24,23 +29,21 @@ export default function PostSection({ posts, setPosts }: PostSectionProps) {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editState, setEditState] = useState<{ dialogOpen: boolean; post?: Post }>({ dialogOpen: false });
   const { isAdmin } = useAuth();
+  const pagination = usePagination(posts, { pageSize: POSTS_PER_PAGE, jumpOnAdd: 'first' });
 
   const handleDeletePost = (slugToDelete: string) => {
     setPosts(prevPosts => prevPosts.filter(p => p.slug !== slugToDelete));
   };
 
   return (
-    <section id="posts" className="py-20 lg:py-32">
+    <section id="posts" className="py-16 md:py-24 scroll-mt-16">
       <div className="container">
-        <div className="flex justify-between items-center mb-12">
-          <div className='text-left'>
-            <div className="flex items-center gap-4 mb-4">
-              <Rss className="h-10 w-10 text-primary" />
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">News & Ideas</h2>
-            </div>
-            <p className="mt-4 max-w-2xl text-lg text-muted-foreground">Check out my latest articles and thoughts on technology.</p>
-          </div>
-          {isAdmin && (
+        <SectionHeader
+          eyebrow="Writing"
+          icon={Rss}
+          title="News & Ideas"
+          description="Articles and thoughts on technology, AI and development."
+          action={isAdmin && (
             <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
               <DialogTrigger asChild>
                 <Button>
@@ -59,11 +62,11 @@ export default function PostSection({ posts, setPosts }: PostSectionProps) {
               </DialogContent>
             </Dialog>
           )}
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((post) => {
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {pagination.pageItems.map((post) => {
             return (
-              <Card key={post.slug} className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+              <Card key={post.slug} className="group flex flex-col overflow-hidden transition-all duration-300 hover:border-primary/40 hover:shadow-lg">
                 {post.imageUrl && (
                   <ImageWithFallback
                     src={post.imageUrl}
@@ -76,22 +79,22 @@ export default function PostSection({ posts, setPosts }: PostSectionProps) {
                   />
                 )}
                 <CardHeader>
-                  <CardTitle className="text-xl font-bold">{post.title}</CardTitle>
+                  <CardTitle className="font-headline text-lg font-semibold leading-snug">{post.title}</CardTitle>
                   <div className="flex items-center gap-2 text-sm text-muted-foreground pt-2">
                     <Calendar className="h-4 w-4" />
                     <span>{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                   </div>
                 </CardHeader>
                 <CardContent className="flex-grow">
-                  <p className="mb-4 text-base text-muted-foreground">{post.description}</p>
+                  <p className="mb-5 text-sm leading-relaxed text-muted-foreground">{post.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {post.tags.map((tag, tagIndex) => (
-                      <Badge key={tagIndex} variant="secondary">{tag}</Badge>
+                      <Badge key={tagIndex} variant="secondary" className="rounded-md font-medium">{tag}</Badge>
                     ))}
                   </div>
                 </CardContent>
-                <CardFooter className="flex justify-between items-center">
-                  <Button asChild>
+                <CardFooter className="flex justify-between items-center border-t pt-4">
+                  <Button asChild size="sm" variant="ghost" className="-ml-3 text-primary-ink hover:text-primary-ink">
                     <Link href={`/posts/${post.slug}`}>
                       Read More
                       <ArrowRight className="ml-2 h-4 w-4" />
@@ -130,6 +133,16 @@ export default function PostSection({ posts, setPosts }: PostSectionProps) {
             );
           })}
         </div>
+        <PaginationControls
+          page={pagination.page}
+          totalPages={pagination.totalPages}
+          start={pagination.start}
+          end={pagination.end}
+          total={pagination.total}
+          itemLabel="posts"
+          onPageChange={pagination.setPage}
+          scrollTargetId="posts"
+        />
 
         <Dialog open={editState.dialogOpen} onOpenChange={(isOpen) => setEditState({ ...editState, dialogOpen: isOpen })}>
           {editState.post && (

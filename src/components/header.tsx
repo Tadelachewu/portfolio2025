@@ -13,6 +13,7 @@ import type { Section } from '@/app/page';
 import { ThemeToggle } from './theme-toggle';
 import { useAuth } from '@/hooks/use-auth';
 import { useRouter } from 'next/navigation';
+import Wave from './wave';
 
 const navLinks: { section: Section; label: string; icon: React.ElementType }[] = [
   { section: 'about', label: 'About', icon: UserCircle2 },
@@ -126,11 +127,12 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
   }
 
   return (
-    <header className={cn("sticky top-0 z-50 w-full transition-all duration-300 bg-secondary border-b", isScrolled ? "shadow-md" : "")}>
+    <header className="sticky top-0 z-50 w-full">
+      <div className={cn("bg-primary text-primary-foreground transition-shadow duration-300", isScrolled ? "shadow-md" : "")}>
       <div className="container flex items-center justify-between h-16">
-        <Link href="/" onClick={() => setActiveSection('home')} className="flex items-center gap-2 text-xl font-bold text-primary">
+        <Link href="/" onClick={() => setActiveSection('home')} className="flex items-center gap-2.5 font-headline text-base font-bold tracking-tight text-primary-foreground">
           {profilePic && (
-            <div className="relative w-8 h-8 rounded-full overflow-hidden">
+            <div className="relative w-8 h-8 rounded-full overflow-hidden ring-2 ring-white/60">
               <Image
                 src={imageSrc || profilePic.imageUrl}
                 alt={profilePic.description}
@@ -146,61 +148,66 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
           <span>Tadele Mesfin</span>
         </Link>
 
-        <div className="flex items-center gap-2">
-          <nav className="hidden md:flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
+          <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <button
                 key={link.section}
                 onClick={() => handleLinkClick(link.section)}
                 className={cn(
-                  "text-sm font-medium transition-all px-3 py-2 rounded-md flex items-center gap-2",
-                  activeSection === link.section ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-primary hover:bg-muted'
+                  "text-sm font-medium transition-colors px-3 py-2 rounded-md flex items-center gap-2",
+                  activeSection === link.section ? 'bg-black/10 text-primary-foreground' : 'text-primary-foreground/75 hover:text-primary-foreground hover:bg-black/5'
                 )}
               >
-                <link.icon className="h-4 w-4" />
+                <link.icon className="h-4 w-4 lg:inline hidden" />
                 <span>{link.label}</span>
               </button>
             ))}
-            <Button asChild size="sm" onClick={() => handleLinkClick('contact')}>
-              <button className={cn(activeSection === 'contact' ? 'bg-primary text-primary-foreground' : '')}>
+            <Button
+              asChild
+              size="sm"
+              className={cn('ml-1 bg-neutral-900 text-white hover:bg-neutral-800', activeSection === 'contact' && 'ring-2 ring-neutral-900/30 ring-offset-2 ring-offset-primary')}
+              onClick={() => handleLinkClick('contact')}
+            >
+              <button>
                 <MessageCircle className="mr-2 h-4 w-4" />
                 Contact Me
               </button>
             </Button>
           </nav>
-          <ThemeToggle />
-          <Button asChild size="sm" variant="outline">
-            <a href="/cv/Tadele_Mesfin_CV.pdf" download="Tadele_Mesfin_CV.pdf" className="flex items-center gap-2">
+          <ThemeToggle className="text-primary-foreground hover:bg-black/10 hover:text-primary-foreground" />
+          <Button asChild size="sm" variant="outline" className="border-black/25 bg-transparent text-primary-foreground hover:bg-black/10 hover:text-primary-foreground">
+            <a href="/cv/Tadele_Mesfin_CV.pdf" download="Tadele_Mesfin_CV.pdf" className="flex items-center gap-2" aria-label="Download resume">
               <Download className="h-4 w-4" />
-              <span>Resume</span>
+              <span className="hidden sm:inline">Resume</span>
             </a>
           </Button>
 
           {isAdmin && (
-            <Button size="sm" variant="outline" onClick={handleResumeUpload}>
+            <Button size="sm" variant="outline" className="border-black/25 bg-transparent text-primary-foreground hover:bg-black/10 hover:text-primary-foreground" onClick={handleResumeUpload}>
               <span className="flex items-center gap-2">Upload Resume</span>
             </Button>
           )}
 
           {isAdmin && (
-            <Button variant="ghost" size="icon" onClick={handleLogout} aria-label="Logout">
+            <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-black/10 hover:text-primary-foreground" onClick={handleLogout} aria-label="Logout">
               <LogOut className="h-5 w-5" />
             </Button>
           )}
 
           <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-black/10 hover:text-primary-foreground">
                 <Menu className="w-6 h-6" />
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px] p-0 bg-secondary">
+            <SheetContent side="right" className="w-[300px] sm:w-[400px] p-0 bg-chrome">
               <SheetHeader className="p-4 border-b">
                 <SheetTitle className="sr-only">Menu</SheetTitle>
                 <SheetDescription className="sr-only">Main navigation menu</SheetDescription>
                 <div className="flex justify-between items-center">
-                  <Link href="/" onClick={() => handleLinkClick('home')} className="flex items-center gap-2 text-xl font-bold text-primary">
+                  <Link href="/" onClick={() => handleLinkClick('home')} className="flex items-center gap-2 text-xl font-bold text-primary-ink">
                     {profilePic && (
                       <div className="relative w-8 h-8 rounded-full overflow-hidden">
                         <Image
@@ -248,6 +255,8 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
           </Sheet>
         </div>
       </div>
+      </div>
+      <Wave direction="down" className="absolute left-0 top-full h-8 sm:h-12" />
     </header>
   );
 }

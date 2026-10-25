@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { EditAboutForm } from '@/components/forms/edit-about-form';
 import { EditImageForm } from '@/components/forms/edit-image-form';
 import { useAuth } from '@/hooks/use-auth';
+import SectionHeader from '@/components/section-header';
 
 type AboutSectionProps = {
   aboutMe: string;
@@ -65,14 +66,13 @@ export default function AboutSection({ aboutMe, setAboutMe }: AboutSectionProps)
   }, [profilePic]);
 
   return (
-    <section id="about" className="py-20 lg:py-32 bg-secondary">
+    <section id="about" className="py-16 md:py-24 bg-secondary">
       <div className="container">
-        <div className="flex justify-between items-center mb-12">
-          <div className="flex items-center gap-4">
-            <UserCircle2 className="h-10 w-10 text-primary" />
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">About Me</h2>
-          </div>
-          {isAdmin && (
+        <SectionHeader
+          eyebrow="About"
+          icon={UserCircle2}
+          title="About Me"
+          action={isAdmin && (
             <Dialog open={isAboutDialogOpen} onOpenChange={setIsAboutDialogOpen}>
               <DialogTrigger asChild>
                 <Button variant="outline">
@@ -91,12 +91,12 @@ export default function AboutSection({ aboutMe, setAboutMe }: AboutSectionProps)
               </DialogContent>
             </Dialog>
           )}
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
+        />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-center">
           <div className="md:col-span-1 flex justify-center animate-fade-in">
             {profilePic && (
               <div className="relative">
-                <div className="relative w-40 h-40 sm:w-48 sm:h-48 rounded-full overflow-hidden border-4 border-primary shadow-lg">
+                <div className="relative w-40 h-40 sm:w-52 sm:h-52 rounded-full overflow-hidden ring-4 ring-primary/20 ring-offset-4 ring-offset-secondary shadow-xl">
                   <Image
                     src={imageSrc || profilePic.imageUrl}
                     alt={profilePic.description}
@@ -136,7 +136,7 @@ export default function AboutSection({ aboutMe, setAboutMe }: AboutSectionProps)
             )}
           </div>
           <div className="md:col-span-2 animate-fade-in-up">
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="max-w-prose text-base sm:text-lg text-muted-foreground leading-relaxed">
               {aboutMe}
             </p>
           </div>

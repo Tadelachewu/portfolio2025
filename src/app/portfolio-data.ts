@@ -4,13 +4,42 @@ import { CodeXml, Smartphone, Server, ServerCog, Database, Flame, Container, Git
 export const aboutMe = "Passionate developer aiming to become a Computer Scientist specializing in Cybersecurity, AI, and Full-Stack Development. With a strong foundation in modern web technologies and a drive for continuous learning, I am dedicated to building efficient, scalable, and secure applications. I thrive in collaborative environments and am always eager to take on new challenges that push the boundaries of technology.";
 
 export const skills = [
-  { category: "Frontend", items: ["React", "React Native", "Qwik.js", "Next.js", "Streamlit", "Typescript"] },
-  { category: "Backend", items: ["Node.js", "Express", "Flask", "Django", "FastAPI"] },
+  { category: "Frontend", items: ["React", "React Native", "Flutter", "Qwik.js", "Next.js", "Streamlit", "Typescript"] },
+  { category: "Backend", items: ["Node.js", "Express", "NestJS", "Flask", "Django", "FastAPI"] },
   { category: "Database", items: ["MongoDB", "SQL Server", "PostgreSQL", "MySQL", "Oracle"] },
-  { category: "Other", items: ["Firebase", "Docker", "Git", "Python", "AI", "Telegram Bot", "Playwright"] }
+  { category: "Other", items: ["Firebase", "Docker", "Git", "Python", "AI", "Telegram Bot", "Playwright", "MCP", "AI-Powered Development"] }
 ];
 
 export const projects = [
+  {
+    title: "AI Scientific Calculator (Web)",
+    description: "Full-stack Next.js web version of the AI Scientific Calculator: a scientific calculator for direct local calculations plus an AI assistant where an LLM (via OpenRouter) picks from 11 MCP calculator tools, the server executes them, and the answer is based on the tool results. It also serves as the API for the Flutter app.",
+    tech: ["Next.js", "TypeScript", "MCP", "OpenRouter", "AI", "Tailwind CSS"],
+    github: "https://github.com/Tadelachewu/McpAi",
+    live: "https://mcpai-76u1.onrender.com/",
+    image: "ai-calculator-web"
+  },
+  {
+    title: "AI Scientific Calculator (Mobile)",
+    description: "Flutter mobile app with a full scientific calculator and an AI chat mode: ask math questions in plain language and the AI picks from MCP-based calculator tools on a Next.js API, runs them, and answers from the tool results.",
+    tech: ["Flutter", "Dart", "Next.js", "MCP", "AI", "Tool Calling"],
+    github: "https://github.com/Tadelachewu/FlutterMcpAi",
+    live: "https://github.com/Tadelachewu/FlutterMcpAi/tags",
+    liveLabel: "Download APK",
+    web: "https://mcpai-76u1.onrender.com/",
+    image: "ai-scientific-calculator"
+  },
+  {
+    title: "Flutter Portfolio App",
+    description: "Mobile version of my portfolio built with Flutter, showcasing projects, education and contact details, with an in-app contact form that sends messages through my Next.js emailing API (POST /api/contact) deployed on Vercel.",
+    tech: ["Flutter", "Dart", "Next.js", "Email API", "Vercel"],
+    github: "https://github.com/Tadelachewu/FlutterPortfolio",
+    live: "https://github.com/Tadelachewu/FlutterPortfolio/tags",
+    web: "https://emailsendserapp.vercel.app/",
+    webLabel: "Email API",
+    liveLabel: "Download APK",
+    image: "flutter-portfolio-app"
+  },
   {
     title: "AI CV Generator",
     description: "A Telegram bot that uses AI to generate professional CVs.",
@@ -106,6 +135,7 @@ export type Experience = {
   company: string;
   duration: string;
   responsibilities: string[];
+  skills?: string[];
   logoUrl?: string;
 };
 
@@ -118,10 +148,11 @@ export const experience: Experience[] = [
     logoUrl: "https://images.unsplash.com/photo-1687523327554-fa9f50423489?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjb21wYW55JTIwbG9nb3xlbnwwfHx8fDE3NTkwODM4NDV8MA&ixlib=rb-4.1.0&q=80&w=1080"
   },
   {
-    role: "IT Trainee",
+    role: "Junior Software Engineer",
     company: "NIB Bank (Technical Program Department)",
     duration: "2025",
-    responsibilities: ["USSD app API integration", "Database scripting", "Deployment", "Web app and API development", "Business ideas"],
+    responsibilities: ["USSD app API integration", "Database scripting", "Deployment", "Web app and API development", "Mobile app development with Flutter", "AI tool-calling integrations using MCP", "Business ideas"],
+    skills: ["NestJS", "Next.js", "Flutter", "MCP", "AI", "SQL", "REST APIs"],
     logoUrl: "https://images.unsplash.com/photo-1692565649291-0341123f29d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxiYW5rJTIwbG9nb3xlbnwwfHx8fDE3NTkxMjM3OTl8MA&ixlib=rb-4.1.0&q=80&w=1080"
   }
 ];
@@ -196,9 +227,13 @@ export const posts: Post[] = [
 export const skillIcons: { [key: string]: React.ElementType } = {
   "React": CodeXml,
   "React Native": Smartphone,
+  "Flutter": Smartphone,
   "Qwik.js": CodeXml,
   "Node.js": Server,
   "Express": ServerCog,
+  "NestJS": ServerCog,
+  "MCP": Bot,
+  "AI-Powered Development": Bot,
   "MongoDB": Database,
   "SQL Server": Database,
   "PostgreSQL": Database,
