@@ -18,7 +18,7 @@ const formSchema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters."),
   description: z.string().min(10, "Description must be at least 10 characters."),
   tags: z.string().min(2, "Enter at least one tag, separated by commas."),
-  imageUrl: z.string().url("Please enter a valid image URL."),
+  imageUrl: z.string().refine(v => v.startsWith("/") || /^https?:\/\//.test(v), "Please enter a valid image URL or a path starting with /."),
   originalImageUrl: z.string().optional(),
 });
 

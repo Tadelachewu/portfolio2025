@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect, useCallback } from 'react';
 import Header from '@/components/header';
 import HeroSection from '@/components/hero-section';
 import AboutSection from '@/components/about-section';
@@ -17,8 +17,33 @@ import { useAuth } from '@/hooks/use-auth';
 
 export type Section = 'home' | 'about' | 'skills' | 'projects' | 'experience' | 'education' | 'posts' | 'contact';
 
+const SECTIONS: Section[] = ['home', 'about', 'skills', 'projects', 'experience', 'education', 'posts', 'contact'];
+
+function sectionFromHash(): Section {
+  const hash = window.location.hash.replace('#', '');
+  return (SECTIONS as string[]).includes(hash) ? (hash as Section) : 'home';
+}
+
 export default function Home() {
-  const [activeSection, setActiveSection] = useState<Section>('home');
+  const [activeSection, setActiveSectionState] = useState<Section>('home');
+
+  // The URL hash (#projects, #posts, ...) is the source of truth, so a refresh or a
+  // "Back" from a post page lands on the same section, and browser back/forward works.
+  useLayoutEffect(() => {
+    setActiveSectionState(sectionFromHash());
+    const onPopState = () => setActiveSectionState(sectionFromHash());
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
+
+  const setActiveSection = useCallback((section: Section) => {
+    setActiveSectionState(section);
+    const url = section === 'home' ? window.location.pathname : `#${section}`;
+    if (sectionFromHash() !== section) {
+      window.history.pushState(null, '', url);
+    }
+    window.scrollTo({ top: 0 });
+  }, []);
   const [skills, setSkills] = useState(initialSkills);
   const [skillIcons, setSkillIcons] = useState(initialSkillIcons);
   const [projects, setProjects] = useState(initialProjects);
