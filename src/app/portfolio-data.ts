@@ -293,6 +293,134 @@ export const posts: Post[] = [
     ],
   },
   {
+    title: "MCP vs API: What Changes When AI Calls Your Services",
+    date: "2026-10-25",
+    tags: ["MCP", "API", "AI", "Architecture"],
+    description: "The Model Context Protocol does not replace your APIs; it standardises how AI applications discover and use them. Here is how MCP compares with a traditional API integration and when to use each.",
+    imageUrl: "/images/posts/mcp-vs-api.png",
+    originalImageUrl: "/images/posts/mcp-vs-api.png",
+    slug: "mcp-vs-api",
+    content: [
+      {
+        paragraphs: [
+          "A common question from developers starting with AI agents is whether the Model Context Protocol (MCP) is a new kind of API that replaces REST. It is not. MCP is a standard way for AI applications to connect to tools and data, and in most systems an MCP server sits in front of the APIs you already have.",
+        ],
+      },
+      {
+        heading: "What a traditional API integration looks like",
+        paragraphs: [
+          "A REST or GraphQL API is designed for developers. Someone reads the documentation, writes code for each endpoint, handles authentication and errors, and maps the responses into the application. Every new service means another custom integration, and that integration only works inside the application it was written for.",
+        ],
+      },
+      {
+        heading: "What MCP adds",
+        paragraphs: [
+          "MCP is an open protocol, introduced by Anthropic in November 2024, that defines how an AI application (the host, through its MCP client) talks to MCP servers. Messages use JSON-RPC 2.0 and run over standard transports: stdio for local servers and Streamable HTTP for remote ones.",
+          "An MCP server exposes three kinds of capability, each self-describing so the model can discover what is available at runtime:",
+        ],
+        bullets: [
+          "Tools: actions the model can call, each with a name, a description and a JSON Schema for its inputs.",
+          "Resources: data the application can read, such as files, records or documents.",
+          "Prompts: reusable prompt templates the server provides for common tasks.",
+        ],
+      },
+      {
+        heading: "Side by side",
+        bullets: [
+          "Audience: an API is written for developers; MCP is designed for AI models and the applications that host them.",
+          "Discovery: API capabilities live in documentation; MCP servers list their tools and schemas at runtime.",
+          "Reuse: a custom API integration serves one application; an MCP server works with any MCP-compatible client.",
+          "Scope: an API exposes business operations; MCP describes them so a model can decide when and how to use them.",
+          "Relationship: MCP servers usually call existing APIs internally. They are complementary layers, not competitors.",
+        ],
+      },
+      {
+        heading: "A real example: my AI Scientific Calculator",
+        paragraphs: [
+          "In my AI Scientific Calculator, a Next.js server exposes calculator operations as MCP tools. When a user asks 'What is 15% of 800?', the model reads the tool descriptions, picks the percentage tool, and the server executes it. The answer is based on the tool's exact result rather than the model's arithmetic. The Flutter app does not need to know about MCP at all; it calls the same server through a normal HTTP API.",
+        ],
+      },
+      {
+        heading: "When to use which",
+        bullets: [
+          "Use a regular API when developers integrate deterministic, well-known flows such as payments, mobile apps or service-to-service calls.",
+          "Add MCP when you want AI assistants or agents to use your services, especially across several AI clients.",
+          "Keep the security you already rely on: authenticate MCP servers, give tools the least privilege they need, validate every input, and require confirmation for destructive actions.",
+        ],
+      },
+    ],
+    sources: [
+      { label: "Model Context Protocol: official documentation and specification", url: "https://modelcontextprotocol.io" },
+    ],
+  },
+  {
+    title: "DevOps in Practice: Ship Faster Without Breaking Things",
+    date: "2026-10-25",
+    tags: ["DevOps", "CI/CD", "Docker", "Cloud"],
+    description: "DevOps is a set of practices that let small teams deliver changes quickly and safely. The essentials: CI/CD pipelines, containers, infrastructure as code, observability and the metrics that show whether it is working.",
+    imageUrl: "/images/posts/devops-practices.png",
+    originalImageUrl: "/images/posts/devops-practices.png",
+    slug: "devops-in-practice",
+    content: [
+      {
+        paragraphs: [
+          "DevOps is not a job title or a single tool. It is a way of working in which the people who build software and the people who run it share responsibility for the whole lifecycle, from planning to monitoring in production. Done well, it means smaller, more frequent releases and fewer late-night incidents.",
+        ],
+      },
+      {
+        heading: "1. Automate the path to production with CI/CD",
+        paragraphs: [
+          "Continuous integration builds and tests every change automatically. Continuous delivery packages each passing change so it can be released at any time. Tools such as GitHub Actions or GitLab CI turn this into a pipeline: lint, test, build, scan for vulnerabilities, then deploy.",
+        ],
+      },
+      {
+        heading: "2. Package once with containers",
+        paragraphs: [
+          "Docker images bundle an application with its runtime and dependencies, so what you test is exactly what you deploy. Use small base images, pin versions, and rebuild regularly. This week's PHP, Node.js and Python security releases are a good reminder: patching often means rebuilding and redeploying images, not editing running servers.",
+        ],
+      },
+      {
+        heading: "3. Treat infrastructure as code",
+        paragraphs: [
+          "Define servers, networks and configuration in version-controlled files with tools such as Terraform or Ansible. Environments become reproducible, changes are reviewed like application code, and recovering from a failure means re-applying a known state.",
+        ],
+      },
+      {
+        heading: "4. Observe what runs in production",
+        bullets: [
+          "Metrics show trends such as request rate, error rate and latency.",
+          "Structured logs explain individual events.",
+          "Traces follow a single request across services.",
+          "Alerts should fire on user-facing symptoms, not on every warning.",
+        ],
+      },
+      {
+        heading: "5. Measure delivery with the DORA metrics",
+        paragraphs: [
+          "The DORA research programme found that a few metrics reliably describe software delivery performance:",
+        ],
+        bullets: [
+          "Deployment frequency: how often you release to production.",
+          "Lead time for changes: how long a commit takes to reach production.",
+          "Change failure rate: the share of deployments that cause a failure.",
+          "Time to restore service: how quickly you recover when something breaks.",
+        ],
+      },
+      {
+        heading: "Build security in (DevSecOps)",
+        bullets: [
+          "Scan dependencies and container images in the pipeline.",
+          "Keep secrets in a secrets manager, never in the repository or the image.",
+          "Require code review and protected branches for production changes.",
+          "Practise rollbacks so recovery is routine, not an emergency.",
+        ],
+      },
+    ],
+    sources: [
+      { label: "DORA: DevOps Research and Assessment", url: "https://dora.dev" },
+    ],
+  },
+  {
     title: "Ethiopia Inaugurates the Grand Ethiopian Renaissance Dam",
     date: "2026-10-25",
     tags: ["Ethiopia", "Energy", "GERD"],
