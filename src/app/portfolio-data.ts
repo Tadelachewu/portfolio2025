@@ -141,19 +141,19 @@ export type Experience = {
 
 export const experience: Experience[] = [
   {
-    role: "Junior IT Officer",
-    company: "ET Inclusive Finance Technology (ETIFT)",
-    duration: "2025 – Present",
-    responsibilities: ["Database management and optimization", "Providing comprehensive IT support to staff", "Remote desktop troubleshooting and assistance"],
-    logoUrl: "https://images.unsplash.com/photo-1687523327554-fa9f50423489?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjb21wYW55JTIwbG9nb3xlbnwwfHx8fDE3NTkwODM4NDV8MA&ixlib=rb-4.1.0&q=80&w=1080"
-  },
-  {
     role: "Junior Software Engineer",
     company: "NIB Bank (Technical Program Department)",
-    duration: "2025",
+    duration: "2025 – Present",
     responsibilities: ["USSD app API integration", "Database scripting", "Deployment", "Web app and API development", "Mobile app development with Flutter", "AI tool-calling integrations using MCP", "Business ideas"],
     skills: ["NestJS", "Next.js", "Flutter", "MCP", "AI", "SQL", "REST APIs"],
     logoUrl: "/images/nib-bank-emblem.png"
+  },
+  {
+    role: "Junior IT Officer",
+    company: "ET Inclusive Finance Technology (ETIFT)",
+    duration: "2025",
+    responsibilities: ["Database management and optimization", "Providing comprehensive IT support to staff", "Remote desktop troubleshooting and assistance"],
+    logoUrl: "https://images.unsplash.com/photo-1687523327554-fa9f50423489?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjb21wYW55JTIwbG9nb3xlbnwwfHx8fDE3NTkwODM4NDV8MA&ixlib=rb-4.1.0&q=80&w=1080"
   }
 ];
 
