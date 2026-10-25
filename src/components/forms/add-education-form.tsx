@@ -15,8 +15,8 @@ import type { education } from "@/app/portfolio-data";
 const formSchema = z.object({
   degree: z.string().min(5, "Degree is required."),
   institution: z.string().min(5, "Institution is required."),
-  cgpa: z.string().min(3, "CGPA is required."),
-  exitExam: z.string().min(3, "Exit exam score is required."),
+  cgpa: z.string().optional(),
+  exitExam: z.string().optional(),
   year: z.string().min(4, "Graduation year is required."),
   logoUrl: z.string().url("Please enter a valid URL for the logo.").optional().or(z.literal('')),
 });
@@ -50,8 +50,8 @@ export function AddEducationForm({ setDialogOpen, setEducation }: AddEducationFo
     const newEducation: typeof education[0] = {
       degree: values.degree,
       institution: values.institution,
-      cgpa: values.cgpa,
-      exitExam: values.exitExam,
+      cgpa: values.cgpa || undefined,
+      exitExam: values.exitExam || undefined,
       year: values.year,
       ...(values.logoUrl ? { logoUrl: values.logoUrl } : { logoUrl: `https://picsum.photos/seed/${values.institution}/200/200` }),
     };

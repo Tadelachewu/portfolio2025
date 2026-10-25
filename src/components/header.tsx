@@ -155,8 +155,10 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
                 key={link.section}
                 onClick={() => handleLinkClick(link.section)}
                 className={cn(
-                  "text-sm font-medium transition-colors px-3 py-2 rounded-md flex items-center gap-2",
-                  activeSection === link.section ? 'bg-black/10 text-primary-foreground' : 'text-primary-foreground/75 hover:text-primary-foreground hover:bg-black/5'
+                  "text-sm font-medium transition-all duration-200 px-3 py-2 rounded-full flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900/60",
+                  activeSection === link.section
+                    ? 'bg-white text-neutral-900 font-semibold shadow-sm'
+                    : 'text-neutral-900/75 hover:text-neutral-900 hover:bg-white/45'
                 )}
               >
                 <link.icon className="h-4 w-4 lg:inline hidden" />
@@ -175,8 +177,8 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
               </button>
             </Button>
           </nav>
-          <ThemeToggle className="text-primary-foreground hover:bg-black/10 hover:text-primary-foreground" />
-          <Button asChild size="sm" variant="outline" className="border-black/25 bg-transparent text-primary-foreground hover:bg-black/10 hover:text-primary-foreground">
+          <ThemeToggle className="text-primary-foreground hover:bg-white/45 hover:text-primary-foreground" />
+          <Button asChild size="sm" variant="outline" className="border-black/25 bg-transparent text-primary-foreground hover:bg-white/45 hover:text-primary-foreground">
             <a href="/cv/Tadele_Mesfin_CV.pdf" download="Tadele_Mesfin_CV.pdf" className="flex items-center gap-2" aria-label="Download resume">
               <Download className="h-4 w-4" />
               <span className="hidden sm:inline">Resume</span>
@@ -184,25 +186,25 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
           </Button>
 
           {isAdmin && (
-            <Button size="sm" variant="outline" className="border-black/25 bg-transparent text-primary-foreground hover:bg-black/10 hover:text-primary-foreground" onClick={handleResumeUpload}>
+            <Button size="sm" variant="outline" className="border-black/25 bg-transparent text-primary-foreground hover:bg-white/45 hover:text-primary-foreground" onClick={handleResumeUpload}>
               <span className="flex items-center gap-2">Upload Resume</span>
             </Button>
           )}
 
           {isAdmin && (
-            <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-black/10 hover:text-primary-foreground" onClick={handleLogout} aria-label="Logout">
+            <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/45 hover:text-primary-foreground" onClick={handleLogout} aria-label="Logout">
               <LogOut className="h-5 w-5" />
             </Button>
           )}
 
           <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-black/10 hover:text-primary-foreground">
+              <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/45 hover:text-primary-foreground">
                 <Menu className="w-6 h-6" />
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px] p-0 bg-chrome">
+            <SheetContent side="right" className="w-[300px] sm:w-[400px] p-0 bg-background">
               <SheetHeader className="p-4 border-b">
                 <SheetTitle className="sr-only">Menu</SheetTitle>
                 <SheetDescription className="sr-only">Main navigation menu</SheetDescription>
@@ -237,15 +239,15 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
                       key={link.section}
                       onClick={() => handleLinkClick(link.section)}
                       className={cn(
-                        "text-lg font-medium w-full p-3 rounded-md flex items-center gap-3 transition-colors",
-                        activeSection === link.section ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
+                        "text-base font-medium w-full px-3 py-2.5 rounded-lg flex items-center gap-3 transition-colors",
+                        activeSection === link.section ? 'bg-primary text-primary-foreground font-semibold shadow-sm' : 'text-foreground/80 hover:bg-primary/15 hover:text-foreground'
                       )}
                     >
                       <link.icon className="h-5 w-5" />
                       <span>{link.label}</span>
                     </button>
                   ))}
-                  <Button className="w-full mt-4" size="lg" onClick={() => handleLinkClick('contact')}>
+                  <Button className="w-full mt-4 bg-neutral-900 text-white hover:bg-neutral-800" size="lg" onClick={() => handleLinkClick('contact')}>
                     <MessageCircle className="mr-2 h-5 w-5" />
                     Contact Me
                   </Button>

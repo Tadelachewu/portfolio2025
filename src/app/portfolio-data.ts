@@ -157,14 +157,18 @@ export const experience: Experience[] = [
   }
 ];
 
-export const education: {
+export type Education = {
   degree: string;
   institution: string;
-  cgpa: string;
-  exitExam: string;
+  // Degree-only fields; trainings and certifications leave them out.
+  cgpa?: string;
+  exitExam?: string;
   year: string;
+  details?: string[];
   logoUrl?: string;
-}[] = [
+};
+
+export const education: Education[] = [
     {
       degree: "BSc in Computer Science",
       institution: "Bahir Dar University",
@@ -172,6 +176,17 @@ export const education: {
       exitExam: "76%",
       year: "Graduated 2023",
       logoUrl: "https://archive.org/services/img/bdu_20250925"
+    },
+    {
+      degree: "Agile Certified Practitioner (ACP) Training",
+      institution: "ITSC Technology Support Training Center",
+      year: "September 14 – 19, 2026",
+      logoUrl: "/images/itsc-logo.png",
+      details: [
+        "Intensive 6-day, full-day program (8:00 AM – 5:00 PM)",
+        "Nominated as one of the selected IT professionals, with the training identified as a key requirement for my role",
+        "Focused on Agile practices under the Agile Certified Practitioner (ACP) theme"
+      ]
     }
   ];
 

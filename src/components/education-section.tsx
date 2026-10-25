@@ -3,7 +3,7 @@
 
 import { educationIcons } from '@/app/portfolio-data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { GraduationCap, PlusCircle, Pencil, Trash2 } from 'lucide-react';
+import { GraduationCap, PlusCircle, Pencil, Trash2, CheckCircle, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
@@ -81,16 +81,23 @@ export default function EducationSection({ education, setEducation }: EducationS
             <Card key={index} className="overflow-hidden transition-all duration-300 hover:border-primary/40 hover:shadow-lg mb-6 last:mb-0 relative group">
               <CardHeader className="border-b bg-muted/50 p-6">
                 <div className="flex items-center gap-4">
+                  {!edu.logoUrl && (
+                    <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary-ink">
+                      <Award className="h-7 w-7" aria-hidden="true" />
+                    </div>
+                  )}
                   {edu.logoUrl && (
-                     <div className="bg-white p-2 rounded-full flex-shrink-0 relative">
-                        <Image
-                            src={edu.logoUrl}
-                            alt={`${edu.institution} logo`}
-                            width={48}
-                            height={48}
-                            className="object-contain"
-                            key={edu.logoUrl}
-                        />
+                     <div className="relative h-16 w-16 flex-shrink-0 rounded-xl border bg-white p-1.5 shadow-sm">
+                        <div className="relative h-full w-full">
+                          <Image
+                              src={edu.logoUrl}
+                              alt={`${edu.institution} logo`}
+                              fill
+                              sizes="64px"
+                              className="object-contain"
+                              key={edu.logoUrl}
+                          />
+                        </div>
                         {isAdmin && (
                              <Button
                                 variant="outline"
@@ -122,20 +129,34 @@ export default function EducationSection({ education, setEducation }: EducationS
                     <span>{edu.institution}</span>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <CgpaIcon className="h-5 w-5 text-accent" />
-                  <div>
-                    <span className="font-semibold">CGPA: </span>
-                    <span>{edu.cgpa}</span>
+                {edu.cgpa && (
+                  <div className="flex items-center gap-3">
+                    <CgpaIcon className="h-5 w-5 text-accent" />
+                    <div>
+                      <span className="font-semibold">CGPA: </span>
+                      <span>{edu.cgpa}</span>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center gap-3 col-span-1 sm:col-span-2">
-                  <ExitExamIcon className="h-5 w-5 text-accent" />
-                  <div>
-                    <span className="font-semibold">Exit Exam Score: </span>
-                    <span>{edu.exitExam}</span>
+                )}
+                {edu.exitExam && (
+                  <div className="flex items-center gap-3 col-span-1 sm:col-span-2">
+                    <ExitExamIcon className="h-5 w-5 text-accent" />
+                    <div>
+                      <span className="font-semibold">Exit Exam Score: </span>
+                      <span>{edu.exitExam}</span>
+                    </div>
                   </div>
-                </div>
+                )}
+                {edu.details && edu.details.length > 0 && (
+                  <ul className="col-span-1 sm:col-span-2 space-y-2.5 leading-relaxed">
+                    {edu.details.map((detail, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <CheckCircle className="h-4 w-4 text-accent mt-1 flex-shrink-0" />
+                        <span>{detail}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </CardContent>
                 {isAdmin && (
                     <div className="absolute top-4 right-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
