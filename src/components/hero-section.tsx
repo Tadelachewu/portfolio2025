@@ -39,7 +39,7 @@ export default function HeroSection({ setActiveSection }: HeroSectionProps) {
       />
       <div className="container grid items-center gap-12 pt-20 pb-16 md:pt-28 md:pb-24 lg:grid-cols-[1.1fr_1fr] lg:gap-8 lg:pt-32 lg:pb-28">
         <div className="animate-fade-in-up order-2 text-center lg:order-1 lg:text-left">
-          <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-primary-ink sm:text-sm">
+          <p className="mb-5 text-xs font-semibold uppercase tracking-[0.1em] text-primary-ink sm:text-sm">
             Software Engineer
           </p>
           <h1 className="font-display text-4xl font-bold leading-[1.1] sm:text-5xl xl:text-6xl">

@@ -17,9 +17,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        body: ['Inter', 'system-ui', 'sans-serif'],
-        headline: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
-        display: ['"Playfair Display"', 'Georgia', 'serif'],
+        body: ['Verdana', 'Geneva', 'Tahoma', '"DejaVu Sans"', 'sans-serif'],
+        headline: ['Verdana', 'Geneva', 'Tahoma', '"DejaVu Sans"', 'sans-serif'],
+        display: ['Verdana', 'Geneva', 'Tahoma', '"DejaVu Sans"', 'sans-serif'],
       },
       colors: {
         background: 'hsl(var(--background))',

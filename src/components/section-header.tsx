@@ -16,7 +16,7 @@ export default function SectionHeader({ eyebrow, title, description, icon: Icon,
   return (
     <div className={cn('mb-12 flex flex-col gap-6 md:mb-16', !centered && 'sm:flex-row sm:items-end sm:justify-between', className)}>
       <div className={cn('max-w-2xl', centered && 'mx-auto text-center')}>
-        <p className={cn('mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary-ink', centered && 'justify-center')}>
+        <p className={cn('mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] text-primary-ink', centered && 'justify-center')}>
           {Icon && <Icon className="h-4 w-4" aria-hidden="true" />}
           {eyebrow}
         </p>

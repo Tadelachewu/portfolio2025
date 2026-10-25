@@ -78,7 +78,7 @@ export default function SkillsSection({ skills, setSkills, skillIcons, setSkillI
           {skills.map((skillCategory, index) => (
             <Card key={index} className="flex flex-col transition-all duration-300 hover:border-primary/40 hover:shadow-lg group">
               <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle className="font-headline text-sm font-semibold uppercase tracking-[0.12em] text-primary-ink">{skillCategory.category}</CardTitle>
+                <CardTitle className="font-headline text-sm font-semibold uppercase tracking-[0.06em] text-primary-ink">{skillCategory.category}</CardTitle>
                 {isAdmin && (
                     <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                         <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setEditState({ dialogOpen: true, category: skillCategory })}>
