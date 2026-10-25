@@ -112,7 +112,7 @@ export default function ContactSection() {
         <SectionHeader
           eyebrow="Contact"
           icon={MessageCircle}
-          title="Get In Touch"
+          title="Get in Touch"
           description="Have a question or want to work together? Feel free to reach out."
           align="center"
         />

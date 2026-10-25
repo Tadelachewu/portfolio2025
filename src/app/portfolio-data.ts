@@ -4,7 +4,7 @@ import { CodeXml, Smartphone, Server, ServerCog, Database, Flame, Container, Git
 export const aboutMe = "Passionate developer aiming to become a Computer Scientist specializing in Cybersecurity, AI, and Full-Stack Development. With a strong foundation in modern web technologies and a drive for continuous learning, I am dedicated to building efficient, scalable, and secure applications. I thrive in collaborative environments and am always eager to take on new challenges that push the boundaries of technology.";
 
 export const skills = [
-  { category: "Frontend", items: ["React", "React Native", "Flutter", "Qwik.js", "Next.js", "Streamlit", "Typescript"] },
+  { category: "Frontend", items: ["React", "React Native", "Flutter", "Qwik.js", "Next.js", "Streamlit", "TypeScript"] },
   { category: "Backend", items: ["Node.js", "Express", "NestJS", "Flask", "Django", "FastAPI"] },
   { category: "Database", items: ["MongoDB", "SQL Server", "PostgreSQL", "MySQL", "Oracle"] },
   { category: "Other", items: ["Firebase", "Docker", "Git", "Python", "AI", "Telegram Bot", "Playwright", "MCP", "AI-Powered Development"] }
@@ -493,7 +493,7 @@ export const skillIcons: { [key: string]: React.ElementType } = {
   "FastAPI": ServerCog,
   "MySQL": Database,
   "Oracle": Database,
-  "Typescript": CodeXml
+  "TypeScript": CodeXml
 };
 
 export const educationIcons = {
@@ -505,5 +505,5 @@ export const educationIcons = {
 
 export const contactInfo = {
   email: 'tade2024bdu@gmail.com',
-  phone: '+251949847581'
+  phone: '+251 94 984 7581'
 }

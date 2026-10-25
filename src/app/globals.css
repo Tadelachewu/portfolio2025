@@ -76,8 +76,14 @@
     text-rendering: optimizeLegibility;
   }
   h1, h2, h3, h4 {
-    @apply font-headline tracking-tight text-foreground;
+    @apply font-headline text-foreground;
     text-wrap: balance;
+  }
+  h1 {
+    @apply tracking-tight;
+  }
+  h2 {
+    letter-spacing: -0.015em;
   }
   p {
     text-wrap: pretty;

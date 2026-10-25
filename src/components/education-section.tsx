@@ -14,6 +14,7 @@ import { useState } from 'react';
 import type { education } from '@/app/portfolio-data';
 import Image from 'next/image';
 import { useAuth } from '@/hooks/use-auth';
+import { cn } from '@/lib/utils';
 import SectionHeader from '@/components/section-header';
 
 type EducationSectionProps = {
@@ -122,7 +123,7 @@ export default function EducationSection({ education, setEducation }: EducationS
                 </div>
               </CardHeader>
               <CardContent className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm">
-                <div className="flex items-center gap-3">
+                <div className={cn("flex items-center gap-3", !edu.cgpa && "sm:col-span-2")}>
                   <InstitutionIcon className="h-5 w-5 text-accent" />
                   <div>
                     <span className="font-semibold">Institution: </span>
