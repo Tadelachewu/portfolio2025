@@ -67,7 +67,8 @@ export default function Home() {
         )}
 
         {activeSection === 'about' && (
-          <div className="w-full">
+          // Stretches to fill <main> so the About background covers the whole content area.
+          <div className="w-full flex-1 flex flex-col">
             <AboutSection aboutMe={aboutMe} setAboutMe={setAboutMe} />
           </div>
         )}

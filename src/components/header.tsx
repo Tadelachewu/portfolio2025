@@ -61,9 +61,18 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
     };
   }, []);
 
-  // ensure header avatar falls back to originalImageUrl if uploaded file is missing
+  // Header avatar: a photo dropped into public/storage wins; otherwise use the configured
+  // profile picture, falling back to originalImageUrl if the uploaded file is missing.
   useEffect(() => {
     async function check(p: any) {
+      for (const candidate of ['/storage/tade-profile.jpg', '/storage/tade-profile.png']) {
+        try {
+          const res = await fetch(candidate, { method: 'HEAD' });
+          if (res.ok && (res.headers.get('content-type') || '').startsWith('image')) return setImageSrc(candidate);
+        } catch (e) {
+          // try the next candidate
+        }
+      }
       if (!p) return setImageSrc(null);
       const tryUrl = p.imageUrl;
       const original = p.originalImageUrl || null;
@@ -130,15 +139,15 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
     <header className="sticky top-0 z-50 w-full">
       <div className={cn("bg-primary text-primary-foreground transition-shadow duration-300", isScrolled ? "shadow-md" : "")}>
       <div className="container flex items-center justify-between h-16">
-        <Link href="/" onClick={() => setActiveSection('home')} className="flex items-center gap-2.5 font-headline text-base font-bold tracking-tight text-primary-foreground">
+        <Link href="/" onClick={() => setActiveSection('home')} className="flex items-center gap-3 font-headline text-base font-bold tracking-tight text-primary-foreground md:self-start md:pt-2">
           {profilePic && (
-            <div className="relative w-8 h-8 rounded-full overflow-hidden ring-2 ring-white/60">
+            <div className="relative z-10 h-14 w-14 flex-shrink-0 overflow-hidden rounded-full bg-white ring-[3px] ring-white shadow-lg md:h-20 md:w-20 md:ring-4">
               <Image
                 src={imageSrc || profilePic.imageUrl}
                 alt={profilePic.description}
                 fill
-                style={{ objectFit: 'cover' }}
-                sizes="32px"
+                style={{ objectFit: 'cover', objectPosition: '50% 15%' }}
+                sizes="(min-width: 768px) 80px, 56px"
                 priority
                 data-ai-hint={profilePic.imageHint}
                 key={imageSrc || profilePic.imageUrl}
@@ -211,13 +220,13 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
                 <div className="flex justify-between items-center">
                   <Link href="/" onClick={() => handleLinkClick('home')} className="flex items-center gap-2 text-xl font-bold text-primary-ink">
                     {profilePic && (
-                      <div className="relative w-8 h-8 rounded-full overflow-hidden">
+                      <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full bg-white ring-2 ring-primary shadow-md">
                         <Image
                           src={imageSrc || profilePic.imageUrl}
                           alt={profilePic.description}
                           fill
-                          style={{ objectFit: 'cover' }}
-                          sizes="32px"
+                          style={{ objectFit: 'cover', objectPosition: '50% 15%' }}
+                          sizes="48px"
                           priority
                           data-ai-hint={profilePic.imageHint}
                           key={imageSrc || profilePic.imageUrl}

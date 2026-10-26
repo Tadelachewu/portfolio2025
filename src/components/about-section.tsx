@@ -65,8 +65,39 @@ export default function AboutSection({ aboutMe, setAboutMe }: AboutSectionProps)
     checkAndSetImage(profilePic);
   }, [profilePic]);
 
+  // Optional section background from public/storage: tade-bg.jpg, falling back to tade-bg.png.
+  const [backgroundSrc, setBackgroundSrc] = useState<string | null>(null);
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      for (const candidate of ['/storage/tade-bg.jpg', '/storage/tade-bg.png']) {
+        try {
+          const res = await fetch(candidate, { method: 'HEAD' });
+          if (res.ok && (res.headers.get('content-type') || '').startsWith('image')) {
+            if (mounted) setBackgroundSrc(candidate);
+            return;
+          }
+        } catch {
+          // try the next candidate
+        }
+      }
+    })();
+    return () => { mounted = false; };
+  }, []);
+
   return (
-    <section id="about" className="py-16 md:py-24 bg-secondary">
+    <section id="about" className="relative isolate flex-1 overflow-hidden py-16 md:py-24 bg-secondary">
+      {backgroundSrc && (
+        <>
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 -z-20 bg-cover bg-[center_20%] bg-no-repeat"
+            style={{ backgroundImage: `url('${backgroundSrc}')` }}
+          />
+          {/* Keeps the heading and summary readable over any photo, in both themes. */}
+          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-b from-background/85 via-background/75 to-background/90" />
+        </>
+      )}
       <div className="container">
         <SectionHeader
           eyebrow="About"
